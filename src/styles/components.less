@@ -1,0 +1,252 @@
+@import './mixins.less';
+
+/*-------- feed-detail-card --------*/
+.feed-detail-card{
+	padding: 0 24rpx;
+	background-color: @white;
+	.border-radius(8rpx);
+	.feed-detail-header{
+		padding-top: 24rpx;
+		height: 136rpx;
+		position: relative;
+		.user-icon-wrapper{
+			position: absolute;
+			top: 24rpx;
+			left: 0;
+			height: 110rpx;
+			width: 110rpx;
+			.user-icon{
+				width: 100%;
+				height: 100%;
+				.border-radius(8rpx);
+			}
+			.vip{
+				position: absolute;
+				right: -2rpx;
+				bottom: -2rpx;
+				width: 30rpx;
+				height: 30rpx;
+				.border-radius(100%);
+				text-align: center;
+				line-height: 30rpx;
+				color: @white;
+				font-size: 24rpx;
+				background-color: @color-v2-base-yellow;
+				border: 2rpx @white solid;
+			}
+		}
+		.user-info{
+			.fitparent(24rpx 0 0 150rpx);
+			.user-name{
+				font-size: 28rpx;
+				color: @color-v2-base-black;
+			}
+			.user-role{
+				margin-top: 10rpx;
+				font-size: 24rpx;
+				color: @color-v2-txt-words;
+				.user-role-item{
+					display: inline-block;
+					&:first-child{
+						padding-right: 0.2rem;
+					}
+					&:last-child{
+						padding-left: 0.2rem;
+						padding-right: 0.2rem;
+						border-left: 1px @color-v2-icon-border solid;
+					}
+				}
+			}
+			.user-identity{
+				margin-top: 10rpx;
+				font-size: 24rpx;
+				color: @color-v2-txt-help;
+				.other-info{
+					display: inline-block;
+					margin-left: 16rpx;
+					.sub-item{
+						display: inline-block;
+						color: @color-v2-txt-subInfo;
+						text-align: center;
+					}
+					.effect-item{
+						text-align: left;
+						padding-right: 8rpx;
+						.effect-value{
+							color: #61a3d1;
+						}
+					}
+					.honesty-item{
+						padding-left: 8rpx;
+						border-left: 1px @color-v2-border solid;
+						.honesty-bar-bg{
+							position: relative;
+							display: inline-block;
+							margin-left: 16rpx;
+							margin-right: 4rpx;
+							height: 20rpx;
+							width: 80rpx;
+							background-color: #dfdce0;
+							.border-radius(4rpx);
+							.honesty-bar{
+								position: absolute;
+								top: 0;
+								left: 0;
+								height: 20rpx;
+								background-color: #ffb501;
+								.border-radius(4rpx);
+							}
+						}
+						.honesty-rank{
+							color: #ffb501;
+						}
+					}
+				}
+			}
+		}
+		.feed-detail-acion{
+			position: absolute;
+			top: 0.32rem;
+			right: 0;
+			bottom: 0.32rem;
+			width: 2.2rem;
+			display: flex;
+			align-items: center;
+			justify-content: flex-end;
+			border-left: 2px @color-v2-border solid;
+			.action-item{
+				width: 1.6rem;
+				color: @white;
+				text-align: center;
+				padding: 0.093333rem 0.453333rem;
+				background-color: @color-v2-base-blue;
+				.border-radius(0.133333rem);
+				.iconfont{
+					font-size: 0.56rem;
+				}
+				.action-name{
+					font-size: 0.32rem;
+				}
+			}
+		}
+	}
+	.feed-detail-content{
+		position: relative;
+		padding-top: 0.266667rem;
+		padding-bottom: 0.266667rem;
+		border-top: 1px #eef0f1 dashed;
+		border-bottom: 1px #eef0f1 dashed;
+		.feed-detail-tags{
+			.user-tags{
+				min-height: 0.48rem;
+				line-height: 0.48rem;
+				display: flex;
+				align-items: center;
+				.tags-name{
+					font-size: 0.373333rem;
+					display: inline-block;
+				}
+				.tags-container{
+					margin-left: 0.266667rem;
+					.tag-item{
+						display: inline-block;
+						margin-top: 0.053333rem;
+						margin-bottom: 0.053333rem;
+						margin-right: 0.093333rem;
+						width: 2.333333rem;
+						height: 0.533333rem;
+						line-height: 0.533333rem;
+						text-align: center;
+						.ellipsis();
+						.border-radius(0.093333rem);
+					}
+				}
+				&.advantage-tags{
+					color: #00b484;
+					.tag-item{
+						border: 1px #00b484 solid;
+					}
+				}
+				&.needs-tags{
+					color: #319be5;
+					.tag-item{
+						border: 1px #319be5 solid;
+					}
+				}
+				&:first-child{
+					margin-bottom: 0.093333rem;
+				}
+			}
+		}
+	}
+	.feed-detail-sub-info{
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		position: relative;
+		height: 0.96rem;
+		bottom: 0.106667rem;
+		padding-top: 0.32rem;
+		.sub-item{
+			display: inline-block;
+			color: @color-v2-txt-subInfo;
+			text-align: center;
+		}
+		.effect-item{
+			width: 2.666667rem;
+			text-align: left;
+			.effect-value{
+				color: #61a3d1;
+			}
+		}
+		.honesty-item{
+			width: 4.0rem;
+			border-left: 1px @color-v2-border solid;
+			border-right: 1px @color-v2-border solid;
+			.honesty-bar-bg{
+				position: relative;
+				display: inline-block;
+				margin-left: 0.213333rem;
+				margin-right: 0.053333rem;
+				height: 0.133333rem;
+				width: 1.04rem;
+				background-color: #dfdce0;
+				.border-radius(4px);
+				.honesty-bar{
+					position: absolute;
+					top: 0;
+					left: 0;
+					height: 0.133333rem;
+					background-color: #ffb501;
+					.border-radius(4px);
+				}
+			}
+			.honesty-rank{
+				color: #ffb501;
+			}
+		}
+		.distance-item{
+			width: 2.133333rem;
+			text-align: right;
+			.iconfont{
+				font-size: 0.4rem;
+				margin-right: 0.106667rem;
+			}
+		}
+	}
+	.contact-info{
+		padding-bottom: 0.266667rem;
+		font-size: 26rpx;
+		.item{
+			display: flex;
+			justify-content: flex-start;
+			text{
+				color: @color-v2-txt-words;
+			}
+			&.area{
+				margin-top: 8rpx;
+			}
+		}
+	}
+}
+/*-------- /feed-detail-card --------*/

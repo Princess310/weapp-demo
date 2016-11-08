@@ -1,0 +1,292 @@
+/*Base Style*/
+@imgBaseUrl: "../img";
+@fontBaseUrl:"../fonts";
+@mainColor: rgb(0, 188, 212);
+@urlColor: #507daf;
+
+/* --------- Colors --------- */
+@black-deep: #000;
+@black-70: #424242;
+@black-60: #4c4c4c;
+@black-50: #737373;
+@black-40: #ababab;
+@black-30: #bcbcbc;
+@black-20: #e9e9e9;
+@black-10: #f4f4f4;
+
+@white: #fff;
+@primary-dark: #006ba6;
+@primary-normal: #2187c0;
+@primary-lightest: #e7f4fc;
+@success-normal: #4cd964;
+@fail-normal: #d9534f;
+@warning-normal: #F0AD4E;
+
+@color-txt-darker: #000;
+@color-txt-dark: #111;
+@color-txt: #333;
+@color-txt-light: #555;
+@color-txt-lighter: #888;
+@color-txt-lighter1: #999;
+@color-txt-lightest: #ccc;
+@color-txt-img: #efefef;
+@color-txt-des: #9c9f9f;
+@color-txt-normal: #5d5d5d;
+
+// --------- Ali Color For Version 2 --------- //
+// --------- base --------- //
+@color-v2-base-blue: #50abf1;
+@color-v2-base-blue-lighter: #d2ebff;
+@color-v2-base-blue-lighter-2: #ddebf5;
+@color-v2-base-blue-lighter-3: #d3edfe;
+@color-v2-base-yellow: #ffb501;
+@color-v2-base-green: #00b484;
+@color-v2-base-black: #4d5059;
+@color-v2-base-red: #F43530;
+@color-v2-base-red-2: #ed2302;
+@color-v2-base-orange: #f15d35;
+// --------- /base --------- //
+
+// --------- text --------- //
+@color-v2-txt-p: #8f8f92;
+@color-v2-txt-words: #6f7380;
+@color-v2-txt-help: #9399ab;
+@color-v2-txt-subInfo: #aaa;
+@color-v2-txt-sub-help: #bcbcbc;
+// --------- /text --------- //
+
+// --------- border --------- //
+@color-v2-border: #f0f0f0;
+@color-v2-icon-border: #d5d5d5;
+@color-v2-cancel-border: #e7e7e8;
+@color-v2-border-lighter: #50aaee;
+// --------- /border --------- //
+
+// --------- background --------- //
+@color-v2-bg: #f6f6f6;
+@color-v2-bg-lighter: #f0f0f0;
+// --------- /background --------- //
+
+// --------- /Ali Color For Version 2 --------- //
+/* --------- /Colors --------- */
+
+// --------- Font Size --------- //
+@font-size-smallest: 10px;
+@font-size-smaller1: 11px;
+@font-size-smaller: 12px;
+@font-size-small: 13px;
+@font-size-normal: 14px;
+@font-size-medium: 15px;
+@font-size-large: 16px;
+@font-size-large1: 17px;
+@font-size-larger: 18px;
+@font-size-larger2: 20px;
+@font-size-largest: 22px;
+
+@font-size-mobile-normal: 0.373333rem;
+// --------- /Font Size --------- //
+
+// --------- Font Weight --------- //
+@font-weight-thin: 100;
+@font-weight-light: 300;
+@font-weight-normal: 400;
+@font-weight-medium: 500;
+@font-weight-bold: 700;
+@font-weight-black: 900;
+// --------- /Font Weight --------- //
+
+
+// --------- toast --------- //
+@toast-txt-color: #fff;
+@toast-bg-color: #272822;
+// --------- /toast --------- //
+
+
+/* --------- Mixins --------- */
+.fitparent(@value) when (length(@value) = 4){
+  position: absolute;
+  top: extract(@value,1); right: extract(@value,2); bottom: extract(@value,3); left: extract(@value,4);
+}
+.fitparent(@value) when (length(@value) = 3){
+  .fitparent(extract(@value,1) extract(@value,2) extract(@value,3) extract(@value,3))
+}
+.fitparent(@value) when (length(@value) = 2){
+  .fitparent(extract(@value,1) extract(@value,2) extract(@value,1) extract(@value,2))
+}
+.fitparent(@value) when (length(@value) = 1){
+  .fitparent(extract(@value,1) extract(@value,1) extract(@value,1) extract(@value,1))
+}
+.fitparent(){
+  .fitparent(0 0 0 0);
+}
+
+.clearfix() {
+  &:before,
+  &:after {
+    content: " "; // 1
+    display: table; // 2
+  }
+  &:after {
+    clear: both;
+  }
+}
+
+
+.placeholder(@color-placeholder: #bcbcbc, @font-weight: 300){
+  &::-webkit-input-placeholder {
+    color:@color-placeholder;
+    font-weight: @font-weight;
+  }
+  &::-moz-placeholder {
+    color:@color-placeholder;
+    font-weight: @font-weight;
+  }
+  &:-ms-input-placeholder {
+    color:@color-placeholder;
+    font-weight: @font-weight;
+  }
+}
+
+.transition(@transition) {
+  transition: @transition;
+  -moz-transition: @transition;
+  -webkit-transition: @transition;
+}
+
+.transform(@transform) {
+  transform: @transform;
+  -moz-transform: @transform;
+  -webkit-transform: @transform;
+}
+
+.box-shadow(@shadow) {
+  box-shadow: @shadow;
+  -moz-box-shadow: @shadow;
+  -webkit-box-shadow: @shadow;
+}
+
+.animation(@animation-name,@animation-duration,@animation-timing-function,@animation-delay,@animation-iteration-count,@animation-direction){
+  animation: @arguments;
+  /* Firefox: */
+  -moz-animation: @arguments;
+  /* Safari Äşâ€™Ĺš Chrome: */
+  -webkit-animation: @arguments;
+  /* Opera: */
+  -o-animation: @arguments;
+}
+
+.btn-hover(){
+  &:hover{
+    background-color: @black-20;
+  }
+}
+
+// ---------- border corner ---------//
+.border-top-radius(@radius) {
+  border-top-right-radius: @radius;
+  -webkit-border-top-right-radius: @radius;
+  -moz-border-radius-topright: @radius;
+  border-top-left-radius: @radius;
+  -webkit-border-top-left-radius: @radius;
+  -moz-border-radius-topleft: @radius;
+}
+.border-right-radius(@radius) {
+  border-top-right-radius: @radius;
+  -webkit-border-top-right-radius: @radius;
+  -moz-border-radius-topright: @radius;
+  border-bottom-right-radius: @radius;
+  -webkit-border-bottom-right-radius: @radius;
+  -moz-border-radius-bottomright: @radius;
+}
+
+.border-bottom-radius(@radius) {
+  border-bottom-right-radius: @radius;
+  -webkit-border-bottom-right-radius: @radius;
+  -moz-border-radius-bottomright: @radius;
+  border-bottom-left-radius: @radius;
+  -webkit-border-bottom-left-radius: @radius;
+  -moz-border-radius-bottomleft: @radius;
+}
+
+.border-left-radius(@radius) {
+  border-top-left-radius: @radius;
+  -webkit-border-top-left-radius: @radius;
+  -moz-border-radius-topleft: @radius;
+  border-bottom-left-radius: @radius;
+  -webkit-border-bottom-left-radius: @radius;
+  -moz-border-radius-bottomleft: @radius;
+}
+
+.border-radius(@radius) {
+  border-radius: @radius;
+  -webkit-border-radius: @radius;
+  -moz-border-radius: @radius;
+}
+
+.user-select(@select) {
+  -webkit-user-select: @select;
+  -moz-user-select: @select;
+  user-select: @select;
+}
+// ---------- border corner ---------//
+
+
+// GRADIENTS
+// --------------------------------------------------
+
+// Horizontal gradient, from left to right
+//
+// Creates two color stops, start and end, by specifying a color and position for each color stop.
+// Color stops are not available in IE9 and below.
+.gradient-horizontal(@start-color: #555, @end-color: #333, @start-percent: 0%,  @end-percent: 100% ){
+  background-image: -webkit-gradient(linear, @start-percent top, @end-percent top, from(@start-color), to(@end-color)) ;
+  // Safari 4+, Chrome 2+
+  background-image: -webkit-linear-gradient(left, color-stop(@start-color @start-percent), color-stop(@end-color @end-percent)) ;
+  // Safari 5.1+, Chrome 10+
+  background-image: -moz-linear-gradient(left, @start-color @start-percent, @end-color @end-percent) ;
+  // FF 3.6+
+  background-image: linear-gradient(to right, @start-color @start-percent, @end-color @end-percent) ;
+  // Standard, IE10
+  background-repeat: repeat-x ;
+  filter: e(%("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=1)",@start-color,@end-color)); // IE9 and down
+}
+
+// Vertical gradient, from top to bottom
+//
+// Creates two color stops, start and end, by specifying a color and position for each color stop.
+// Color stops are not available in IE9 and below.
+.gradient-vertical(@start-color: #555 , @end-color: #333, @start-percent: 0%, @end-percent: 100%){
+  background-image: -webkit-gradient(linear, left @start-percent, left @end-percent, from(@start-color), to(@end-color)) ;
+  // Safari 4+, Chrome 2+
+  background-image: -webkit-linear-gradient(top, @start-color, @start-percent, @end-color, @end-percent) ;
+  // Safari 5.1+, Chrome 10+
+  background-image: -moz-linear-gradient(top, @start-color @start-percent, @end-color @end-percent) ;
+  // FF 3.6+
+  background-image: linear-gradient(to bottom, @start-color @start-percent, @end-color @end-percent) ;
+  // Standard, IE10
+  background-repeat: repeat-x ;
+  filter: e(%("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=0)",@start-color,@end-color)); // IE9 and down
+}
+
+/* --------- /Mixins --------- */
+
+// ---------- scroll---------//
+.scroll-y(){
+  overflow-y: scroll;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+.scroll-x(){
+  overflow-y: hidden;
+  overflow-x: scroll;
+  -webkit-overflow-scrolling: touch;
+}
+// ---------- /scroll---------//
+
+// ---------- scroll---------//
+.ellipsis(){
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
