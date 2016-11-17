@@ -1,0 +1,76 @@
+<template name="feed-detail-card">
+	<view class="feed-detail-card">
+		<view class="feed-detail-header">
+			<view class="user-icon-wrapper">
+				<image class="user-icon" src="{{avatar}}"></image>
+				<view wx:if="{{verify_status == 2}}" class="vip">V</view>
+			</view>
+			<view class="user-info">
+				<view class="user-name">
+					{{nickname}}
+				</view>
+				<view wx:if="{{company !== '' || position !== ''}}" class="user-role">
+					<text class="user-role-item company">{{company}}</text>
+					<text class="user-role-item position">{{position}}</text>
+				</view>
+				<view class="user-identity">
+					{{tag_identity_name}}
+				</view>
+			</view>
+			<view class="feed-detail-acion">
+				<view class="action-item">
+					<image class="icon" src="../../../images/icon_yaoyue.png"></image>
+					<view class="action-name">邀约</view>
+				</view>
+			</view>
+		</view> 
+		<view class="feed-detail-content">
+			<view class="feed-detail-tags">
+				<view class="user-tags advantage-tags">
+					<text class="tags-name">优势</text>
+					<view class="tags-container">
+						<block wx:for="{{advantages}}" wx:key="unique">
+							<text wx:if="{{index < 3}}" class="tag-item">{{item}}</text>
+						</block>
+					</view>
+				</view>
+				<view class="user-tags needs-tags">
+					<text class="tags-name">需求</text>
+					<view class="tags-container">
+						<block wx:for="{{needs}}" wx:key="unique">
+							<text wx:if="{{index < 3}}" class="tag-item">{{item}}</text>
+						</block>
+					</view>
+				</view>
+			</view>
+		</view>
+		<view class="feed-detail-sub-info">
+			<view class="sub-item effect-item">
+				<text>影响力：</text>
+				<text class="effect-value">{{influence}}</text>
+			</view>
+			<view class="sub-item honesty-item">
+				<text>诚信等级</text>
+				<text class="honesty-bar-bg">
+					<text class="honesty-bar" style="width: {{integrity_progress* 100 + '%'}}"></text>
+				</text>
+				<text class="honesty-rank">V{{integrity_level}}</text>
+			</view>
+			<view class="sub-item distance-item">
+				<image class="icon" src="../../../images/icon_dingwei.png"></image>
+				<text>{{distance <  1000 ? (distance + 'm') : ( distance < 99 * 1000 ? (distance / 1000 + 'km') : (city ? city : ">99km") )}}</text>
+			</view>
+		</view>
+	</view>
+</template>
+
+<scroll-view class="dashboard" scroll-y="true" bindscrolltolower="nextpage">
+	<view class="match-list">
+		<block wx:for="{{list}}"  wx:key="id">
+			<template is="feed-detail-card" data="{{...item, index: index}}" />
+		</block>
+	</view>
+	<loading hidden="{{!loading}}">
+		加载中...
+	</loading>
+</scroll-view>

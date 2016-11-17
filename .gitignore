@@ -1,0 +1,16 @@
+# Ignore mac info files
+.DS_Store
+
+# Ingore eclipse stuff, should be for each developer, so, ignore
+.classpath
+.project
+.settings
+
+# ignore node_modules
+node_modules/
+
+#build
+.build
+
+# dist
+dist/
