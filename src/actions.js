@@ -22,5 +22,9 @@ export async function getMacthList(cityId, tagId, keyword, pageCount){
 // --------- User Actions --------- //
 export async function getUserInfo(){
 	const {data} =  await api.getUserInfo();
+	return {
+		type: 'USER_INFO',
+		data: data
+	}
 }
 // --------- /User Actions --------- //

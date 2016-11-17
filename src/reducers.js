@@ -34,6 +34,14 @@ const match = createReducer(initState.match)({
 })
 // --------- /Match Reducers --------- //
 
+
+// --------- User Reducers --------- //
+const user = createReducer(initState.user)({
+	USER_INFO: (state, action) => (action.data)
+})
+// --------- /User Reducers --------- //
+
 export default combineReducers({
+	user,
 	match
 })

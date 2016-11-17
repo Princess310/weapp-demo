@@ -58,7 +58,7 @@
 			</view>
 			<view class="sub-item distance-item">
 				<image class="icon" src="../../../images/icon_dingwei.png"></image>
-				<text>{{distance <  1000 ? (distance + 'm') : ( distance < 99 * 1000 ? (distance / 1000 + 'km') : (city ? city : ">99km") )}}</text>
+				<text>{{distance > 0 ? (distance <  1000 ? (distance + 'm') : ( distance < 99 * 1000 ? (distance / 1000 + 'km') : (city ? city : ">99km") )) : '未知'}}</text>
 			</view>
 		</view>
 	</view>
