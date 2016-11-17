@@ -1,12 +1,47 @@
 {
   "pages":[
-    "pages/index/index",
+    "pages/message/index/index",
+    "pages/business/index/index",
+    "pages/yaoyue/index/index",
+    "pages/mine/index/index",
     "pages/logs/logs"
   ],
   "window":{
-    "backgroundTextStyle":"light",
+    "backgroundTextStyle":"dark",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "WeChat",
-    "navigationBarTextStyle":"black"
+    "navigationBarTextStyle":"black",
+    "backgroundColor": "#f6f6f6"
+  },
+  "tabBar": {
+    "borderStyle": "white",
+    "color": "#bcbcbc",
+    "selectedColor": "#50abf1",
+    "list": [
+      {
+        "pagePath": "pages/message/index/index",
+        "text": "消息",
+        "iconPath":"images/menu_xiaoxi.png",
+        "selectedIconPath":"images/menu_xiaoxi_active.png"
+      },
+      {
+        "pagePath": "pages/business/index/index",
+        "text": "商务圈",
+        "iconPath":"images/menu_circle.png",
+        "selectedIconPath":"images/menu_circle_active.png"
+      },
+      {
+        "pagePath": "pages/yaoyue/index/index",
+        "text": "邀约",
+        "iconPath":"images/menu_yaoyue.png",
+        "selectedIconPath":"images/menu_yaoyue_active.png"
+      },
+      {
+        "pagePath": "pages/mine/index/index",
+        "text": "我",
+        "iconPath":"images/menu_mine.png",
+        "selectedIconPath":"images/menu_mine_active.png"
+      }
+    ]
   }
 }

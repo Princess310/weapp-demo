@@ -1,16 +1,17 @@
 import wx from 'labrador';
-import {macthView} from '../../actions';
+import {macthView, getUserInfo} from '../../actions';
 
 class Index extends wx.Component {
 	app = getApp()
 
 	onReady() {
 		wx.app.dispatch(macthView())
+		wx.app.dispatch(getUserInfo())
 	}
 }
 
 export default wx.app.connect(
 	state => ({
-		data: state.macthView.data
+		list: state.match.detail
 	})
 )(Index)
