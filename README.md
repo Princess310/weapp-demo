@@ -7,6 +7,6 @@
 ```
 2. try to run project
 ```
-	npm run watch
+	npm start
 ```
 3. select the dist folder as the project root for WX
