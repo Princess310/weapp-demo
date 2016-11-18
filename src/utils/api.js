@@ -1,5 +1,5 @@
 const baseUrl = "https://api.alijian.net/index.php?r="
-const token = "cd339e1eba71e940a3b6aa3d9b2472e6"
+const token = "55153687b70ff363249b2653b14f8608"
 
 const apiMethod = {
 	matchView: 'match/view',

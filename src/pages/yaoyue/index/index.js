@@ -8,7 +8,8 @@ class Index extends wx.Component {
 		page: 2,
 		loading: false,
 		refreshing: false,
-		pageCount: -1
+		pageCount: -1,
+		scrollTop: 20
 	}
 
 	loading(boolean) {

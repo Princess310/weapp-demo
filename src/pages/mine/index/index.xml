@@ -1,7 +1,7 @@
 <view class="user-center">
 	<view class="ali-user-info">
 		<view class="user-info-bg">
-			<view class="user-wrapper">
+			<view class="user-wrapper" bindtap="handlePreview">
 				<image class="user-icon" src="{{avatar}}"></image>
 				<view wx:if="{{verify_status == 2}}" class="vip">V</view>
 			</view>
@@ -16,8 +16,8 @@
 			<view class="info">
 				<text class="info-item">{{intro}}</text>
 			</view>
-			<image class="btn-right share-btn" src="../../../images/icon_yaoyue.png"></image>
-			<image class="msg-icon msg-btn" src="../../../images/icon_yaoyue.png"></image>
+			<image class="btn-right share-btn" src="../../../images/icon_notice.png"></image>
+			<image class="msg-icon msg-btn" src="../../../images/icon_setting.png"></image>
 		</view>
 		<view class="user-sub-info">
 			<view class="sub-item effect-item">
@@ -47,7 +47,7 @@
 		</navigator>
 		<navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
 			<view class="weui-cell__bd">
-				<image class="btn-right share-btn" src="../../../images/menu_circle_active.png"></image>
+				<image class="btn-right share-btn" src="../../../images/icon_grou_user_active.png"></image>
 				<text>访客</text>
 			</view>
 			<view class="weui-cell__ft weui-cell__ft_in-access"></view>
@@ -61,28 +61,28 @@
 		</navigator>
 		<navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
 			<view class="weui-cell__bd">
-				<image class="btn-right share-btn" src="../../../images/menu_circle_active.png"></image>
+				<image class="btn-right share-btn" src="../../../images/icon_star_active.png"></image>
 				<text>我的收藏</text>
 			</view>
 			<view class="weui-cell__ft weui-cell__ft_in-access"></view>
 		</navigator>
 		<navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
 			<view class="weui-cell__bd">
-				<image class="btn-right share-btn" src="../../../images/menu_circle_active.png"></image>
+				<image class="btn-right share-btn" src="../../../images/icon_money_active.png"></image>
 				<text>我的钱包</text>
 			</view>
 			<view class="weui-cell__ft weui-cell__ft_in-access"></view>
 		</navigator>
 		<navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
 			<view class="weui-cell__bd">
-				<image class="btn-right share-btn" src="../../../images/menu_circle_active.png"></image>
+				<image class="btn-right share-btn" src="../../../images/icon_tip_active.png"></image>
 				<text>成为认证用户</text>
 			</view>
 			<view class="weui-cell__ft weui-cell__ft_in-access"></view>
 		</navigator>
 		<navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
 			<view class="weui-cell__bd">
-				<image class="btn-right share-btn" src="../../../images/menu_circle_active.png"></image>
+				<image class="btn-right share-btn" src="../../../images/menu_xiaoxi_active.png"></image>
 				<text>意见反馈</text>
 			</view>
 			<view class="weui-cell__ft weui-cell__ft_in-access"></view>
@@ -90,7 +90,7 @@
 	</view>
 
 	<view class="ali-action-bar">
-		<image src="../../../images/menu_circle_active.png"></image>
+		<image src="../../../images/icon_share_active.png"></image>
 		<span>邀请好友帮您增加影响力</span>
 	</view>
 </view>
