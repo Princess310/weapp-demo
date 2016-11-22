@@ -1,8 +1,8 @@
 <template name="feed-detail-card">
-	<view class="feed-detail-card">
+	<navigator class="feed-detail-card" url="" hover-class="feed-card-active">
 		<view class="feed-detail-header">
 			<view class="user-icon-wrapper">
-				<image class="user-icon" src="{{avatar}}"></image>
+				<image mode="aspectFill" class="user-icon" src="{{avatar}}"></image>
 				<view wx:if="{{verify_status == 2}}" class="vip">V</view>
 			</view>
 			<view class="user-info">
@@ -58,19 +58,19 @@
 			</view>
 			<view class="sub-item distance-item">
 				<image class="icon" src="../../../images/icon_dingwei.png"></image>
-				<text>{{distance <  1000 ? (distance + 'm') : ( distance < 99 * 1000 ? (distance / 1000 + 'km') : (city ? city : ">99km") )}}</text>
+				<text>{{distance > 0 ? (distance <  1000 ? (distance + 'm') : ( distance < 99 * 1000 ? (distance / 1000 + 'km') : (city ? city : ">99km") )) : '未知'}}</text>
 			</view>
 		</view>
-	</view>
+	</navigator>
 </template>
 
-<scroll-view class="dashboard" scroll-y="true" bindscrolltolower="nextpage">
+<scroll-view class="dashboard" scroll-y="true" scroll-top="{{scrollTop}}" bindscrolltolower="nextpage">
+	<view animation="{{matchAnimationData}}" class="match-panel">
+		<text>已为您匹配到</text><text>{{matchCount}}</text><text>条信息</text>
+	</view>
 	<view class="match-list">
 		<block wx:for="{{list}}"  wx:key="id">
 			<template is="feed-detail-card" data="{{...item, index: index}}" />
 		</block>
 	</view>
-	<loading hidden="{{!loading}}">
-		加载中...
-	</loading>
 </scroll-view>
