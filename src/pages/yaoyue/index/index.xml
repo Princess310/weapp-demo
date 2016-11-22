@@ -65,12 +65,12 @@
 </template>
 
 <scroll-view class="dashboard" scroll-y="true" scroll-top="{{scrollTop}}" bindscrolltolower="nextpage">
+	<view animation="{{matchAnimationData}}" class="match-panel">
+		<text>已为您匹配到</text><text>{{matchCount}}</text><text>条信息</text>
+	</view>
 	<view class="match-list">
 		<block wx:for="{{list}}"  wx:key="id">
 			<template is="feed-detail-card" data="{{...item, index: index}}" />
 		</block>
 	</view>
-	<loading hidden="{{!loading}}">
-		加载中...
-	</loading>
 </scroll-view>

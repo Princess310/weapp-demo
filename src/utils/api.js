@@ -1,9 +1,11 @@
 const baseUrl = "https://api.alijian.net/index.php?r="
-const token = "55153687b70ff363249b2653b14f8608"
+const token = "878cec809844f1a298e1898c48d7d69d"
 
 const apiMethod = {
 	matchView: 'match/view',
 	gatMatchList: 'match/index',
+	getMomentsList: 'moments/moments',
+	getPlazaList: 'moments/plaza',
 	getUserInfo: 'user/info'
 }
 
@@ -18,7 +20,7 @@ const request = (path, data) => new Promise((resolve, reject) => {
 			resolve(res.data);
 		},
 		fail: err => {
-			reject(err)
+			reject(err);
 		}
 	})
 })
@@ -38,6 +40,16 @@ const gatMatchList = (cityId, tagId, keyword, page) => request(apiMethod.gatMatc
 })
 // --------- /Match Api --------- //
 
+// --------- Moments Api --------- //
+const getMomentsList = (page) => request(apiMethod.getMomentsList, {
+	page: page
+})
+
+const getPlazaList = (page) => request(apiMethod.getPlazaList, {
+	page: page
+})
+// --------- /Moments Api --------- //
+
 // --------- User Api --------- //
 const getUserInfo = () => request(apiMethod.getUserInfo)
 // --------- /User Api --------- //
@@ -46,7 +58,9 @@ const getUserInfo = () => request(apiMethod.getUserInfo)
 // --------- exports --------- //
 module.exports = {
 	matchView,
-	getUserInfo,
-	gatMatchList
+	gatMatchList,
+	getMomentsList,
+	getPlazaList,
+	getUserInfo
 }
 // --------- /exports --------- //
