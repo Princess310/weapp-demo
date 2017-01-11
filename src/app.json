@@ -1,10 +1,9 @@
 {
-  "pages":[
+  "pages": [
     "pages/message/index/index",
     "pages/business/index/index",
     "pages/yaoyue/index/index",
-    "pages/mine/index/index",
-    "pages/logs/logs"
+    "pages/mine/index/index"
   ],
   "window":{
     "backgroundTextStyle":"dark",

@@ -1,49 +1,33 @@
-<template name="feed-detail-card">
-	<view class="feed-detail-card user-info" data-id="{{id}}">
-		<view class="feed-detail-header">
-			<view class="user-icon-wrapper">
-				<image class="user-icon" src="{{avatar}}"></image>
-				<view class="vip">V</view>
-			</view>
-			<view class="user-info">
-				<view class="user-name">
-					{{nickname}}
-				</view>
-				<view class="user-role">
-					<text class="user-role-item">公司{{company}}</text>
-					<text class="user-role-item">{{position}}</text>
-				</view>
-				<view class="user-identity">
-					<text>{{tag_identity_name}}</text>
-					<view class="other-info">
-						<text class="sub-item effect-item">
-							<text>影响力：</text>
-							<text class="effect-value">{{influence}}</text>
-						</text>
-						<text class="sub-item honesty-item">
-							<text>诚信等级</text>
-							<text class="honesty-bar-bg">
-								<text class="honesty-bar" style="width: {{integrity_progress}}"></text>
-							</text>
-							<text class="honesty-rank">V{{integrity_level}}</text>
-						</text>
-					</view>
-				</view>
-			</view>
-		</view>
-		<view class="contact-info">
-			<view class="item tel">
-				<text class="des">手机号:手机互换可见</text>
-			</view>
-			<view class="item area">
-				<text>地区:</text>
-				<text class="des">{{address}}</text>
-				<text class="distance-item">{{city_name}}</text>
-			</view>
-		</view>
-	</view>
-</template>
-
-<view class="container">
-	<template is="feed-detail-card" data="{{...data}}"/>
-</view>
+<scroll-view class="todo-list has-toolbar" scroll-y="true" bindscrolltolower="nextpage">
+  <view class="list">
+    <list key="unfinished" name="todo"/>
+  </view>
+  <block wx:if="{{state.finished}}">
+    <view class="group-header">已完成</view>
+    <view class="list">
+      <list key="finished" name="todo"/>
+    </view>
+    <view wx:if="{{state.finished>3}}" class="padding-h-xxlarge padding-top-large">
+      <view class="btn btn-gray-hollow block" catchtap="handleShowFinished">查看全部已完成</view>
+    </view>
+  </block>
+  <view wx:if="{{props.todos.length}}" class="gray padding text-right">总数 {{props.todos.length}} 已完成
+    {{state.finished}}
+  </view>
+  <view wx:else class="msg">
+    <icon class="msg-icon" type="info" size="80" color="#ccc"/>
+    <view class="msg-title">当前没有任务</view>
+    <view class="msg-desc">请在下方输入框中填入新任务然后点击新增</view>
+  </view>
+  <view class="toolbar toolbar-bottom padding-h-xsmall">
+    <view class="form-group flex">
+      <input class="form-control" type="text" placeholder="请输入新的任务" value="{{state.titleInput}}"
+             bindinput="handleInput"/>
+    </view>
+    <view class="btn btn-success btn-toolbar" catchtap="handleCreate">新增</view>
+  </view>
+  <view class="footer">
+    <view>Powered by Labrador</view>
+    <text class="link" catchtap="handleShowUI">AL UI</text>
+  </view>
+</scroll-view>

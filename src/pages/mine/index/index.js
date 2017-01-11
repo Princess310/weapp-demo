@@ -1,23 +1,12 @@
-import wx from 'labrador';
+import wx, { Component, PropTypes } from 'labrador-immutable';
+import { connect } from 'labrador-redux';
 
-class Index extends wx.Component {
+class Index extends Component {
 	onReady() {
-		wx.setNavigationBarTitle({title: "个人中心"})
-	}
-
-	async onLoad(option) {
-	}
-
-	handlePreview() {
-		wx.previewImage({
-			current: this.data.avatar,
-			urls: [this.data.avatar]
-		})
+		wx.setNavigationBarTitle({title: "个人中心"});
 	}
 }
 
-export default wx.app.connect(
-	state => (
-		state.user
-	)
-)(Index)
+export default connect(
+	({ user }) => ({ user })
+)(Index);

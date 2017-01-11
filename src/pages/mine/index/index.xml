@@ -2,19 +2,19 @@
 	<view class="ali-user-info">
 		<view class="user-info-bg">
 			<view class="user-wrapper" bindtap="handlePreview">
-				<image class="user-icon" src="{{avatar}}"></image>
-				<view wx:if="{{verify_status == 2}}" class="vip">V</view>
+				<image class="user-icon" src="{{props.user.avatar}}"></image>
+				<view wx:if="{{props.user.verify_status == 2}}" class="vip">V</view>
 			</view>
 			<view class="info">
-				<text class="info-item">{{nickname}}</text>
-				<text wx:if="{{position !== ''}}" class="info-item">{{position}}</text>
+				<text class="info-item">{{props.user.nickname}}</text>
+				<text wx:if="{{props.user.position !== ''}}" class="info-item">{{props.user.position}}</text>
 			</view>
 			<view class="info">
-				<text wx:if="{{company !== ''}}" class="info-item">{{company}}</text>
-				<text wx:if="{{tag_identity_name !== ''}}" class="info-item">{{tag_identity_name}}</text>
+				<text wx:if="{{props.user.company !== ''}}" class="info-item">{{props.user.company}}</text>
+				<text wx:if="{{props.user.tag_identity_name !== ''}}" class="info-item">{{props.user.tag_identity_name}}</text>
 			</view>
 			<view class="info">
-				<text class="info-item">{{intro}}</text>
+				<text class="info-item">{{props.user.intro}}</text>
 			</view>
 			<image class="btn-right share-btn" src="../../../images/icon_notice.png"></image>
 			<image class="msg-icon msg-btn" src="../../../images/icon_setting.png"></image>
@@ -22,14 +22,14 @@
 		<view class="user-sub-info">
 			<view class="sub-item effect-item">
 				<text>影响力：</text>
-				<text class="effect-value">{{influence}}</text>
+				<text class="effect-value">{{props.user.influence}}</text>
 			</view>
 			<view class="sub-item honesty-item">
 				<text>诚信等级</text>
 				<text class="honesty-bar-bg">
-					<text class="honesty-bar" style="width: {{integrity_progress* 100 + '%'}}"></text>
+					<text class="honesty-bar" style="width: {{props.user.integrity_progress* 100 + '%'}}"></text>
 				</text>
-				<text class="honesty-rank">V{{integrity_level}}</text>
+				<text class="honesty-rank">V{{props.user.integrity_level}}</text>
 			</view>
 		</view>
 		<view class="action-btns">

@@ -1,28 +1,29 @@
-import wx from 'labrador';
-import Moment from '../../../components/moment/moment';
-import MomentList from '../../../components/momentList/momentList';
-import { getMomentsList, getPlazaList } from '../../../actions';
+import wx, { Component, PropTypes } from 'labrador-immutable';
+import { bindActionCreators } from 'redux';
+import { connect } from 'labrador-redux';
+import * as momentActions from '../../../redux/moment';
 
-const sliderWidth = 96;
-class Index extends wx.Component {
-	data = {
-		tabs: ["动态", "广场"],
+class Index extends Component {
+	state = {
+		page: 1,
 		refreshing: false,
-		activeIndex: "0",
-		sliderOffset: 0,
-		sliderLeft: 0,
-		sliderWidth: 0,
-		scrollTop: 20,
-		momentPage: 1,
-		plazaPage: 1,
-		momentPageCount: -1,
-		plazaPageCount: -1,
-		testStr: 'test1'
+		pageCount: -1
 	}
 
-	children = {
-		momentListComp: new MomentList({ list: "@momentsList" }),
-		plazaListComp: new MomentList({ list: "@plazaList" })
+	async onLoad() {
+		// get list first
+		const self = this;
+		wx.showToast({
+			title: '加载中',
+			icon: 'loading'
+		})
+
+		const { page } = this.state;
+		this.props.getList({
+			page: page
+		});
+
+		wx.hideToast();
 	}
 
 	async onPullDownRefresh() {
@@ -31,111 +32,41 @@ class Index extends wx.Component {
 			refreshing: true
 		});
 
-		if(this.data.activeIndex === "0"){
-			this.setData({
-				momentPage: 1
-			});
-			await wx.app.dispatch(getMomentsList(this.data.momentPage));
-		}else {
-			this.setData({
-				plazaPage: 1
-			});
-
-			await wx.app.dispatch(getPlazaList(this.data.plazaPage));
-		}
-
-		wx.stopPullDownRefresh();
+		this.props.getList({
+			page: 1
+		});
 
 		this.setData({
-			refreshing: false
+			refreshing: false,
+			page: page
 		});
 	}
 
-	async nextpage(e) {
-		const { momentPage, plazaPage } = this.data;
-		let page = 0;
-
-		if(this.data.activeIndex === "0"){
-			page = momentPage + 1;
-			console.log(page);
-			if(page > this.data.momentPageCount){return false}
-
-			wx.showToast({
-				title: '加载中',
-				icon: 'loading'
-			})
-
-			await wx.app.dispatch(getMomentsList(page));
-
-			this.setData({
-				momentPage: page
-			});
-		}else {
-			console.log("plazaPage");
-			page = plazaPage + 1;
-			if(page > this.data.plazaPageCount){return false}
-
-			wx.showToast({
-				title: '加载中',
-				icon: 'loading'
-			})
-
-			await wx.app.dispatch(getPlazaList(page));
-
-			this.setData({
-				plazaPage: page
-			});
-		}
-
-		wx.hideToast();
-	}
-
-	onReady() {
-		wx.setNavigationBarTitle({title: "商务圈"})
-	}
-
-	async onLoad(option) {
-		const self = this;
+	nextpage() {
 		wx.showToast({
 			title: '加载中',
 			icon: 'loading'
 		})
 
-		wx.getSystemInfo({
-			success: function(res) {
-				self.setData({
-					sliderLeft: (res.windowWidth / that.data.tabs.length - sliderWidth) / 2
-				});
-			}
+		let { page } = this.state;
+
+		page = page + 1;
+
+		this.props.getList({
+			page: page
 		});
 
-		// 初始化商务圈和广场
-		wx.app.dispatch(getPlazaList(this.data.plazaPage)).then((result) => {
-			self.setData({
-				plazaPageCount: result.page.page_count
-			});
-		});
-
-		await wx.app.dispatch(getMomentsList(this.data.momentPage)).then((result) => {
-			self.setData({
-				momentPageCount: result.page.page_count
-			});
+		this.setState({
+			page: page
 		});
 
 		wx.hideToast();
 	}
-
-	tabClick(e) {
-		this.setData({
-			sliderOffset: e.currentTarget.offsetLeft,
-			activeIndex: e.currentTarget.id
-		});
-	}
 }
 
-export default wx.app.connect(
-	state => ({
-		momentsList: state.moment.moments,
-		plazaList: state.moment.plaza
-	})
-)(Index)
+export default connect(
+	({ moment }) => ({ moment }),
+	(dispatch) => bindActionCreators({
+		getList: momentActions.list,
+	}, dispatch)
+)(Index);

@@ -1,19 +1,11 @@
-import wx from 'labrador';
-import { getUserInfo } from '../../../actions';
+import wx, { Component, PropTypes } from 'labrador-immutable';
+import { connect } from 'labrador-redux';
 
-class Index extends wx.Component {
+class Index extends Component {
 	onReady() {
 		wx.setNavigationBarTitle({title: "消息"})
 	}
-
-	async onLoad(option) {
-		// try to get user state info first
-		await wx.app.dispatch(getUserInfo())
-	}
 }
 
-export default wx.app.connect(
-	state => ({
-		data: {}
-	})
-)(Index)
+export default connect(
+)(Index);

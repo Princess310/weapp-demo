@@ -1,14 +1,32 @@
-import wx from 'labrador';
-import { sleep } from './utils/util';
-import createStore from './utils/store'
-import reducers from './reducers'
-import connect from './utils/wechat-weapp-redux/connect'
-import Provider from './utils/wechat-weapp-redux/Provider'
+import request from 'al-request';
+import { setStore } from 'labrador-redux';
+import { sleep } from './utils/utils';
+import store from './redux';
 
-const store = createStore(reducers)
+if (__DEV__) {
+  console.log('DEV-ENV');
+}
+
+// 向labrador-redux注册store
+setStore(store);
 
 export default class {
-	store = store
-	dispatch = store.dispatch
-	connect = connect
+  async onLaunch() {
+    try {
+      await sleep(100);
+      await request('initialize/check', {
+        app_version: 'web_'
+      });
+    } catch (error) {
+      console.error(error);
+    }
+    this.timer();
+  }
+
+  async timer() {
+    while (true) {
+      console.log('hello');
+      await sleep(10000);
+    }
+  }
 }

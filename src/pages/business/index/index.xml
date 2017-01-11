@@ -1,26 +1,67 @@
-<scroll-view class="dashboard" scroll-y="true" scroll-top="{{scrollTop}}" bindscrolltolower="nextpage">
-	<view class="business-circle">
-		<view class="page">
-			<view class="page__bd">
-				<view class="weui-tab">
-					<view class="weui-navbar">
-						<block wx:for-items="{{tabs}}" wx:key="{{index}}">
-							<view id="{{index}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}" bindtap="tabClick">
-								<view class="weui-navbar__title">{{item}}</view>
-							</view>
+<template name="feed-detail-mini">
+	<view class="feed-detail-mini" data-id="{{id}}" data-uid="{{uid}}" data-balance="{{balance}}">
+		<view class="feed-detail-left">
+			<navigator url="">
+				<view class="user-icon-wrapper">
+					<image mode="aspectFill" class="user-icon" src="{{avatar}}"></image>
+					<view wx:if="{{verify_status == 2}}" class="vip">V</view>
+				</view>
+			</navigator>
+		</view> 
+		<view class="feed-detail-right">
+			<view class="feed-detail-identity">
+				<view class="username">
+					{{nickname}}
+				</view>
+				<view wx:if="{{company !== ''}}" class="company">
+					{{company}}
+				</view>
+				<view wx:if="{{position !== ''}}" class="position">
+					{{position}}
+				</view>
+				<text class="feed-label level-label">V{{integrity_level}}</text>
+				<text class="feed-label honesty-label">{{influence}}</text>
+			</view>
+			<view class="user-role">{{tag_identity_name}}</view>
+			<view class="time">{{created_at}}</view>
+			<view class="todo-btn">
+				<image mode="aspectFill" class="user-icon" src="../../../images/icon_menu.png"></image>
+			</view>
+			<view class="user-status-wrapper">
+				<view class="user-status-content">
+					<view class="words">{{content}}</view>
+					<view class="pictures">
+						<block wx:for="{{pictures}}" wx:key="unique">
+							<image mode="aspectFill" class="pic" src="{{item}}"></image>
 						</block>
-						<view class="weui-navbar__slider" style="left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"></view>
 					</view>
-					<view class="weui-tab__panel">
-						<view class="weui-tab__content" hidden="{{activeIndex != 0}}">
-							<component key="momentListComp" name="momentList"/>
-						</view>
-						<view class="weui-tab__content" hidden="{{activeIndex != 1}}">
-							<component key="plazaListComp" name="momentList"/>
-						</view>
+				</view>
+				<view class="user-status-time">
+					<view class="time">{{hits}}人看过</view>
+				</view>
+				<view class="user-status-operaters">
+					<view class="operater-item share-btn">
+						<image mode="aspectFill" src="../../../images/icon_share_grey.png"></image>
+						<text class="count">{{share_count}}</text>
+					</view>
+					<view class="operater-item comment-btn">
+						<image mode="aspectFill" src="../../../images/icon_xiaoxi_grey.png"></image>
+						<text class="count">{{comment_count}}</text>
+					</view>
+					<view class="operater-item agree-btn">
+						<image mode="aspectFill" src="../../../images/icon_zan_grey.png"></image>
+						<text class="count">{{like_count}}</text>
 					</view>
 				</view>
 			</view>
 		</view>
+	</view>
+</template>
+
+<scroll-view class="dashboard" scroll-y="true" bindscrolltolower="nextpage">
+	<view class="business-circle">
+		<block wx:for="{{props.moment.list}}"  wx:key="id">
+			<template is="feed-detail-mini" data="{{...item, index: index}}" />
+		</block>
 	</view>
 </scroll-view>
