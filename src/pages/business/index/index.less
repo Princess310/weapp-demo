@@ -1,20 +1,25 @@
 @import '../../../styles/mixins.less';
 
 .dashboard {
+	height:100vh;
+
 	background-color:@color-ve-bg-light;
+}
+.publish-wrapper {
+	position:fixed;
+	right:24rpx;
+	bottom:24rpx;
 
-	.fitparent();
-	.weui-navbar {
-		position:relative;
+	width:130rpx;
+	height:130rpx;
 
-		background-color:@white;
-	}
-	.weui-navbar__slider {
-		width:20%;
-		margin-left:15%;
-	}
-	.weui-tab__panel {
-		height:auto;
-		padding-top:0;
+	button{
+		height: 100%;
+		line-height: 130rpx;
+		.border-radius(100%);
+		box-shadow: rgba(0, 0, 0, 0.156863) 0px 3px 10px, rgba(0, 0, 0, 0.227451) 0px 3px 10px;
+		&.button-hover{
+			box-shadow: rgba(0, 0, 0, 0.188235) 0px 10px 30px, rgba(0, 0, 0, 0.227451) 0px 6px 10px;
+		}
 	}
 }

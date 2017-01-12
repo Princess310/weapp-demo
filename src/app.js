@@ -12,8 +12,11 @@ setStore(store);
 
 export default class {
   async onLaunch() {
+    request.setOptionset({
+      session: false
+    });
+
     try {
-      await sleep(100);
       await request('initialize/check', {
         app_version: 'web_'
       });

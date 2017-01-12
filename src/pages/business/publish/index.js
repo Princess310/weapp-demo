@@ -7,5 +7,5 @@ class Index extends Component {
 }
 
 export default connect(
-	({ user }) => ({ user })
+	({ moment }) => ({ moment })
 )(Index);

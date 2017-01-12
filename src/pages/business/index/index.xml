@@ -32,7 +32,7 @@
 					<view class="words">{{content}}</view>
 					<view class="pictures">
 						<block wx:for="{{pictures}}" wx:key="unique">
-							<image mode="aspectFill" class="pic" src="{{item}}"></image>
+							<image mode="aspectFill" class="pic" src="{{item}}" data-src="{{item}}" data-pid="{{id}}" catchtap="handleViewImage"></image>
 						</block>
 					</view>
 				</view>
@@ -58,10 +58,11 @@
 	</view>
 </template>
 
-<scroll-view class="dashboard" scroll-y="true" bindscrolltolower="nextpage">
-	<view class="business-circle">
-		<block wx:for="{{props.moment.list}}"  wx:key="id">
-			<template is="feed-detail-mini" data="{{...item, index: index}}" />
-		</block>
-	</view>
-</scroll-view>
+<view class="dashboard">
+	<block wx:for="{{props.moment.list}}"  wx:key="id">
+		<template is="feed-detail-mini" data="{{...item, index: index}}" />
+	</block>
+</view>
+<navigator class="publish-wrapper" url="../publish/index">
+	<button class="weui-btn" type="primary">发布</button>
+</navigator>

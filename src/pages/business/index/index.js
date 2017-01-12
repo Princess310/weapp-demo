@@ -27,22 +27,25 @@ class Index extends Component {
 	}
 
 	async onPullDownRefresh() {
-		if(this.data.refreshing) return false;
-		this.setData({
+		console.log("state", this.state);
+		if(this.state.refreshing) return false;
+		this.setState({
 			refreshing: true
 		});
 
-		this.props.getList({
+		this.props.doRefresh({
 			page: 1
 		});
 
-		this.setData({
+		this.setState({
 			refreshing: false,
-			page: page
+			page: 1
 		});
+
+		wx.stopPullDownRefresh();
 	}
 
-	nextpage() {
+	async onReachBottom() {
 		wx.showToast({
 			title: '加载中',
 			icon: 'loading'
@@ -62,11 +65,33 @@ class Index extends Component {
 
 		wx.hideToast();
 	}
+
+	handleViewImage(e) {
+		let data = e.currentTarget.dataset;
+		let src = data.src;
+		let pid = data.pid;
+		let urls = [];
+		const list = this.props.moment.list || [];
+
+		list.map((item, i) => {
+			if(pid === item.id){
+				urls = item.pictures.map((p) => {
+					return p;
+				});
+			}
+		});
+
+		wx.previewImage({
+			current: src,
+			urls: urls
+		});
+	}
 }
 
 export default connect(
 	({ moment }) => ({ moment }),
 	(dispatch) => bindActionCreators({
+		doRefresh: momentActions.refresh,
 		getList: momentActions.list,
 	}, dispatch)
 )(Index);
