@@ -64,5 +64,5 @@
 	</block>
 </view>
 <navigator class="publish-wrapper" url="../publish/index">
-	<button class="weui-btn" type="primary">发布</button>
+	<image src="../../images/business_pubsh.png" mode="scaleToFill" />
 </navigator>

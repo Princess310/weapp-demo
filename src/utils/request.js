@@ -1,5 +1,5 @@
 import wx from 'labrador';
-import { create } from 'al-request';
+import { create } from './request.base';
 
 export function setSession(sessionId){
 	wx.app.sessionId = sessionId;

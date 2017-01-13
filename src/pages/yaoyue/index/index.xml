@@ -1,7 +1,63 @@
-<template name="feed-detail-card">
-	
-</template>
-
-<scroll-view class="dashboard" scroll-y="true" bindscrolltolower="nextpage">
-	邀约
-</scroll-view>
+<view class="ali-header">
+	<view class="left-wrapper">
+		<text class="name">成都市</text>
+		<image class="icon-menu" src="../../images/icon_menu_down.png"></image>
+	</view>
+	<view class="title">
+		<text class="name">全部</text>
+		<image class="icon-menu" src="../../images/icon_menu_down.png"></image>
+	</view>
+	<navigator url="../publish/index" class="right-wrapper">
+		<image class="icon-menu" src="../../images/bianji_active.png"></image>
+		<text class="name">发供求</text>
+	</navigator>
+</view>
+<view class="ali-search-container">
+	<view class="search-bar">
+		<image class="icon" src="../../images/search_icon.png"></image>
+		<text>搜索人脉资源</text>
+	</view>
+</view>
+<view class="tip-bar">
+	<view class="info">
+		<image src="../../images/tip_icon.png"></image>
+		<text>填写您的优势需求，让匹配的人更精准！</text>
+	</view>
+	<navigator url="../publish/index">
+		<text class="link">现在就去</text>
+	</navigator>
+</view>
+<view>
+	<navigator url="" class="fedd-detail-title">
+		<navigator class="feed-detail-left">
+			<view class="user-icon-wrapper">
+				<image mode="aspectFill" class="user-icon" src="../../images/test_user.png"></image>
+				<view class="vip">V</view>
+			</view>
+		</navigator> 
+		<view class="feed-detail-right">
+			<view class="header">
+				<view class="wrapper">
+					<text class="user-name">石光吉</text>
+					<image src="../../images/dianhua_icon.png" mode="aspectFit"></image>
+				</view>
+				<view class="wrapper">
+					<text class="label">求</text>
+					<text class="money">2000元</text>
+					<image class="pin" src="../../images/pin_icon.png" mode="aspectFit"></image>
+					<text class="distance">10.5km</text>
+				</view>
+			</view>
+			<view class="sub-info">
+				<text>藏医药研究院</text>
+				<text>会销公司</text>
+			</view>
+			<view class="time">
+				<text>4分钟前</text>
+			</view>
+		</view> 
+	</navigator>
+	<view class="feed-content">
+		商务邀约软件怎么用？首先邀请好友加入邀约APP，其次完善资料后你可以发布动态和创建群组...
+	</view>
+</view>

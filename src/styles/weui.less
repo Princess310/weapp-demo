@@ -395,14 +395,23 @@ icon {
   color: #B2B2B2;
 }
 .weui-uploader__bd {
+  padding: 16rpx 0;
   margin-bottom: -4px;
   margin-right: -9px;
   overflow: hidden;
 }
 .weui-uploader__file {
+  position: relative;
   float: left;
   margin-right: 9px;
   margin-bottom: 9px;
+}
+.weui-uploader__clear_file{
+  position: absolute;
+  top: -15rpx;
+  right: -15rpx;
+  width: 32rpx;
+  height: 32rpx;
 }
 .weui-uploader__img {
   display: block;
@@ -1037,11 +1046,6 @@ icon {
   display: flex;
   align-items: center;
   color: @color-v2-base-black;
-  image{
-    margin-right: 15rpx;
-    width: 40rpx;
-    height: 40rpx;
-  }
 }
 .weui-cell__ft_in-access{
   &:after{

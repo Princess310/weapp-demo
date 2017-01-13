@@ -13,3 +13,33 @@ page {
 	border-top: 2px @color-v2-border solid;
 	background-color: @color-v2-bg;
 }
+
+.ali-header{
+	position: relative;
+	height: 90rpx;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0 24rpx;
+	background-color: @white;
+	.name{
+		font-size: 36rpx;
+	}
+	image{
+		height: 36rpx;
+		width: 36rpx;
+	}
+	.left-wrapper, .right-wrapper{
+		display: flex;
+		align-items: center;
+		position: relative;
+		z-index: 10;
+	}
+	.title{
+		.fitparent();
+		display: flex;
+		justify-content: center;
+		align-items:center;
+
+	}
+}

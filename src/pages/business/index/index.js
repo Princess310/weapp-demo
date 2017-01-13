@@ -46,6 +46,11 @@ class Index extends Component {
 	}
 
 	async onReachBottom() {
+		// if has next page
+		if(!this.props.moment.hasNaxt){
+			return false;
+		}
+
 		wx.showToast({
 			title: '加载中',
 			icon: 'loading'

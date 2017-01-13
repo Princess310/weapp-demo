@@ -706,3 +706,114 @@
 	}
 }
 /*-------- /ali-action-bar --------*/
+/*-------- ali-search-container --------*/
+.ali-search-container {
+	padding: 16rpx 20rpx;
+	height: 58rpx;
+	background-color:@color-v2-bg-light;
+	.search-bar {
+		display: flex;
+		align-items: center;
+		justify-Content: center;
+		height: 58rpx;
+		background-color: @white;
+		border: 1rpx @color-v2-border solid;
+		.icon{
+			width: 24rpx;
+			height: 24rpx;
+			margin-right: 12rpx;
+		}
+		text{
+			font-size: 24rpx;
+			color: @color-v2-txt-help;
+		}
+	}
+}
+/*-------- /ali-search-container --------*/
+
+/*-------- fedd-detail-title --------*/
+.fedd-detail-title{
+	height: 105rpx;
+	padding: 20rpx 32rpx 20rpx 32rpx;
+	display: flex;
+	background-color: @white;
+	.feed-detail-left{
+		.user-icon-wrapper{
+			position: relative;
+			height: 102rpx;
+			width: 102rpx;
+			.user-icon{
+				width: 100%;
+				height: 100%;
+				.border-radius(8rpx);
+			}
+			.vip{
+				position: absolute;
+				right: -2rpx;
+				bottom: -2rpx;
+				width: 30rpx;
+				height: 30rpx;
+				.border-radius(100%);
+				text-align: center;
+				line-height: 30rpx;
+				color: @white;
+				font-size: 24rpx;
+				background-color: @color-v2-base-yellow;
+				border: 2rpx @white solid;
+			}
+		}
+	}
+	.feed-detail-right{
+		margin-left: 15rpx;
+		width: 100%;
+		.header{
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			font-size: 24rpx;
+			.wrapper{
+				display: flex;
+				align-items: center;
+				image{
+					margin: 0 12rpx;
+					width: 30rpx;
+					height: 30rpx;
+				}
+			}
+			.user-name{
+				font-size: 33rpx;
+			}
+			.label{
+				margin-right: 12rpx;
+				width: 30rpx;
+				height: 30rpx;
+				color: @white;
+				font-size: 26rpx;
+				text-align: center;
+				line-height: 30rpx;
+				.border-radius(100%);
+				background-color: @color-v2-base-yellow;
+			}
+			.money{
+				color: @color-v2-base-deep-blue;
+			}
+			.pin{
+				padding-left: 16rpx;
+			}
+			.distance{
+				color: @color-v2-txt-help;
+			}
+		}
+		.sub-info{
+			display: flex;
+			align-items: center;
+			font-size: 25rpx;
+			color: @color-v2-txt-help;
+		}
+		.time{
+			font-size: 24rpx;
+			color: @color-v2-txt-help;
+		}
+	}
+}
+/*-------- /fedd-detail-title --------*/

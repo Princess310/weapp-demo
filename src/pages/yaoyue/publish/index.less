@@ -1,0 +1,60 @@
+@import '../../../styles/mixins.less';
+
+.header{
+	position: relative;
+	height: 90rpx;
+	padding-right: 24rpx;
+	color: @color-v2-base-blue;
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	background-color: @white;
+	.type-switch{
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		margin-top: -28rpx;
+		margin-left: -178rpx;
+		width: 355rpx;
+		height: 55rpx;
+		display: flex;
+		line-height: 55rpx;
+		color: @color-v2-base-blue;
+		border: 1rpx @color-v2-base-blue solid;
+		.border-radius(25rpx);
+		.switch-item{
+			position: relative;
+			width: 50%;
+			text-align: center;
+			font-size: 30rpx;
+			z-index: 10;
+			&.active{
+				color: @white;
+			}
+		}
+		.slider{
+			position: absolute;
+			top: 0;
+			left: 0;
+			bottom: 0;
+			width: 178rpx;
+			.border-radius(25rpx);
+			background-color: @color-v2-base-blue;
+			.transition(transform .3s);
+			&.right {
+				.transform(translateX(178rpx));
+			}
+		}
+	}
+}
+
+.weui-cells{
+	margin-top: 12rpx;
+	.publish-label{
+		max-width: 100rpx;
+		color: @black-normal;
+	}
+	.weui-input{
+		width: 100%;
+	}
+}
