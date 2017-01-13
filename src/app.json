@@ -7,7 +7,7 @@
     "pages/yaoyue/publish/index",
     "pages/mine/index/index",
 
-    "pages/common/selectPanel"
+    "pages/common/selectPanel/index"
   ],
   "window":{
     "backgroundTextStyle":"dark",
