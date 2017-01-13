@@ -1,5 +1,7 @@
 import wx, { Component, PropTypes } from 'labrador-immutable';
+import { bindActionCreators } from 'redux';
 import { connect } from 'labrador-redux';
+import * as sysEmitActions from '../../../redux/sysEmit';
 
 class Index extends Component {
 	state = {
@@ -11,8 +13,17 @@ class Index extends Component {
 		showTel: true
 	}
 
+	async onLoad() {
+		this.props.setSelectInfo({
+			id: 1,
+			name: "模式"
+		});
+	}
+
 	selectCategory(e) {
-		
+		wx.navigateTo({
+			url: '../../common/selectPanel/index?type=reward&val=' + this.props.sysEmit.selectMsg.id
+		})
 	}
 
 	switchType(e) {
@@ -66,4 +77,9 @@ class Index extends Component {
 	}
 }
 
-export default connect()(Index);
+export default connect(
+	(sysEmit) => (sysEmit),
+	(dispatch) => bindActionCreators({
+		setSelectInfo: sysEmitActions.set
+	}, dispatch)
+)(Index);

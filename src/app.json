@@ -5,7 +5,9 @@
     "pages/business/publish/index",
     "pages/yaoyue/index/index",
     "pages/yaoyue/publish/index",
-    "pages/mine/index/index"
+    "pages/mine/index/index",
+
+    "pages/common/selectPanel"
   ],
   "window":{
     "backgroundTextStyle":"dark",

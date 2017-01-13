@@ -18,7 +18,7 @@
 		<view class="weui-cell__bd">
 			<text class="publish-label">类目</text>
 		</view>
-		<view class="weui-cell__ft weui-cell__ft_in-access publish-label">模式</view>
+		<view class="weui-cell__ft weui-cell__ft_in-access publish-label">{{props.sysEmit.selectMsg.name}}</view>
 	</view>
 	<view class="weui-cell weui-cell_input">
 		<view class="weui-cell__hd">

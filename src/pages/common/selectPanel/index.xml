@@ -1,0 +1,12 @@
+<view wx:if="{{state.type === 'reward'}}">
+	<view class="weui-cells weui-cells_after-title">
+		<block wx:for="{{props.moment.rewardList}}" wx:key="unique">
+	        <view class="weui-cell" catchtap="handleSelect" data-val="{{item.id}}" data-name="{{item.name}}">
+	            <view class="weui-cell__bd">{{item.name}}</view>
+	            <view wx:if="{{item.id === state.val}}" class="weui-cell__ft">
+	            	<icon type="success_no_circle" size="23"></icon>
+	            </view>
+	        </view>
+        </block>
+    <view>
+</view>
