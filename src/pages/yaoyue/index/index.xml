@@ -1,8 +1,44 @@
+<template name="feed-detail-invite">
+	<navigator url="" class="fedd-detail-title">
+		<navigator class="feed-detail-left">
+			<view class="user-icon-wrapper">
+				<image mode="aspectFill" class="user-icon" src="{{avatar}}"/>
+				<view wx:if="{{verify_status == 2}}" class="vip">V</view>
+			</view>
+		</navigator> 
+		<view class="feed-detail-right">
+			<view class="header">
+				<view class="wrapper">
+					<text class="user-name">{{nickname}}</text>
+					<image src="../../../images/dianhua_icon.png" mode="aspectFit"/>
+				</view>
+				<view class="wrapper">
+					<text wx:if="{{reward_as === 1}}" class="label">求</text>
+					<text wx:if="{{reward_as === 2}}" class="label supply">供</text>
+					<text wx:if="{{reward_amount > 0}}" class="money">{{reward_amount}}元</text>
+					<image class="pin" src="../../../images/pin_icon.png" mode="aspectFit"/>
+					<text class="distance">10.5km</text>
+				</view>
+			</view>
+			<view class="sub-info">
+				<text>{{company}}</text>
+				<text>{{position}}</text>
+			</view>
+			<view class="time">
+				<text>{{event_at}}</text>
+			</view>
+		</view> 
+	</navigator>
+	<view class="feed-content">
+		{{event_summary}}
+	</view>
+</template>
+
 <view class="ali-header">
-	<view class="left-wrapper">
+	<navigator url="../../common/selectCity/index" class="left-wrapper">
 		<text class="name">成都市</text>
 		<image class="icon-menu" src="../../../images/icon_menu_down.png"/>
-	</view>
+	</navigator>
 	<view class="title">
 		<text class="name">全部</text>
 		<image class="icon-menu" src="../../../images/icon_menu_down.png"/>
@@ -18,7 +54,7 @@
 		<text>搜索人脉资源</text>
 	</view>
 </view>
-<view class="tip-bar">
+<view wx:if="{{props.user.tag_identity_id > 0 }}" class="tip-bar">
 	<view class="info">
 		<image src="../../../images/tip_icon.png"/>
 		<text>填写您的优势需求，让匹配的人更精准！</text>
@@ -28,36 +64,7 @@
 	</navigator>
 </view>
 <view>
-	<navigator url="" class="fedd-detail-title">
-		<navigator class="feed-detail-left">
-			<view class="user-icon-wrapper">
-				<image mode="aspectFill" class="user-icon" src="../../../images/test_user.png"/>
-				<view class="vip">V</view>
-			</view>
-		</navigator> 
-		<view class="feed-detail-right">
-			<view class="header">
-				<view class="wrapper">
-					<text class="user-name">石光吉</text>
-					<image src="../../../images/dianhua_icon.png" mode="aspectFit"/>
-				</view>
-				<view class="wrapper">
-					<text class="label">求</text>
-					<text class="money">2000元</text>
-					<image class="pin" src="../../../images/pin_icon.png" mode="aspectFit"/>
-					<text class="distance">10.5km</text>
-				</view>
-			</view>
-			<view class="sub-info">
-				<text>藏医药研究院</text>
-				<text>会销公司</text>
-			</view>
-			<view class="time">
-				<text>4分钟前</text>
-			</view>
-		</view> 
-	</navigator>
-	<view class="feed-content">
-		商务邀约软件怎么用？首先邀请好友加入邀约APP，其次完善资料后你可以发布动态和创建群组...
-	</view>
+	<block wx:for="{{props.match.list}}"  wx:key="id">
+		<template is="feed-detail-invite" data="{{...item, index: index}}" />
+	</block>
 </view>

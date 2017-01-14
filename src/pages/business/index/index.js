@@ -27,7 +27,6 @@ class Index extends Component {
 	}
 
 	async onPullDownRefresh() {
-		console.log("state", this.state);
 		if(this.state.refreshing) return false;
 		this.setState({
 			refreshing: true

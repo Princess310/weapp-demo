@@ -8,7 +8,7 @@
 			<text>发供应</text>
 		</view>
 	</view>
-	<view class="publish-btn">
+	<view class="publish-btn" catchtap="handleSubmit">
 		<text>发送</text>
 	</view>
 </view>
@@ -20,21 +20,21 @@
 		</view>
 		<view class="weui-cell__ft weui-cell__ft_in-access publish-label">{{props.sysEmit.selectMsg.name}}</view>
 	</view>
-	<view class="weui-cell weui-cell_input">
+	<!-- <view class="weui-cell weui-cell_input">
 		<view class="weui-cell__hd">
 			<view class="weui-label publish-label">费用</view>
 		</view>
 		<view class="weui-cell__bd">
 			<text class="publish-label">￥</text>
-			<input class="weui-input" type="digit" placeholder="输入你觉得合适的价格(选填)"/>
+			<input class="weui-input" type="digit" placeholder="输入你觉得合适的价格(选填)" bindinput="handleAmount"/>
 		</view>
-	</view>
+	</view> -->
 </view>
 
 <view class="weui-cells weui-cells_after-title publish-area">
 	<view class="weui-cell">
 		<view class="weui-cell__bd">
-			<textarea class="weui-textarea" placeholder="输入你可以提供的信息" style="height: 210rpx" />
+			<textarea class="weui-textarea" placeholder="输入你可以提供的信息" style="height: 210rpx" bindinput="handleContent" />
 		</view>
 	</view>
 </view>
@@ -74,7 +74,7 @@
 	</view>
 	<view wx:if="{{state.showTel}}" class="weui-cell weui-cell_input">
 		<view class="weui-cell__bd">
-			<input class="weui-input" type="number" maxlength="11" placeholder="请输入你的电话号码"/>
+			<input class="weui-input" type="number" maxlength="11" placeholder="请输入你的电话号码" bindinput="handleTel"/>
 		</view>
 	</view>
 </view>

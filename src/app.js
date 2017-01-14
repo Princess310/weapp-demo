@@ -23,13 +23,5 @@ export default class {
     } catch (error) {
       console.error(error);
     }
-    this.timer();
-  }
-
-  async timer() {
-    while (true) {
-      console.log('hello');
-      await sleep(10000);
-    }
   }
 }

@@ -2,15 +2,20 @@ import wx, { Component, PropTypes } from 'labrador-immutable';
 import { bindActionCreators } from 'redux';
 import { connect } from 'labrador-redux';
 import * as sysEmitActions from '../../../redux/sysEmit';
+import * as momentActions from '../../../redux/moment';
+import * as matchActions from '../../../redux/match';
 
 class Index extends Component {
 	state = {
 		type: 1,
-		reward_amount: '',
+		reward_amount: 0,
+		content: '',
 		fileCount: 0,
 		files: [],
 		filesLimit: 9,
-		showTel: true
+		showTel: true,
+		category: 3,
+		tel: ''
 	}
 
 	async onLoad() {
@@ -75,11 +80,93 @@ class Index extends Component {
 			fileCount: (self.state.fileCount - 1)
 		});
 	}
+
+	handleAmount(e){
+		this.setState({
+			reward_amount: e.detail.value
+		});
+	}
+
+	handleContent(e){
+		this.setState({
+			content: e.detail.value
+		});
+	}
+
+	handleTel(e){
+		this.setState({
+			tel: e.detail.value
+		});
+	}
+
+	async handleSubmit(e){
+		const { type, reward_amount, content, files, showTel, tel, category } = this.state;
+		const { selectMsg } = this.props.sysEmit;
+
+		const props = {
+			content: content,
+			pictures: files.join(','),
+			reward_item: selectMsg.id,
+			reward_as: type,
+			category: category,
+			reward_amount: reward_amount
+		};
+
+		if(showTel){
+			if(tel === "" || (tel.length !== 7 && tel.length !== 11)){
+				wx.showModal({
+					content: '请输入正确电话号码和格式',
+					showCancel: false,
+					success: function (res) {
+						if (res.confirm) {
+							console.log('用户点击确定')
+						}
+					}
+				});
+
+				return flase;
+			}
+
+			props.mobile = tel;
+		}
+
+		if(content === '' && files.length === 0){
+			wx.showModal({
+				content: '请上传图片或者输入内容',
+				showCancel: false,
+				success: function (res) {
+					if (res.confirm) {
+						console.log('用户点击确定')
+					}
+				}
+			});
+
+			return flase;
+		}
+
+		await this.props.addReward(props);
+		// refresh moment
+		await this.props.refreshMomentList({
+			page: 1
+		});
+		// refresh macth
+		await this.props.refreshMatchList({
+			page: 2,
+			city_id: 2
+		});
+
+		wx.navigateBack({
+			delta: 1
+		});
+	}
 }
 
 export default connect(
 	(sysEmit) => (sysEmit),
 	(dispatch) => bindActionCreators({
-		setSelectInfo: sysEmitActions.set
+		setSelectInfo: sysEmitActions.set,
+		refreshMomentList: momentActions.refresh,
+		addReward: momentActions.add,
+		refreshMatchList: matchActions.list
 	}, dispatch)
 )(Index);

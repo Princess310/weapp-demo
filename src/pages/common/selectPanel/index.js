@@ -31,7 +31,7 @@ class Index extends Component {
 
 		wx.navigateBack({
 			delta: 1
-		})
+		});
 	}
 
 	async onLoad(options) {		

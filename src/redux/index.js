@@ -5,6 +5,7 @@ import rootSaga from '../sagas/';
 import loginReducer from './login';
 import userReducer from './user';
 import momentReducer from './moment';
+import matchReducer from './match';
 import todosReducer from './todos';
 
 import sysEmitReducer from './sysEmit';
@@ -14,6 +15,7 @@ function createStore() {
     login: loginReducer,
     user: userReducer,
     moment: momentReducer,
+    match: matchReducer,
     todos: todosReducer,
     sysEmit: sysEmitReducer
   });

@@ -4,6 +4,7 @@ import immutable from 'seamless-immutable';
 export const REFRESH_MOMENTS = 'REFRESH_MOMENTS';
 export const LOAD_MOMENTS = 'LOAD_MOMENTS';
 export const FETCH_MOMENTS = 'FETCH_MOMENTS';
+export const ADD_MOMENT = 'ADD_MOMENT';
 
 export const FETCH_REWARD = 'FETCH_REWARD';
 export const LOAD_REWARD = 'LOAD_REWARD';
@@ -19,6 +20,7 @@ export const INITIAL_STATE = immutable({
 export const refresh = createAction(REFRESH_MOMENTS);
 export const list = createAction(FETCH_MOMENTS);
 export const load = createAction(LOAD_MOMENTS, (list) => (list));
+export const add = createAction(ADD_MOMENT, (moment) => (moment));
 
 export const fetchReward = createAction(FETCH_REWARD);
 export const loadReward = createAction(LOAD_REWARD, (list) => (list));

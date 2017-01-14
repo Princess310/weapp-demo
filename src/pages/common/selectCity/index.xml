@@ -1,0 +1,45 @@
+<view class="gps"  data-text="{{state.city}}" bindtap = "wxSortPickerViewItemTap">
+	{{state.city}} <text class="gpsif">GPS定位</text>
+	<view class="dw" catchtap ="cxgps">
+		<image style="width: 30px; height: 30px;position: absolute;top: 50%;left:40px;margin-top: -15px " src="{{state.src}}"></image>
+	</view>
+</view>
+
+
+<block wx:if="{{state.isShowLetter}}">
+	<view class="showSlectedLetter">
+		{{state.showLetter}}
+	</view>
+</block>
+<view class="searchLetter touchClass" >
+	<view wx:for="{{state.searchLetter}}" style="height:{{itemH}}px" wx:key="index" data-letter="{{item.name}}" catchtouchstart="searchStart" catchtouchmove="searchMove" catchtouchend="searchEnd">{{item.name}}</view>
+</view>
+<scroll-view scroll-y="true" style="height:{{state.winHeight}}px" bindscroll="bindScroll"  scroll-into-view="{{state.showLetter}}">
+	<view class="selection">
+		<block wx:if="{{cityArr.length}}" >
+			<view style="margin-left: 15px">
+				<text class="hor" >历史访问</text>
+				<view>
+					<block  wx:for="{{cityArr}}" wx:for-item="cityName">
+						<view  class="kuai" data-text="{{cityName}}" bindtap = "wxSortPickerViewItemTap">{{cityName}}</view>
+					</block>
+				</view>
+			</view>
+		</block>
+
+		<view style="margin-left: 15px;margin-bottom: 15px">
+			<text class="hor" >热门城市</text>
+			<block wx:for="{{props.match.city.hot_city}}" wx:key="index">
+				<view class="kuai" data-id="{{item.id}}" data-text="{{item.name}}" bindtap = "wxSortPickerViewItemTap">{{item.name}}</view>
+			</block>
+		</view>
+		<block wx:for="{{props.match.city.normal_city}}" wx:key="index">
+			<view class="item_letter">{{item.name}}</view>
+			<block wx:for="{{item.list}}" wx:key="id" wx:for-item="city"  wx:for-index="id">
+				<view class="item_city" data-id="{{city.id}}" data-text="{{city.name}}" bindtap = "wxSortPickerViewItemTap">
+					{{city.name}}
+				</view>
+			</block>
+		</block>
+	</view>
+</scroll-view>

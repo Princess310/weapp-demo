@@ -1,11 +1,14 @@
 import * as moment from '../redux/moment';
 import { takeLatest } from 'redux-saga';
 import { put } from 'redux-saga/effects';
-import { LOAD_MOMENTS, FETCH_MOMENTS, REFRESH_MOMENTS, 
+import { LOAD_MOMENTS, FETCH_MOMENTS, REFRESH_MOMENTS, ADD_MOMENT,
+		 FETCH_INVITES,
 		 FETCH_REWARD, LOAD_REWARD } from '../redux/moment';
 import { request } from '../utils/request';
 import { load, loadReward } from '../redux/moment';
+import wx from 'labrador';
 
+// --------- Moment Interface --------- //
 function* fetchMoments(action) {
 	const { page } = action.payload;
 
@@ -23,6 +26,16 @@ function* fetchMoments(action) {
 	}
 }
 
+function* addMoment(action){
+	try {
+		yield request(true).post("moments/release", action.payload);
+	} catch (error) {
+		console.log('login error', error);
+	}
+}
+// --------- /Moment Interface --------- //
+
+// --------- Reward Interface --------- //
 function* fetchReword(){
 	try {
 		let { list } = yield request(true).get("moments/reward-item");
@@ -33,12 +46,14 @@ function* fetchReword(){
 		console.log('login error', error);
 	}
 }
+// --------- /Reward Interface --------- //
 
 function* momentSaga() {
 	yield [
 		takeLatest(REFRESH_MOMENTS, fetchMoments),
 		takeLatest(FETCH_MOMENTS, fetchMoments),
-		takeLatest(FETCH_REWARD, fetchReword)
+		takeLatest(FETCH_REWARD, fetchReword),
+		takeLatest(ADD_MOMENT, addMoment)
 	];
 }
 
