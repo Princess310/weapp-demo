@@ -64,5 +64,5 @@
 	</block>
 </view>
 <navigator class="publish-wrapper" url="../publish/index">
-	<image src="../../images/business_pubsh.png" mode="scaleToFill" />
+	<image src="../../../images/business_pubsh.png" mode="scaleToFill" />
 </navigator>

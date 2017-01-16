@@ -8,8 +8,7 @@ class Index extends Component {
 		pageStart: 2,
 		page: 2,
 		refreshing: false,
-		pageCount: -1,
-		city_id: 5101
+		pageCount: -1
 	}
 
 	async onLoad() {
@@ -21,9 +20,29 @@ class Index extends Component {
 		})
 
 		const { page } = this.state;
+
+		wx.getLocation({
+			complete: (res) => {
+				let latitude = res.latitude;
+				let longitude = res.longitude;
+
+				if(latitude && longitude){
+					self.props.getLocation({
+						lng: longitude,
+						lat: latitude
+					});
+				}else {
+					wx.showModal({
+						content: '定位失败，可选择城市改变筛选',
+						showCancel: false
+					});
+				}
+			}
+		})
+
 		this.props.getList({
 			page: page,
-			city_id: this.state.city_id
+			city_id: self.props.match.city.current.id
 		});
 
 		wx.hideToast();
@@ -37,7 +56,7 @@ class Index extends Component {
 
 		this.props.getList({
 			page: this.state.pageStart,
-			city_id: this.state.city_id
+			city_id: this.props.match.city.current.id
 		});
 
 		this.setState({
@@ -47,11 +66,20 @@ class Index extends Component {
 
 		wx.stopPullDownRefresh();
 	}
+
+	handleCall(e) {
+		const { tel } = e.currentTarget.dataset;
+
+		wx.makePhoneCall({
+			phoneNumber: tel
+		});
+	}
 }
 
 export default connect(
 	({ match, user }) => ({ match, user }),
 	(dispatch) => bindActionCreators({
-		getList: matchActions.list
+		getList: matchActions.list,
+		getLocation: matchActions.fetchLoaction
 	}, dispatch)
 )(Index);

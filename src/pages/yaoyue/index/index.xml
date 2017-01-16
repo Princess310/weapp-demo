@@ -1,16 +1,16 @@
 <template name="feed-detail-invite">
-	<navigator url="" class="fedd-detail-title">
-		<navigator class="feed-detail-left">
+	<navigator url="../detail/index?id={{id}}" class="fedd-detail-title">
+		<view class="feed-detail-left">
 			<view class="user-icon-wrapper">
 				<image mode="aspectFill" class="user-icon" src="{{avatar}}"/>
 				<view wx:if="{{verify_status == 2}}" class="vip">V</view>
 			</view>
-		</navigator> 
+		</view> 
 		<view class="feed-detail-right">
 			<view class="header">
 				<view class="wrapper">
 					<text class="user-name">{{nickname}}</text>
-					<image src="../../../images/dianhua_icon.png" mode="aspectFit"/>
+					<image wx:if="{{mobile !== ''}}" src="../../../images/dianhua_icon.png" mode="aspectFit" data-tel="{{mobile}}" catchtap="handleCall"/>
 				</view>
 				<view class="wrapper">
 					<text wx:if="{{reward_as === 1}}" class="label">求</text>
@@ -36,7 +36,7 @@
 
 <view class="ali-header">
 	<navigator url="../../common/selectCity/index" class="left-wrapper">
-		<text class="name">成都市</text>
+		<text class="name">{{props.match.city.current.name}}</text>
 		<image class="icon-menu" src="../../../images/icon_menu_down.png"/>
 	</navigator>
 	<view class="title">

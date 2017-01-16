@@ -2,6 +2,8 @@ import wx, { Component, PropTypes } from 'labrador-immutable';
 import { bindActionCreators } from 'redux';
 import { connect } from 'labrador-redux';
 import city from '../../../utils/city';
+import { LOAD_LOCATION } from '../../../redux/match';
+import store from '../../../redux';
 import * as matchActions from '../../../redux/match';
 
 class Index extends Component {
@@ -32,21 +34,10 @@ class Index extends Component {
 		this.props.getList();
 
 		wx.hideToast();
-		//历史选择，应该在缓存中记录，或者在在app中全局记录
-		//当前城市通过之前的页面穿过来或者调用定位
-		let c = '北京'
-		let cityArr = ['上海','北京']
-		this.setState({
-			cityArr: cityArr,
-			city:c
-		})
 		// 生命周期函数--监听页面加载
 		let searchLetter = city.searchLetter;
-		let cityList = city.cityList();
-		// console.log(cityInfo);
 
 		let sysInfo = wx.getSystemInfoSync();
-		console.log(sysInfo);
 		let winHeight = sysInfo.windowHeight;
 
 		//添加要匹配的字母范围值
@@ -66,10 +57,7 @@ class Index extends Component {
 			winHeight: winHeight,
 			itemH: itemH,
 			searchLetter: tempObj,
-			cityList:cityList
 		})
-
-		console.log(this.state.cityInfo);
 	}
 
 	searchStart(e) {
@@ -90,7 +78,6 @@ class Index extends Component {
 		let tHeight=this.state.tHeight;
 		let bHeight=this.state.bHeight;
 		let showLetter = 0;
-		console.log(pageY);
 		if(startPageY-pageY>0){ //向上移动
 			if(pageY<tHeight){
 				// showLetter=this.mateLetter(pageY,this);
@@ -141,7 +128,7 @@ class Index extends Component {
 	}
 
 	bindScroll(e){
-		console.log(e.detail)
+		//console.log(e.detail)
 	}
 
 	setScrollTop(that,showLetter){
@@ -169,65 +156,33 @@ class Index extends Component {
 	}
 
 	wxSortPickerViewItemTap(e){
-		let city = e.target.dataset.text;
-		//可以跳转了
-		console.log('选择了城市：',city);
-	}
-
-	cxgps(e) {
-		let that = this;
-		wx.getLocation({
-			type: 'wgs84',
-			success: (res) => {
-				let latitude = res.latitude;
-				let longitude = res.longitude;
-				ajaxGes(latitude,longitude)
-					.then(function (data) {
-						if(data.status === 'success'){
-								that.setState({
-
-								})
-						}else{
-							that.setState({
-								city: '定位失败'
-							})
-						}
-					})
-			},
-			fail: () => {
-				that.setState({
-					city: '定位失败'
-				})
+		let { id, text } = e.target.dataset;
+		store.dispatch({
+			type: LOAD_LOCATION,
+			payload: {
+				data: {
+					id: id,
+					name: text
+				}
 			}
-		})
+		});
+
+		// refresh match list then
+		this.props.getMatchList({
+			page: 2,
+			city_id: id
+		});
+		
+		wx.navigateBack({
+			delta: 1
+		});
 	}
-}
-
-//经纬度定位获取站点
-function ajaxGes(lat, lng) {
-	//自己的定位接口
-	var url = '';
-
-	return new Promise(function (resolve, reject) {
-		wx.request({
-			url: url,
-			header: {
-				'content-type': 'application/json'
-			},
-			success: function(res) {
-				resolve(res.data);
-			},
-			fail:function (err) {
-				reject(err);
-			}
-		})
-	})
-
 }
 
 export default connect(
 	({ match }) => ({ match }),
 	(dispatch) => bindActionCreators({
+		getMatchList: matchActions.list,
 		getList: matchActions.fetchCity
 	}, dispatch)
 )(Index);

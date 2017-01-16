@@ -1,8 +1,5 @@
-<view class="gps"  data-text="{{state.city}}" bindtap = "wxSortPickerViewItemTap">
-	{{state.city}} <text class="gpsif">GPS定位</text>
-	<view class="dw" catchtap ="cxgps">
-		<image style="width: 30px; height: 30px;position: absolute;top: 50%;left:40px;margin-top: -15px " src="{{state.src}}"></image>
-	</view>
+<view class="gps" data-id="{{props.match.city.current.id}}" data-text="{{props.match.city.current.name}}" bindtap = "wxSortPickerViewItemTap">
+	{{props.match.city.current.name}}
 </view>
 
 
@@ -12,7 +9,7 @@
 	</view>
 </block>
 <view class="searchLetter touchClass" >
-	<view wx:for="{{state.searchLetter}}" style="height:{{itemH}}px" wx:key="index" data-letter="{{item.name}}" catchtouchstart="searchStart" catchtouchmove="searchMove" catchtouchend="searchEnd">{{item.name}}</view>
+	<view wx:for="{{state.searchLetter}}" style="height:{{state.itemH}}px" wx:key="index" data-letter="{{item.name}}" catchtouchstart="searchStart" catchtouchmove="searchMove" catchtouchend="searchEnd">{{item.name}}</view>
 </view>
 <scroll-view scroll-y="true" style="height:{{state.winHeight}}px" bindscroll="bindScroll"  scroll-into-view="{{state.showLetter}}">
 	<view class="selection">
@@ -34,7 +31,7 @@
 			</block>
 		</view>
 		<block wx:for="{{props.match.city.normal_city}}" wx:key="index">
-			<view class="item_letter">{{item.name}}</view>
+			<view class="item_letter" id="{{item.name}}">{{item.name}}</view>
 			<block wx:for="{{item.list}}" wx:key="id" wx:for-item="city"  wx:for-index="id">
 				<view class="item_city" data-id="{{city.id}}" data-text="{{city.name}}" bindtap = "wxSortPickerViewItemTap">
 					{{city.name}}

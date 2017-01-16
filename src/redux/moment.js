@@ -32,7 +32,7 @@ export default handleActions({
 	[LOAD_MOMENTS]: (state, action) => {
 		const page = action.payload.page;
 		let list = [];
-		let hasNaxt = page && page.current_page < page.page_count;
+		let hasNext = page && page.current_page < page.page_count;
 
 		if(page && page.current_page === 1){
 			list = action.payload.list;
@@ -42,7 +42,7 @@ export default handleActions({
 
 		return {
 			...state,
-			hasNaxt: hasNaxt,
+			hasNext: hasNext,
 			page: state.list.concat(action.payload.page),
 			list: list
 		};

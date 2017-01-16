@@ -1,0 +1,130 @@
+<view class="user-info">
+	<view class="feed-detail-card user-info" data-id="{{props.match.detail.id}}">
+		<view class="feed-detail-header">
+			<view class="user-icon-wrapper">
+				<image mode="aspectFill" class="user-icon" src="{{props.match.detail.avatar}}"/>
+				<view wx:if="{{props.match.detail.verify_status == 2}}" class="vip">V</view>
+			</view>
+			<view class="user-info">
+				<view class="user-name">
+					{{props.match.detail.nickname}}
+				</view>
+				<view wx:if="{{props.match.detail.company !== '' && props.match.detail.position !== ''}}" class="user-role">
+					<text class="user-role-item">{{props.match.detail.company}}</text>
+					<text class="user-role-item">{{props.match.detail.position}}</text>
+				</view>
+				<view class="user-identity">
+					<text>{{props.match.detail.tag_identity_name}}</text>
+					<text class="other-info">
+						<text class="sub-item effect-item">
+							<text>影响力：</text>
+							<text class="effect-value">{{props.match.detail.influence}}</text>
+						</text>
+						<text class="sub-item honesty-item">
+							<text>诚信等级</text>
+							<text class="honesty-bar-bg">
+								<text class="honesty-bar" style="width: {{props.match.detail.integrity_progress* 100 + '%'}}"></text>
+							</text>
+							<text class="honesty-rank">LV{{props.match.detail.integrity_level}}</text>
+						</text>
+					</text>
+				</view>
+			</view>
+		</view>
+		<view class="contact-info">
+			<view class="item tel">
+				<text class="des">手机号:</text><text class="content">{{mobile}}</text>
+			</view>
+			<view class="item area">
+				<text class="des">地  区: </text>
+				<text class="content">{{props.match.detail.address}}</text>
+				<image class="pin" src="../../../images/pin_icon.png" mode="aspectFit"/>
+				<text>{{props.match.detail.city_name}}</text>
+			</view>
+		</view>
+	</view>
+	<view wx:if="{{props.match.detail.advantage.length > 0 || props.match.detail.needs.length > 0}}" class="weui-panel weui-panel_access" style="margin-top: 0">
+		<view class="weui-panel__bd user-tags">
+			<view class="weui-media-box weui-media-box_text">
+				<view class="weui-media-box__title weui-media-box__title_in-text">优势需求</view>
+				<view class="weui-media-box__desc">
+					<view class="user-box-wrapper">
+						<view class="box-des">
+							<text>提</text>
+							<text>供</text>
+						</view>
+						<view class="box-container advantage">
+							<block wx:for="{{props.match.detail.advantage}}"  wx:key="index">
+								<view class="box-item">{{item}}</view>
+							</block>
+						</view>
+					</view>
+					<view class="user-box-wrapper">
+						<view class="box-des">
+							<text>需</text>
+							<text>求</text>
+						</view>
+						<view class="box-container require">
+							<block wx:for="{{props.match.detail.needs}}"  wx:key="index">
+								<view class="box-item">{{item}}</view>
+							</block>
+						</view>
+					</view>
+				</view>
+			</view>
+		</view>
+	</view>
+	<view wx:if="{{props.match.detail.intro !== '' && props.match.detail.business_intro !== ''}}" class="weui-panel weui-panel_access">
+		<view class="weui-panel__bd">
+			<view wx:if="{{props.match.detail.intro !== ''}}" class="weui-media-box weui-media-box_text">
+				<view class="weui-media-box__title weui-media-box__title_in-text">个人简介</view>
+				<view class="weui-media-box__desc">{{props.match.detail.intro}}</view>
+			</view>
+			<view wx:if="{{props.match.detail.business_intro !== ''}}" class="weui-media-box weui-media-box_text">
+				<view class="weui-media-box__title weui-media-box__title_in-text">业务介绍</view>
+				<view class="weui-media-box__desc">{{props.match.detail.business_intro}}</view>
+			</view>
+		</view>
+	</view>
+
+	<view wx:if="{{props.match.detail.pictures.length > 0}}" class="weui-panel weui-panel_access">
+		<view class="weui-panel__bd user-tags">
+			<view class="weui-media-box weui-media-box_text">
+				<view class="weui-media-box__title weui-media-box__title_in-text">展示图片</view>
+				<view class="weui-media-box__desc swiper-panel">
+					<swiper indicator-dots="{{state.swiper.indicatorDots}}" indicator-active-color="{{state.swiper.color}}">
+						<block wx:for="{{props.match.detail.pictures}}" wx:key="index">
+							<swiper-item>
+								<image src="{{item}}" data-src="{{item}}" class="slide-image" mode="aspectFit" catchtap="handleViewImage"/>
+							</swiper-item>
+						</block>
+					</swiper>
+				</view>
+			</view>
+		</view>
+	</view>
+
+	<view wx:if="{{props.match.detail.pictures.length > 0}}" class="weui-panel weui-panel_access">
+		<view class="weui-panel__bd user-tags">
+			<view class="weui-media-box weui-media-box_text">
+				<view class="weui-media-box__title weui-media-box__title_in-text">TA的动态</view>
+				<view class="weui-media-box__desc">
+					<block wx:for="{{props.match.myList}}" wx:key="index">
+						<view class="moment-wrapper">
+							<view class="content">
+								<text wx:if="{{item.sort > 0}}" class="sort">置顶</text>
+								<text>{{item.content}}</text>
+							</view>
+							<block wx:if="{{item.pictures.length > 0}}">
+								<image src="{{item.pictures[0]}}" class="moment-image" mode="aspectFit"/>
+							</block>
+							<view class="sub-info">
+								<text>{{item.hits}}人看过</text>
+							</view>
+						</view>
+					</block>
+				</view>
+			</view>
+		</view>
+	</view>
+</view>

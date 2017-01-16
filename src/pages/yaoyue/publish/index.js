@@ -100,6 +100,7 @@ class Index extends Component {
 	}
 
 	async handleSubmit(e){
+		const self = this;
 		const { type, reward_amount, content, files, showTel, tel, category } = this.state;
 		const { selectMsg } = this.props.sysEmit;
 
@@ -143,7 +144,7 @@ class Index extends Component {
 
 			return flase;
 		}
-
+		
 		await this.props.addReward(props);
 		// refresh moment
 		await this.props.refreshMomentList({
@@ -152,7 +153,7 @@ class Index extends Component {
 		// refresh macth
 		await this.props.refreshMatchList({
 			page: 2,
-			city_id: 2
+			city_id: self.props.match.city.current.id
 		});
 
 		wx.navigateBack({
@@ -162,7 +163,7 @@ class Index extends Component {
 }
 
 export default connect(
-	(sysEmit) => (sysEmit),
+	({ sysEmit, match }) => ({ sysEmit, match }),
 	(dispatch) => bindActionCreators({
 		setSelectInfo: sysEmitActions.set,
 		refreshMomentList: momentActions.refresh,

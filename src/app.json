@@ -1,10 +1,14 @@
 {
   "pages": [
     "pages/message/index/index",
+
     "pages/business/index/index",
     "pages/business/publish/index",
+
     "pages/yaoyue/index/index",
     "pages/yaoyue/publish/index",
+    "pages/yaoyue/detail/index",
+
     "pages/mine/index/index",
 
     "pages/common/selectPanel/index",
@@ -15,7 +19,7 @@
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "WeChat",
     "navigationBarTextStyle":"black",
-    "backgroundColor": "#f6f6f6"
+    "backgroundColor": "#f1f6f9"
   },
   "tabBar": {
     "borderStyle": "white",

@@ -46,7 +46,7 @@ class Index extends Component {
 
 	async onReachBottom() {
 		// if has next page
-		if(!this.props.moment.hasNaxt){
+		if(!this.props.moment.hasNext){
 			return false;
 		}
 
