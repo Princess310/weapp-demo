@@ -7,7 +7,7 @@ import * as matchActions from '../../../redux/match';
 
 class Index extends Component {
 	state = {
-		type: 1,
+		type: 2,
 		reward_amount: 0,
 		content: '',
 		fileCount: 0,
