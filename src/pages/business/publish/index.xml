@@ -1,3 +1,49 @@
-<view>
-	publish index
+<view class="weui-cells weui-cells_after-title publish-area">
+	<view class="weui-cell">
+		<view class="weui-cell__bd">
+			<textarea class="weui-textarea" placeholder="这一刻的想法..." style="height: 210rpx" bindinput="handleContent" />
+		</view>
+	</view>
 </view>
+
+<view class="weui-cells">
+	<view class="weui-cell">
+		<view class="weui-cell__bd">
+			<view class="weui-uploader">
+				<view class="weui-uploader__hd">
+					<view class="weui-uploader__title">图片上传</view>
+					<view class="weui-uploader__info">{{state.fileCount}}/{{state.filesLimit}}</view>
+				</view>
+				<view class="weui-uploader__bd">
+					<view class="weui-uploader__files" id="uploaderFiles">
+						<block wx:for-items="{{state.files}}" wx:key="{{index}}">
+								<view class="weui-uploader__file">
+									<image class="weui-uploader__img" src="{{item}}" mode="aspectFill" />
+									<image class="weui-uploader__clear_file" src="../../images/clear-icon.png" mode="aspectFill" data-index="{{index}}" catchtap="clearFile" />
+								</view>
+						</block>
+						<view class="weui-uploader__input-box">
+							<view class="weui-uploader__input" bindtap="chooseImage"></view>
+						</view>
+					</view>
+				</view>
+			</view>
+		</view>
+	</view>
+</view>
+
+<view class="weui-cells weui-cells_after-title">
+	<view class="weui-cell weui-cell_switch">
+		<view class="weui-cell__bd">添加电话号码</view>
+		<view class="weui-cell__ft">
+			<switch checked="checked" bindchange="switchTel"></switch>
+		</view>
+	</view>
+	<view wx:if="{{state.showTel}}" class="weui-cell weui-cell_input">
+		<view class="weui-cell__bd">
+			<input class="weui-input" type="number" maxlength="11" placeholder="请输入你的电话号码" bindinput="handleTel"/>
+		</view>
+	</view>
+</view>
+
+<button class="weui-btn publish-btn" type="primary" catchtap="handleSubmit">发布</button>

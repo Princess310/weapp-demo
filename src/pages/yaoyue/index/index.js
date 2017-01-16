@@ -67,10 +67,10 @@ class Index extends Component {
 
 		this.props.getList({
 			page: this.state.pageStart,
-			tag_identity_id: self.state.tag_identity_id,
-			reward_as: self.state.reward_as,
-			reward_item: self.state.reward_item,
-			city_id: self.props.match.city.current.id
+			tag_identity_id: this.state.tag_identity_id,
+			reward_as: this.state.reward_as,
+			reward_item: this.state.reward_item,
+			city_id: this.props.match.city.current.id
 		});
 
 		this.setState({
@@ -79,6 +79,36 @@ class Index extends Component {
 		});
 
 		wx.stopPullDownRefresh();
+	}
+
+	async onReachBottom() {
+		// if has next page
+		if(!this.props.match.hasNext){
+			return false;
+		}
+
+		wx.showToast({
+			title: '加载中',
+			icon: 'loading'
+		})
+
+		let { id, page } = this.state;
+
+		page = page + 1;
+
+		await this.props.getList({
+			page: page,
+			tag_identity_id: this.state.tag_identity_id,
+			reward_as: this.state.reward_as,
+			reward_item: this.state.reward_item,
+			city_id: this.props.match.city.current.id
+		});
+
+		this.setState({
+			page: page
+		});
+
+		wx.hideToast();
 	}
 
 	handleCall(e) {
