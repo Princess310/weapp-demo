@@ -1,9 +1,9 @@
 import * as moment from '../redux/moment';
 import { takeLatest } from 'redux-saga';
 import { put } from 'redux-saga/effects';
-import { FETCH_MATCH, FETCH_DETAIL, FETCH_MY_LIST, FETCH_CITY, FETCH_LOCATION } from '../redux/match';
+import { FETCH_MATCH, FETCH_DETAIL, FETCH_MY_LIST, FETCH_CITY, FETCH_FILTERS, FETCH_LOCATION } from '../redux/match';
 import { request } from '../utils/request';
-import { load, loadDetail, loadMyList, loadCity, loadLoaction } from '../redux/match';
+import { load, loadDetail, loadMyList, loadCity, loadFilters, loadLoaction } from '../redux/match';
 
 // --------- Invite Interface --------- //
 function* fetchIvites(action){
@@ -38,6 +38,19 @@ function* fetchMyList(action){
 		yield put(loadMyList({
 			page: resPage,
 			list: list
+		}));
+	} catch (error) {
+		console.log('login error', error);
+	}
+}
+
+function* fetchFilters(){
+	try {
+		let { items, roles } = yield request(true).get("match/filters");
+
+		yield put(loadFilters({
+			items: items,
+			roles: roles
 		}));
 	} catch (error) {
 		console.log('login error', error);
@@ -80,7 +93,8 @@ function* matchSaga() {
 		takeLatest(FETCH_DETAIL, fetchDetail),
 		takeLatest(FETCH_MY_LIST, fetchMyList),
 		takeLatest(FETCH_CITY, fetchCityList),
-		takeLatest(FETCH_LOCATION, fetchLocation)
+		takeLatest(FETCH_LOCATION, fetchLocation),
+		takeLatest(FETCH_FILTERS, fetchFilters)
 	];
 }
 

@@ -13,8 +13,8 @@
 					<image wx:if="{{mobile !== ''}}" src="../../../images/dianhua_icon.png" mode="aspectFit" data-tel="{{mobile}}" catchtap="handleCall"/>
 				</view>
 				<view class="wrapper">
-					<text wx:if="{{reward_as === 1}}" class="label">求</text>
-					<text wx:if="{{reward_as === 2}}" class="label supply">供</text>
+					<text wx:if="{{reward_as === 1}}" class="label supply">供</text>
+					<text wx:if="{{reward_as === 2}}" class="label">求</text>
 					<text wx:if="{{reward_amount > 0}}" class="money">{{reward_amount}}元</text>
 					<image class="pin" src="../../../images/pin_icon.png" mode="aspectFit"/>
 					<text class="distance">10.5km</text>
@@ -39,7 +39,7 @@
 		<text class="name">{{props.match.city.current.name}}</text>
 		<image class="icon-menu" src="../../../images/icon_menu_down.png"/>
 	</navigator>
-	<view class="title">
+	<view class="title" catchtap="showFilter">
 		<text class="name">全部</text>
 		<image class="icon-menu" src="../../../images/icon_menu_down.png"/>
 	</view>
@@ -67,4 +67,46 @@
 	<block wx:for="{{props.match.list}}"  wx:key="id">
 		<template is="feed-detail-invite" data="{{...item, index: index}}" />
 	</block>
+</view>
+
+<view wx:if="{{state.showFilter}}" class="filter-panel">
+	<view class="switch-filter">
+		<view class="item {{state.reward_as == 1 ? 'active' : ''}}" data-id="1" data-type="type" catchtap="handleFilter">
+			<text>供</text>
+		</view>
+		<view class="item {{state.reward_as == 2 ? 'active' : ''}}" data-id="2" data-type="type" catchtap="handleFilter">
+			<text>求</text>
+		</view>
+		<view class="item" data-id="0" data-type="type" catchtap="handleFilter">
+			<text>清除条件</text>
+		</view>
+	</view>
+	<view class="filter-content">
+		<view class="title">类目</view>
+		<view class="weui-cells weui-cells_after-title action-wrapper">
+			<block wx:for="{{props.match.filter.items}}" wx:key="unique">
+				<view class="weui-cell weui-cell_access" hover-class="weui-cell_active" data-id="{{item.id}}" data-type="item" catchtap="handleFilter">
+					<view class="weui-cell__bd">
+						<text>{{item.name}}</text>
+					</view>
+					<view wx:if="{{item.id === state.reward_item}}" class="weui-cell__ft">
+						<icon type="success_no_circle" size="23"></icon>
+					</view>
+				</view>
+			</block>
+		</view>
+		<view class="title">行业角色</view>
+		<view class="weui-cells weui-cells_after-title action-wrapper">
+			<block wx:for="{{props.match.filter.roles}}" wx:key="unique">
+				<view class="weui-cell weui-cell_access" hover-class="weui-cell_active" data-id="{{item.id}}" data-type="role" catchtap="handleFilter">
+					<view class="weui-cell__bd">
+						<text>{{item.name}}</text>
+					</view>
+					<view wx:if="{{item.id === state.tag_identity_id}}" class="weui-cell__ft">
+						<icon type="success_no_circle" size="23"></icon>
+					</view>
+				</view>
+			</block>
+		</view>
+	</view>
 </view>

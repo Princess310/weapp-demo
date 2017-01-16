@@ -13,6 +13,9 @@ export const LOAD_CITY = 'LOAD_CITY';
 export const FETCH_MY_LIST = 'FETCH_MY_LIST';
 export const LOAD_MY_LIST = 'LOAD_MY_LIST';
 
+export const FETCH_FILTERS = 'FETCH_FILTERS';
+export const LOAD_FILTERS = 'LOAD_FILTERS';
+
 export const FETCH_LOCATION = 'FETCH_LOCATION';
 export const LOAD_LOCATION = 'LOAD_LOCATION';
 
@@ -22,6 +25,10 @@ export const INITIAL_STATE = immutable({
 	page: {},
 	list: [],
 	myList: [],
+	filter: {
+		items: [],
+		roles: []
+	},
 	city: {
 		current: {
 			id: "5101",
@@ -43,6 +50,9 @@ export const loadCity = createAction(LOAD_CITY);
 
 export const fetchMyList = createAction(FETCH_MY_LIST);
 export const loadMyList = createAction(LOAD_MY_LIST);
+
+export const fetchFilters = createAction(FETCH_FILTERS);
+export const loadFilters = createAction(LOAD_FILTERS);
 
 export const fetchLoaction = createAction(FETCH_LOCATION);
 export const loadLoaction = createAction(LOAD_LOCATION);
@@ -89,7 +99,6 @@ export default handleActions({
 		};
 	},
 	[LOAD_LOCATION]: (state, action) => {
-		console.log("action", action);
 		const { data } = action.payload;
 		let city = {
 			...state.city,
@@ -99,6 +108,16 @@ export default handleActions({
 		return {
 			...state,
 			city: city
+		}
+	},
+	[LOAD_FILTERS]: (state, action) => {
+		const { items, roles } = action.payload;
+		return {
+			...state,
+			filter: {
+				items: items,
+				roles: roles
+			}
 		}
 	},
 	[LOAD_MY_LIST]: (state, action) => {

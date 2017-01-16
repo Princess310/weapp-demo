@@ -1,10 +1,10 @@
 <view class="header">
 	<view class="type-switch">
 		<view class="slider {{state.type === 2 ? 'right' : ''}}"></view>
-		<view data-type="{{1}}" class="switch-item {{state.type === 1 ? 'active' : ''}}" catchtap="switchType">
+		<view data-type="{{2}}" class="switch-item {{state.type === 2 ? 'active' : ''}}" catchtap="switchType">
 			<text>发需求</text>
 		</view>
-		<view data-type="{{2}}" class="switch-item {{state.type === 2 ? 'active' : ''}}" catchtap="switchType">
+		<view data-type="{{1}}" class="switch-item {{state.type === 1 ? 'active' : ''}}" catchtap="switchType">
 			<text>发供应</text>
 		</view>
 	</view>

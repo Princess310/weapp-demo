@@ -46,3 +46,40 @@
 	-webkit-box-orient: vertical;
 	background-color: @white;
 }
+
+.filter-panel{
+	.fitparent();
+	background-color: @white;
+	z-index: 10;
+	.switch-filter{
+		padding: 30rpx 28rpx;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		border-top: 1rpx @color-v2-border solid;
+		.item{
+			width: 225rpx;
+			height: 60rpx;
+			text-align: center;
+			line-height: 60rpx;
+			font-size: 30rpx;
+			border: 1rpx @color-v2-border solid;
+			.border-radius(10rpx);
+			&.active{
+				background-color: @color-v2-base-blue;
+				border-color: @color-v2-base-blue;
+				color: @white;
+			}
+		}
+	}
+	.filter-content{
+		.title{
+			padding-left: 15px;
+			height: 55rpx;
+			line-height: 55rpx;
+			font-size: 26rpx;
+			color: @color-v2-txt-help;
+			background-color: #e8f1f6;
+		}
+	}
+}

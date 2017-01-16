@@ -8,7 +8,12 @@ class Index extends Component {
 		pageStart: 2,
 		page: 2,
 		refreshing: false,
-		pageCount: -1
+		pageCount: -1,
+		tag_identity_id: 0,
+		reward_as: 0,
+		reward_item: '',
+		filter: {},
+		showFilter: false
 	}
 
 	async onLoad() {
@@ -42,8 +47,14 @@ class Index extends Component {
 
 		this.props.getList({
 			page: page,
+			tag_identity_id: self.state.tag_identity_id,
+			reward_as: self.state.reward_as,
+			reward_item: self.state.reward_item,
 			city_id: self.props.match.city.current.id
 		});
+
+		// reward filter
+		this.props.getFilters();
 
 		wx.hideToast();
 	}
@@ -56,7 +67,10 @@ class Index extends Component {
 
 		this.props.getList({
 			page: this.state.pageStart,
-			city_id: this.props.match.city.current.id
+			tag_identity_id: self.state.tag_identity_id,
+			reward_as: self.state.reward_as,
+			reward_item: self.state.reward_item,
+			city_id: self.props.match.city.current.id
 		});
 
 		this.setState({
@@ -74,12 +88,72 @@ class Index extends Component {
 			phoneNumber: tel
 		});
 	}
+
+	showFilter(e) {
+		this.setState({
+			showFilter: true
+		});
+	}
+
+	handleFilter(e){
+		const self = this;
+		const { type, id } = e.currentTarget.dataset;
+		let { reward_as, reward_item, tag_identity_id } = this.state;
+
+		if(type !== 'type' && this.state.reward_as == 0){
+			return false;
+		}
+
+		switch(type){
+			case 'type':
+				reward_as = id;
+				reward_item = 0;
+				tag_identity_id = 0;
+				break;
+			case 'item':
+				reward_item = id;
+				tag_identity_id = 0;
+				break;
+			case 'role':
+				tag_identity_id = id;
+				reward_item = 0;
+				break;
+		}
+
+		self.setState({
+			reward_as: reward_as,
+			reward_item: reward_item,
+			tag_identity_id: tag_identity_id
+		});
+
+		if(type !== 'type' || reward_as == 0){
+			self.setState({
+				showFilter: false
+			});
+
+			wx.showToast({
+				title: '加载中',
+				icon: 'loading'
+			})
+
+			this.props.getList({
+				page: this.state.pageStart,
+				tag_identity_id: tag_identity_id,
+				reward_as: reward_as,
+				reward_item: reward_item,
+				city_id: self.props.match.city.current.id
+			});
+
+			wx.hideToast();
+		}
+	}
 }
 
 export default connect(
 	({ match, user }) => ({ match, user }),
 	(dispatch) => bindActionCreators({
 		getList: matchActions.list,
-		getLocation: matchActions.fetchLoaction
+		getLocation: matchActions.fetchLoaction,
+		getFilters: matchActions.fetchFilters
 	}, dispatch)
 )(Index);
