@@ -177,9 +177,7 @@ class Index extends Component {
 
 		store.dispatch({
 			type: SET_FILTER,
-			payload: {
-				data: props
-			}
+			data: props
 		});
 
 		// refresh match list then
