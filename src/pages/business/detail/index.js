@@ -5,66 +5,27 @@ import * as momentActions from '../../../redux/moment';
 
 class Index extends Component {
 	state = {
-		page: 1,
-		refreshing: false,
-		pageCount: -1
+		id: '',
+		activeIndex: 0,
+		sliderLeft: 20,
+		sliderOffset: 0
 	}
 
-	async onLoad() {
-		// get list first
-		const self = this;
+	async onLoad(options) {
+		const { id } = options;
+
+		this.setState({
+			id: id
+		});
+
+		// get reward list
 		wx.showToast({
 			title: '加载中',
 			icon: 'loading'
-		})
-
-		const { page } = this.state;
-		this.props.getList({
-			page: page
 		});
 
-		wx.hideToast();
-	}
-
-	async onPullDownRefresh() {
-		if(this.state.refreshing) return false;
-		this.setState({
-			refreshing: true
-		});
-
-		this.props.doRefresh({
-			page: 1
-		});
-
-		this.setState({
-			refreshing: false,
-			page: 1
-		});
-
-		wx.stopPullDownRefresh();
-	}
-
-	async onReachBottom() {
-		// if has next page
-		if(!this.props.moment.hasNext){
-			return false;
-		}
-
-		wx.showToast({
-			title: '加载中',
-			icon: 'loading'
-		})
-
-		let { page } = this.state;
-
-		page = page + 1;
-
-		this.props.getList({
-			page: page
-		});
-
-		this.setState({
-			page: page
+		this.props.getInfo({
+			id: id
 		});
 
 		wx.hideToast();
@@ -73,17 +34,7 @@ class Index extends Component {
 	handleViewImage(e) {
 		let data = e.currentTarget.dataset;
 		let src = data.src;
-		let pid = data.pid;
-		let urls = [];
-		const list = this.props.moment.list || [];
-
-		list.map((item, i) => {
-			if(pid === item.id){
-				urls = item.pictures.map((p) => {
-					return p;
-				});
-			}
-		});
+		let urls = this.props.moment.detail.pictures;
 
 		wx.previewImage({
 			current: src,
@@ -104,7 +55,33 @@ class Index extends Component {
 
 		this.props.doLikeMoment({
 			id: id,
-			uid: uid
+			uid: 8
+		});
+	}
+
+	handleAgreeComment(e) {
+		const { id, uid } = e.currentTarget.dataset;
+
+		this.props.doLikeComment({
+			id: id,
+			cid: this.state.id,
+			uid: 8
+		});
+	}
+
+	tabClick(e) {
+		console.log('e.currentTarget.offsetLeft', e.currentTarget.offsetLeft,);
+		this.setState({
+			sliderOffset: e.currentTarget.offsetLeft,
+			activeIndex: e.currentTarget.id
+		});
+	}
+
+	handleJoin(e) {
+		const { id } = e.currentTarget.dataset;
+
+		this.props.doJoinReward({
+			id: id
 		});
 	}
 
@@ -120,6 +97,10 @@ class Index extends Component {
 						self.props.deleteMoment({
 							id: id
 						});
+
+						wx.navigateBack({
+							delta: 1
+						});
 					}
 				}
 			})
@@ -131,6 +112,10 @@ class Index extends Component {
 						self.props.shieldMoment({
 							uid: uid
 						});
+
+						wx.navigateBack({
+							delta: 1
+						});
 					}
 				}
 			})
@@ -141,10 +126,11 @@ class Index extends Component {
 export default connect(
 	({ moment, user }) => ({ moment, user }),
 	(dispatch) => bindActionCreators({
-		doRefresh: momentActions.refresh,
-		getList: momentActions.list,
+		getInfo: momentActions.fetchDetail,
+		doLikeMoment: momentActions.doLikeMoment,
+		doLikeComment: momentActions.doLikeComment,
 		deleteMoment: momentActions.del,
 		shieldMoment: momentActions.shieldMoment,
-		doLikeMoment: momentActions.doLikeMoment
+		doJoinReward: momentActions.doJoinReward
 	}, dispatch)
 )(Index);

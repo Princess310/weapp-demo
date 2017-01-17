@@ -4,6 +4,7 @@
 
     "pages/business/index/index",
     "pages/business/publish/index",
+    "pages/business/detail/index",
 
     "pages/yaoyue/index/index",
     "pages/yaoyue/publish/index",

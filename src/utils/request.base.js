@@ -59,7 +59,7 @@ export function create(options) {
 
     let url = apiRoot + apiName;
 
-    if (['POST', 'PUT'].indexOf(method) === -1 && data) {
+    if (['POST', 'PUT', 'DELETE'].indexOf(method) === -1 && data) {
       let querystring = stringify(data);
       if (url.indexOf('?') > -1) {
         url += '&' + querystring;
@@ -72,7 +72,7 @@ export function create(options) {
     header = Object.assign({}, defaultHeader, header);
 
     // set form type
-    if(['POST', 'PUT'].indexOf(method) >= 0){
+    if(['POST', 'PUT', 'DELETE'].indexOf(method) >= 0){
       header['content-type'] = 'application/x-www-form-urlencoded';
     }
 

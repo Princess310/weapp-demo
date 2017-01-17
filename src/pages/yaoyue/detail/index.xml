@@ -110,7 +110,7 @@
 				<view class="weui-media-box__title weui-media-box__title_in-text">TA的动态</view>
 				<view class="weui-media-box__desc">
 					<block wx:for="{{props.match.myList}}" wx:key="index">
-						<view class="moment-wrapper">
+						<navigator url="../../business/detail/index?id={{item.id}}" class="moment-wrapper">
 							<view class="content">
 								<text wx:if="{{item.sort > 0}}" class="sort">置顶</text>
 								<text>{{item.content}}</text>
@@ -121,7 +121,7 @@
 							<view class="sub-info">
 								<text>{{item.hits}}人看过</text>
 							</view>
-						</view>
+						</navigator>
 					</block>
 				</view>
 			</view>

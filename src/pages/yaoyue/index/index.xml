@@ -1,5 +1,5 @@
 <template name="feed-detail-invite">
-	<navigator url="../detail/index?id={{id}}" class="fedd-detail-title">
+	<navigator url="../detail/index?id={{id}}" class="fedd-detail-item">
 		<view class="feed-detail-left">
 			<view class="user-icon-wrapper">
 				<image mode="aspectFill" class="user-icon" src="{{avatar}}"/>
@@ -10,19 +10,19 @@
 			<view class="header">
 				<view class="wrapper">
 					<text class="user-name">{{nickname}}</text>
-					<image wx:if="{{mobile !== ''}}" src="../../../images/dianhua_icon.png" mode="aspectFit" data-tel="{{mobile}}" catchtap="handleCall"/>
+					<image wx:if="{{mobile && mobile !== ''}}" src="../../../images/dianhua_icon.png" mode="aspectFit" data-tel="{{mobile}}" catchtap="handleCall"/>
 				</view>
 				<view class="wrapper">
 					<text wx:if="{{reward_as === 1}}" class="label supply">供</text>
 					<text wx:if="{{reward_as === 2}}" class="label">求</text>
 					<text wx:if="{{reward_amount > 0}}" class="money">{{reward_amount}}元</text>
 					<image class="pin" src="../../../images/pin_icon.png" mode="aspectFit"/>
-					<text class="distance">10.5km</text>
+					<text class="distance">{{distance}}</text>
 				</view>
 			</view>
 			<view class="sub-info">
 				<text>{{company}}</text>
-				<text>{{position}}</text>
+				<text>{{tag_identity_name}}</text>
 			</view>
 			<view class="time">
 				<text>{{event_at}}</text>

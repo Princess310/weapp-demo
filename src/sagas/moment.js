@@ -1,12 +1,12 @@
 import * as moment from '../redux/moment';
 import { takeLatest } from 'redux-saga';
 import { put } from 'redux-saga/effects';
-import { LOAD_MOMENTS, FETCH_MOMENTS, REFRESH_MOMENTS, ADD_MOMENT,
-		 FETCH_INVITES,
-		 FETCH_REWARD, LOAD_REWARD } from '../redux/moment';
+import { LOAD_MOMENTS, FETCH_MOMENTS, REFRESH_MOMENTS, DELETE_MOMENT, ADD_MOMENT,
+		 FETCH_MOMENT_DETAIL, FETCH_INVITES, DO_LIKE_MOMENT, DO_LIKE_COMMENT,
+		 DO_JOIN_REWARD, FETCH_REWARD, LOAD_REWARD, SHIELD_MOMENT } from '../redux/moment';
 import { FETCH_MATCH } from '../redux/match';
 import { request } from '../utils/request';
-import { load, loadReward } from '../redux/moment';
+import { load, loadDetail, loadReward, loadLikeMoment, loadLikeComment, loadJoinReward } from '../redux/moment';
 import * as redux from 'labrador-redux';
 import wx from 'labrador';
 
@@ -42,6 +42,103 @@ function* addMoment(action){
 		console.log('login error', error);
 	}
 }
+
+function* delMoment(action){
+	try {
+		let { data } = yield request(true).delete("moments/delete", {
+			moments_id: action.payload.id
+		});
+
+		// then refresh list
+		yield put({type: FETCH_MOMENTS, payload: {
+			page: 1
+		}});
+	} catch (error) {
+		console.log('login error', error);
+	}
+}
+
+function* shieldMoment(action){
+	try {
+		let { data } = yield request(true).post("privacy/set-moments", {
+			type: 3,
+			uid: action.payload.uid
+		});
+
+		// then refresh list
+		yield put({type: FETCH_MOMENTS, payload: {
+			page: 1
+		}});
+	} catch (error) {
+		console.log('login error', error);
+	}
+}
+
+function* fetchDetail(action){
+	try {
+		let { data } = yield request(true).get("moments/details", {
+			moments_id: action.payload.id
+		});
+
+		yield put(loadDetail({
+			data: data
+		}));
+	} catch (error) {
+		console.log('login error', error);
+	}
+}
+
+function* likeMoment(action){
+	const { id, uid } = action.payload;
+	try {
+		yield request(true).post("moments/like", {
+			moments_id: id,
+			to_uid: uid
+		});
+		// then refresh detail
+		yield put({type: FETCH_MOMENTS, payload: {
+			page: 1
+		}});
+		yield put({type: FETCH_MOMENT_DETAIL, payload: {
+			id: id
+		}});
+	} catch (error) {
+		console.log('login error', error);
+	}
+}
+
+function* likeComment(action){
+	const { id, cid, uid } = action.payload;
+	try {
+		yield request(true).post("moments/comment-like", {
+			comment_id: id,
+			to_uid: uid
+		});
+		// then refresh detail
+		yield put({type: FETCH_MOMENT_DETAIL, payload: {
+			id: cid
+		}});
+	} catch (error) {
+		console.log('login error', error);
+	}
+}
+
+function* joinReward(action){
+	const { id } = action.payload;
+
+	try {
+		yield request(true).post("moments/participate", {
+			moments_id: id
+		});
+		
+		// then refresh detail
+		yield put({type: FETCH_MOMENT_DETAIL, payload: {
+			id: id
+		}});
+	} catch (error) {
+		console.log('login error', error);
+	}
+}
 // --------- /Moment Interface --------- //
 
 // --------- Reward Interface --------- //
@@ -61,8 +158,14 @@ function* momentSaga() {
 	yield [
 		takeLatest(REFRESH_MOMENTS, fetchMoments),
 		takeLatest(FETCH_MOMENTS, fetchMoments),
+		takeLatest(FETCH_MOMENT_DETAIL, fetchDetail),
 		takeLatest(FETCH_REWARD, fetchReword),
-		takeLatest(ADD_MOMENT, addMoment)
+		takeLatest(ADD_MOMENT, addMoment),
+		takeLatest(DELETE_MOMENT, delMoment),
+		takeLatest(SHIELD_MOMENT, shieldMoment),
+		takeLatest(DO_LIKE_MOMENT, likeMoment),
+		takeLatest(DO_LIKE_COMMENT, likeComment),
+		takeLatest(DO_JOIN_REWARD, joinReward)
 	];
 }
 
