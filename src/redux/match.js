@@ -15,6 +15,7 @@ export const LOAD_MY_LIST = 'LOAD_MY_LIST';
 
 export const FETCH_FILTERS = 'FETCH_FILTERS';
 export const LOAD_FILTERS = 'LOAD_FILTERS';
+export const SET_FILTER = 'SET_FILTER';
 
 export const FETCH_LOCATION = 'FETCH_LOCATION';
 export const LOAD_LOCATION = 'LOAD_LOCATION';
@@ -27,7 +28,11 @@ export const INITIAL_STATE = immutable({
 	myList: [],
 	filter: {
 		items: [],
-		roles: []
+		roles: [],
+		current: {
+			page: 2,
+			city_id: "5101"
+		}
 	},
 	city: {
 		current: {
@@ -53,6 +58,7 @@ export const loadMyList = createAction(LOAD_MY_LIST);
 
 export const fetchFilters = createAction(FETCH_FILTERS);
 export const loadFilters = createAction(LOAD_FILTERS);
+export const setFilter = createAction(SET_FILTER);
 
 export const fetchLoaction = createAction(FETCH_LOCATION);
 export const loadLoaction = createAction(LOAD_LOCATION);
@@ -115,6 +121,7 @@ export default handleActions({
 		return {
 			...state,
 			filter: {
+				...state.filter,
 				items: items,
 				roles: roles
 			}
@@ -136,5 +143,16 @@ export default handleActions({
 			hasMyNext: hasNext,
 			myList: list
 		};
+	},
+	[SET_FILTER]: (state, action) => {
+		const { data } = action;
+		let filter = {
+			...state.filter,
+			current: data
+		}
+		return {
+			...state,
+			filter: filter
+		}
 	}
 }, INITIAL_STATE);

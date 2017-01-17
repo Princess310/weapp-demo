@@ -4,8 +4,10 @@ import { put } from 'redux-saga/effects';
 import { LOAD_MOMENTS, FETCH_MOMENTS, REFRESH_MOMENTS, ADD_MOMENT,
 		 FETCH_INVITES,
 		 FETCH_REWARD, LOAD_REWARD } from '../redux/moment';
+import { FETCH_MATCH } from '../redux/match';
 import { request } from '../utils/request';
 import { load, loadReward } from '../redux/moment';
+import * as redux from 'labrador-redux';
 import wx from 'labrador';
 
 // --------- Moment Interface --------- //
@@ -28,7 +30,14 @@ function* fetchMoments(action) {
 
 function* addMoment(action){
 	try {
+		const { city, filter } = redux.getStore().getState().match;
 		yield request(true).post("moments/release", action.payload);
+
+		// after add moment, should refresh list for invites and moments
+		yield put({type: FETCH_MOMENTS, payload: {
+			page: 1
+		}});
+		yield put({type: FETCH_MATCH, payload: filter.current});
 	} catch (error) {
 		console.log('login error', error);
 	}

@@ -146,16 +146,7 @@ class Index extends Component {
 		}
 		
 		await this.props.addReward(props);
-		// refresh moment
-		await this.props.refreshMomentList({
-			page: 1
-		});
-		// refresh macth
-		await this.props.refreshMatchList({
-			page: 2,
-			city_id: self.props.match.city.current.id
-		});
-
+		
 		wx.navigateBack({
 			delta: 1
 		});

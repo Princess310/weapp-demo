@@ -1,6 +1,8 @@
 import wx, { Component, PropTypes } from 'labrador-immutable';
 import { bindActionCreators } from 'redux';
 import { connect } from 'labrador-redux';
+import { SET_FILTER } from '../../../redux/match';
+import * as redux from 'labrador-redux';
 import * as matchActions from '../../../redux/match';
 
 class Index extends Component {
@@ -166,13 +168,21 @@ class Index extends Component {
 				icon: 'loading'
 			})
 
-			this.props.getList({
+			const props = {
 				page: this.state.pageStart,
 				tag_identity_id: tag_identity_id,
 				reward_as: reward_as,
 				reward_item: reward_item,
 				city_id: self.props.match.city.current.id
+			}
+			
+			// store filter
+			redux.getStore().dispatch({
+				type: SET_FILTER,
+				data: props
 			});
+			// refresh list
+			this.props.getList(props);
 
 			wx.hideToast();
 		}

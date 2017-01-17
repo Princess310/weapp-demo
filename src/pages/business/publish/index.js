@@ -99,10 +99,6 @@ class Index extends Component {
 
 
 		await this.props.addMoment(props);
-		// refresh moment
-		await this.props.refreshMomentList({
-			page: 1
-		});
 
 		wx.navigateBack({
 			delta: 1

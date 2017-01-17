@@ -2,8 +2,8 @@ import wx, { Component, PropTypes } from 'labrador-immutable';
 import { bindActionCreators } from 'redux';
 import { connect } from 'labrador-redux';
 import city from '../../../utils/city';
-import { LOAD_LOCATION } from '../../../redux/match';
-import store from '../../../redux';
+import { LOAD_LOCATION, SET_FILTER } from '../../../redux/match';
+import * as redux from 'labrador-redux';
 import * as matchActions from '../../../redux/match';
 
 class Index extends Component {
@@ -157,6 +157,14 @@ class Index extends Component {
 
 	wxSortPickerViewItemTap(e){
 		let { id, text } = e.target.dataset;
+		let { filter } = this.props.match;
+
+		let props = {
+			...filter.current,
+			city_id: id
+		};
+		
+		const store = redux.getStore();
 		store.dispatch({
 			type: LOAD_LOCATION,
 			payload: {
@@ -167,11 +175,15 @@ class Index extends Component {
 			}
 		});
 
-		// refresh match list then
-		this.props.getMatchList({
-			page: 2,
-			city_id: id
+		store.dispatch({
+			type: SET_FILTER,
+			payload: {
+				data: props
+			}
 		});
+
+		// refresh match list then
+		this.props.getMatchList(props);
 		
 		wx.navigateBack({
 			delta: 1
