@@ -31,7 +31,8 @@ export const INITIAL_STATE = immutable({
 		roles: [],
 		current: {
 			page: 2,
-			city_id: "5101"
+			city_id: "5101",
+			keyword: ''
 		}
 	},
 	city: {

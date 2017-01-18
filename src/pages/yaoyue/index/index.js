@@ -15,7 +15,10 @@ class Index extends Component {
 		reward_as: 0,
 		reward_item: '',
 		filter: {},
-		showFilter: false
+		showFilter: false,
+		keyword: '',
+		inputShowed: false,
+		inputVal: ""
 	}
 
 	async onLoad() {
@@ -103,7 +106,8 @@ class Index extends Component {
 			tag_identity_id: this.state.tag_identity_id,
 			reward_as: this.state.reward_as,
 			reward_item: this.state.reward_item,
-			city_id: this.props.match.city.current.id
+			city_id: this.props.match.city.current.id,
+			keyword: this.state.inputVal
 		});
 
 		this.setState({
@@ -186,6 +190,42 @@ class Index extends Component {
 
 			wx.hideToast();
 		}
+	}
+
+	showInput() {
+		this.setState({
+			inputShowed: true
+		});
+	}
+
+	hideInput() {
+		this.setState({
+			inputVal: "",
+			inputShowed: false
+		});
+	}
+
+	clearInput() {
+		this.setState({
+			inputVal: ""
+		});
+	}
+
+	inputTyping(e) {
+		this.setState({
+			inputVal: e.detail.value
+		});
+	}
+
+	handleSearch(e){
+		this.props.getList({
+			page: this.state.page,
+			tag_identity_id: this.state.tag_identity_id,
+			reward_as: this.state.reward_as,
+			reward_item: this.state.reward_item,
+			city_id: this.props.match.city.current.id,
+			keyword: this.state.inputVal
+		});
 	}
 }
 
