@@ -226,6 +226,11 @@ class Index extends Component {
 			city_id: this.props.match.city.current.id,
 			keyword: this.state.inputVal
 		});
+
+		this.setState({
+			inputVal: "",
+			inputShowed: false
+		});
 	}
 }
 
