@@ -3,7 +3,7 @@ import { takeLatest } from 'redux-saga';
 import { put } from 'redux-saga/effects';
 import { LOAD_MOMENTS, FETCH_MOMENTS, REFRESH_MOMENTS, DELETE_MOMENT, ADD_MOMENT,
 		 FETCH_MOMENT_DETAIL, FETCH_INVITES, DO_LIKE_MOMENT, DO_LIKE_COMMENT,
-		 DO_JOIN_REWARD, FETCH_REWARD, LOAD_REWARD, SHIELD_MOMENT } from '../redux/moment';
+		 DO_JOIN_REWARD, FETCH_REWARD, LOAD_REWARD, SHIELD_MOMENT, DO_SEND_COMMENT } from '../redux/moment';
 import { FETCH_MATCH } from '../redux/match';
 import { request } from '../utils/request';
 import { load, loadDetail, loadReward, loadLikeMoment, loadLikeComment, loadJoinReward } from '../redux/moment';
@@ -139,6 +139,24 @@ function* joinReward(action){
 		console.log('login error', error);
 	}
 }
+
+function* sendComment(action){
+	try {
+		yield request(true).post("moments/comment", action.payload);
+
+		// then refresh detail and list
+		yield put({type: FETCH_MOMENT_DETAIL, payload: {
+			id: action.payload.moments_id
+		}});
+
+		// then refresh list
+		yield put({type: FETCH_MOMENTS, payload: {
+			page: 1
+		}});
+	} catch (error) {
+		console.log('login error', error);
+	}
+}
 // --------- /Moment Interface --------- //
 
 // --------- Reward Interface --------- //
@@ -163,6 +181,7 @@ function* momentSaga() {
 		takeLatest(ADD_MOMENT, addMoment),
 		takeLatest(DELETE_MOMENT, delMoment),
 		takeLatest(SHIELD_MOMENT, shieldMoment),
+		takeLatest(DO_SEND_COMMENT, sendComment),
 		takeLatest(DO_LIKE_MOMENT, likeMoment),
 		takeLatest(DO_LIKE_COMMENT, likeComment),
 		takeLatest(DO_JOIN_REWARD, joinReward)

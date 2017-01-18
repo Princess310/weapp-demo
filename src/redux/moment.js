@@ -19,6 +19,8 @@ export const LOAD_LIKE_MOMENT = 'LOAD_LIKE_MOMENT';
 export const DO_LIKE_COMMENT = 'DO_LIKE_COMMENT';
 export const LOAD_LIKE_COMMENT= 'LOAD_LIKE_COMMENT';
 
+export const DO_SEND_COMMENT = 'DO_SEND_COMMENT';
+
 export const DO_JOIN_REWARD = 'DO_JOIN_REWARD';
 export const LOAD_JOIN_REWARD= 'LOAD_JOIN_REWARD';
 
@@ -40,6 +42,8 @@ export const del = createAction(DELETE_MOMENT);
 export const add = createAction(ADD_MOMENT, (moment) => (moment));
 
 export const shieldMoment = createAction(SHIELD_MOMENT);
+
+export const sendComment = createAction(DO_SEND_COMMENT);
 
 export const fetchDetail = createAction(FETCH_MOMENT_DETAIL);
 export const loadDetail = createAction(LOAD_MOMENT_DETAIL, (data) => (data));

@@ -742,7 +742,7 @@
 }
 /*-------- /ali-search-container --------*/
 
-/*-------- fedd-detail-title --------*/
+/*-------- fedd-detail-item --------*/
 .fedd-detail-item{
 	padding: 20rpx 32rpx 20rpx 32rpx;
 	display: flex;
@@ -1047,4 +1047,43 @@
 		}
 	}
 }
-/*-------- /fedd-detail-title --------*/
+/*-------- /fedd-detail-item --------*/
+
+/*-------- chat-tool--------*/
+.chat-tool{
+	position: fixed;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	padding: 0 24rpx;
+	height: 120rpx;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	font-size: 28rpx;
+	border-top: 1rpx @color-v2-border solid;
+	background-color: @white;
+	.input-wrapper{
+		padding: 0 24rpx;
+		height: 60rpx;
+		width: 490rpx;
+		border: 1rpx #bebebe solid;
+		.border-radius(10rpx);
+		input{
+			height: 100%;
+			line-height: 60rpx;
+		}
+	}
+	button{
+		margin: 0;
+		height: 50rpx;	
+		line-height: 50rpx;
+		background-color: @color-v2-base-blue;
+		color: @white;
+		&.button-hover{
+			background-color: @color-v2-base-blue;
+			opacity: .7;
+		}
+	}
+}
+/*-------- /chat-tool--------*/

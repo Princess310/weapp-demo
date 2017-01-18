@@ -46,7 +46,7 @@
 			<image mode="aspectFill" src="../../../images/icon_share_grey.png"></image>
 			<text class="count">{{share_count}}</text>
 		</view> -->
-		<view class="operater-item comment-btn">
+		<view catchtap="handleShowChat" class="operater-item comment-btn">
 			<image mode="aspectFill" src="../../../images/comment_icon.png"></image>
 			<text class="count">{{props.moment.detail.comment_count}}</text>
 		</view>
@@ -83,7 +83,7 @@
 	<view class="content-panel">
 		<view class="content" hidden="{{state.activeIndex != 0}}">
 			<block wx:for="{{props.moment.detail.comments}}"  wx:key="id">
-				<view class="feed-comment-panel">
+				<view class="feed-comment-panel" data-id="{{item.id}}" catchtap="handleFocusComment">
 					<view class="feed-comment-left">
 						<navigator url="../../yaoyue/detail/index?id={{item.created_by}}" class="user-icon-wrapper">
 							<image mode="aspectFill" class="user-icon" src="{{item.avatar}}"/>
@@ -104,9 +104,11 @@
 						<view class="user-status-wrapper">
 							<view class="user-status-content">
 								<view class="words">
-									<text wx:if="{{item.to_name !== ''}}">回复<text class="to-name">
-										{{item.to_name}}
-									</text>：</text>
+									<block wx:if="{{item.to_name !== ''}}">
+										<text>回复</text>
+										<text class="to-name">{{item.to_name}}</text>
+										<text>：</text>
+									</block>
 									<text>{{item.content}}</text>
 								</view>
 							</view>
@@ -172,4 +174,11 @@
 			</block>
 		</view>
 	</view>
+</view>
+
+<view wx:if="{{state.showChat}}" class="chat-tool">
+	<view class="input-wrapper">
+		<input value="{{state.comment.content}}" bindblur="handleBlur" placeholder="输入评论..." bindinput="handleInputValue" bindconfirm="handleSendComment" />
+	</view>
+	<button type="primary" catchtap="handleSendComment">发送</button>
 </view>

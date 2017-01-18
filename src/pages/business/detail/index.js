@@ -8,7 +8,12 @@ class Index extends Component {
 		id: '',
 		activeIndex: 0,
 		sliderLeft: 20,
-		sliderOffset: 0
+		sliderOffset: 0,
+		showChat: false,
+		comment: {
+			cid: '',
+			content: ''
+		}
 	}
 
 	async onLoad(options) {
@@ -70,7 +75,6 @@ class Index extends Component {
 	}
 
 	tabClick(e) {
-		console.log('e.currentTarget.offsetLeft', e.currentTarget.offsetLeft,);
 		this.setState({
 			sliderOffset: e.currentTarget.offsetLeft,
 			activeIndex: e.currentTarget.id
@@ -121,6 +125,81 @@ class Index extends Component {
 			})
 		}
 	}
+
+	handleInputValue(e) {
+		const { cid } = this.state.comment;
+		let value = e.detail.value;
+
+		this.setState({
+			comment: {
+				cid: cid,
+				content: value
+			}
+		});
+	}
+
+	handleShowChat(){
+		this.setState({
+			showChat: true
+		});
+	}
+
+	handleBlur(){
+		this.setState({
+			showChat: false
+		});
+	}
+
+	handleFocusComment(e){
+		const self = this;
+		const { id } = e.currentTarget.dataset;
+
+		wx.showActionSheet({
+			itemList: ['回复'],
+			complete: function(res) {
+				if(res && res.tapIndex == 0){
+					self.setState({
+						showChat: true,
+						comment: {
+							cid: id,
+							content: ''
+						}
+					});
+				}
+			}
+		})
+	}
+
+	handleSendComment(e){
+		const { cid, content } = this.state.comment;
+		const { id, uid } = this.props.moment.detail;
+
+		if(content === ''){
+			return false;
+		}
+
+		let props = {
+			moments_id: id,
+			content: content,
+			to_uid: uid
+		}
+
+
+		if(cid !== ''){
+			props.pid = cid;
+		}
+
+		this.props.sendComment(props);
+
+		this.setState({
+			showChat: false,
+			comment: {
+				cid: '',
+				content: '',
+				focus: false
+			}
+		});
+	}
 }
 
 export default connect(
@@ -131,6 +210,7 @@ export default connect(
 		doLikeComment: momentActions.doLikeComment,
 		deleteMoment: momentActions.del,
 		shieldMoment: momentActions.shieldMoment,
-		doJoinReward: momentActions.doJoinReward
+		doJoinReward: momentActions.doJoinReward,
+		sendComment: momentActions.sendComment
 	}, dispatch)
 )(Index);
