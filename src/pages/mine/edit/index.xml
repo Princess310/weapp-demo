@@ -78,7 +78,7 @@
 				<text>详细地址</text>
 			</view>
 			<view class="weui-cell__ft">
-				<input placeholder="请输入您的详细地址(必填)" value="{{state.address}}"/>
+				<input placeholder="请输入您的详细地址(必填)" value="{{state.address}}" bindinput="handleAddress"/>
 			</view>
 		</view>
 	</view>

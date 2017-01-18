@@ -3,9 +3,9 @@ import { takeLatest } from 'redux-saga';
 import { put } from 'redux-saga/effects';
 import { FETCH_MATCH, FETCH_DETAIL, FETCH_MY_LIST, 
 		 FETCH_CITY, FETCH_FILTERS, FETCH_LOCATION,
-		 FETCH_INDUSTRY } from '../redux/match';
+		 FETCH_INDUSTRY, FETCH_BUSINESS_INFO } from '../redux/match';
 import { request } from '../utils/request';
-import { load, loadDetail, loadMyList, loadCity, loadFilters, loadLoaction, loadIndustry } from '../redux/match';
+import { load, loadDetail, loadMyList, loadCity, loadFilters, loadLoaction, loadIndustry, loadBusinessInfo } from '../redux/match';
 
 // --------- Invite Interface --------- //
 function* fetchIvites(action){
@@ -103,6 +103,20 @@ function* fetchIndustry(action){
 }
 // --------- /Industry Interface --------- //
 
+// --------- Business Interface --------- //
+function* fetchBusinessInfo(action){
+	try {
+		let { data } = yield request(true).get("user/business-info");
+
+		yield put(loadBusinessInfo({
+			data: data
+		}));
+	} catch (error) {
+		console.log('login error', error);
+	}
+}
+// --------- /Business Interface --------- //
+
 function* matchSaga() {
 	yield [
 		takeLatest(FETCH_MATCH, fetchIvites),
@@ -111,7 +125,8 @@ function* matchSaga() {
 		takeLatest(FETCH_CITY, fetchCityList),
 		takeLatest(FETCH_LOCATION, fetchLocation),
 		takeLatest(FETCH_FILTERS, fetchFilters),
-		takeLatest(FETCH_INDUSTRY, fetchIndustry)
+		takeLatest(FETCH_INDUSTRY, fetchIndustry),
+		takeLatest(FETCH_BUSINESS_INFO, fetchBusinessInfo)
 	];
 }
 

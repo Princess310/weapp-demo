@@ -57,6 +57,12 @@ class Index extends Component {
 		});
 	}
 
+	handleAddress(e) {
+		this.setState({
+			address: e.detail.value
+		});
+	}
+
 	chooseImage(e) {
 		let self = this;
 

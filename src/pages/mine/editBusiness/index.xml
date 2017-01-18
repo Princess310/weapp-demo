@@ -6,7 +6,7 @@
 				<view class="weui-cells weui-cells_after-title publish-area">
 					<view class="weui-cell">
 						<view class="weui-cell__bd">
-							<textarea placeholder="请输入业务介绍，字数限制200字" maxlength="200" style="height: 210rpx" bindinput="handleContent" />
+							<textarea placeholder="请输入业务介绍，字数限制200字" maxlength="200" value="{{state.content}}" style="height: 210rpx" bindinput="handleContent" />
 						</view>
 					</view>
 				</view>

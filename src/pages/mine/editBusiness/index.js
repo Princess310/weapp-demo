@@ -11,6 +11,17 @@ class Index extends Component {
 		filesLimit: 9,
 	}
 
+	onLoad() {
+		// get info first
+		const { business_intro, pictures } = this.props.match.business;
+
+		this.setState({
+			content: business_intro,
+			files: pictures,
+			fileCount: pictures.length
+		});
+	}
+
 	chooseImage(e) {
 		let self = this;
 		let count = this.state.filesLimit - this.state.files.length;
@@ -58,7 +69,7 @@ class Index extends Component {
 }
 
 export default connect(
-	({ user }) => ({ user }),
+	({ user, match }) => ({ user, match }),
 	(dispatch) => bindActionCreators({
 		save: userActions.saveBusiness
 	}, dispatch)

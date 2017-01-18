@@ -23,6 +23,9 @@ export const LOAD_LOCATION = 'LOAD_LOCATION';
 export const FETCH_INDUSTRY = 'FETCH_INDUSTRY';
 export const LOAD_INDUSTRY = 'LOAD_INDUSTRY';
 
+export const FETCH_BUSINESS_INFO = 'FETCH_BUSINESS_INFO';
+export const LOAD_BUSINESS_INFO = 'LOAD_BUSINESS_INFO';
+
 // 初始state
 export const INITIAL_STATE = immutable({
 	detail: {},
@@ -46,7 +49,8 @@ export const INITIAL_STATE = immutable({
 		hot_city: [],
 		normal_city: []
 	},
-	industry: []
+	industry: [],
+	business: {}
 });
 
 export const list = createAction(FETCH_MATCH);
@@ -70,6 +74,9 @@ export const loadLoaction = createAction(LOAD_LOCATION);
 
 export const fetchIndustry = createAction(FETCH_INDUSTRY);
 export const loadIndustry = createAction(LOAD_INDUSTRY);
+
+export const fetchBusinessInfo = createAction(FETCH_BUSINESS_INFO);
+export const loadBusinessInfo = createAction(LOAD_BUSINESS_INFO);
 
 export default handleActions({
 	[LOAD_MATCH]: (state, action) => {
@@ -164,11 +171,17 @@ export default handleActions({
 		}
 	},
 	[LOAD_INDUSTRY]: (state, action) => {
-		console.log("industry", action);
 		const { list } = action.payload;
 		return {
 			...state,
 			industry: list
+		}
+	},
+	[LOAD_BUSINESS_INFO]: (state, action) => {
+		const { data } = action.payload;
+		return {
+			...state,
+			business: data
 		}
 	}
 }, INITIAL_STATE);
