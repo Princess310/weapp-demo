@@ -1,7 +1,5 @@
 {
   "pages": [
-    "pages/message/index/index",
-
     "pages/business/index/index",
     "pages/business/publish/index",
     "pages/business/detail/index",
@@ -11,9 +9,12 @@
     "pages/yaoyue/detail/index",
 
     "pages/mine/index/index",
+    "pages/mine/edit/index",
+    "pages/mine/editBusiness/index",
 
     "pages/common/selectPanel/index",
-    "pages/common/selectCity/index"
+    "pages/common/selectCity/index",
+    "pages/common/selectIdentity/index"
   ],
   "window":{
     "backgroundTextStyle":"dark",
@@ -27,12 +28,6 @@
     "color": "#bcbcbc",
     "selectedColor": "#50abf1",
     "list": [
-      {
-        "pagePath": "pages/message/index/index",
-        "text": "消息",
-        "iconPath":"images/menu_xiaoxi.png",
-        "selectedIconPath":"images/menu_xiaoxi_active.png"
-      },
       {
         "pagePath": "pages/business/index/index",
         "text": "商务圈",

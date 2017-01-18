@@ -1,0 +1,22 @@
+<view class="swiper-panel">
+	<view scroll-x="true" class="type-wrapper">
+		<block wx:for="{{props.match.industry}}" wx:key="index">
+			<view class="type-circle {{state.id == item.id ? 'active' : ''}}" data-id='{{item.id}}' data-index="{{index}}" catchtap="handleTab">
+				<text data-id="{{item.id}}">{{item.name}}</text>
+			</view>
+		</block>
+	</view>
+	<view class="items-wrapper">
+		<block wx:for="{{props.match.industry}}" wx:key="index">
+			<view class="wrapper" hidden="{{state.id != item.id}}">
+				<block wx:for="{{item.children}}" wx:key="id" wx:for-item="c">
+					<view class="item {{state.selectedId == c.id ? 'active' : ''}}" data-id="{{c.id}}" data-name="{{c.name}}" catchtap="handleSelect">
+						<text>{{c.name}}</text>
+					</view>
+				</block>
+			</view>
+		</block>
+	</view>
+</view>
+
+<button class="comfirm-btn" catchtap="handleConfirm">确定</button>

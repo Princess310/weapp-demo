@@ -1,9 +1,11 @@
 import * as moment from '../redux/moment';
 import { takeLatest } from 'redux-saga';
 import { put } from 'redux-saga/effects';
-import { FETCH_MATCH, FETCH_DETAIL, FETCH_MY_LIST, FETCH_CITY, FETCH_FILTERS, FETCH_LOCATION } from '../redux/match';
+import { FETCH_MATCH, FETCH_DETAIL, FETCH_MY_LIST, 
+		 FETCH_CITY, FETCH_FILTERS, FETCH_LOCATION,
+		 FETCH_INDUSTRY } from '../redux/match';
 import { request } from '../utils/request';
-import { load, loadDetail, loadMyList, loadCity, loadFilters, loadLoaction } from '../redux/match';
+import { load, loadDetail, loadMyList, loadCity, loadFilters, loadLoaction, loadIndustry } from '../redux/match';
 
 // --------- Invite Interface --------- //
 function* fetchIvites(action){
@@ -87,6 +89,20 @@ function* fetchLocation(action){
 }
 // --------- /City Interface --------- //
 
+// --------- Industry Interface --------- //
+function* fetchIndustry(action){
+	try {
+		let { list } = yield request(true).get("industry/industry-lists");
+
+		yield put(loadIndustry({
+			list: list
+		}));
+	} catch (error) {
+		console.log('login error', error);
+	}
+}
+// --------- /Industry Interface --------- //
+
 function* matchSaga() {
 	yield [
 		takeLatest(FETCH_MATCH, fetchIvites),
@@ -94,7 +110,8 @@ function* matchSaga() {
 		takeLatest(FETCH_MY_LIST, fetchMyList),
 		takeLatest(FETCH_CITY, fetchCityList),
 		takeLatest(FETCH_LOCATION, fetchLocation),
-		takeLatest(FETCH_FILTERS, fetchFilters)
+		takeLatest(FETCH_FILTERS, fetchFilters),
+		takeLatest(FETCH_INDUSTRY, fetchIndustry)
 	];
 }
 

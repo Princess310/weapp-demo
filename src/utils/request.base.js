@@ -83,6 +83,11 @@ export function create(options) {
       }
     }
 
+    wx.showToast({
+      title: '加载中',
+      icon: 'loading'
+    });
+
     let res = await wx.request({
       method,
       url,
@@ -90,6 +95,7 @@ export function create(options) {
       header
     });
 
+    wx.hideToast();
 
     if (options.session !== false && res.data && res.data[updateKey]) {
       if (res.data && res.data[updateKey]) {
@@ -99,6 +105,14 @@ export function create(options) {
 
     if (res.data && res.data.error) {
       throw new Error(res.data.error);
+    }
+
+    if(res.data.code !== 200){
+      wx.showToast({
+        title: res.data.message,
+        icon: 'loading'
+      });
+      throw new Error(res.data.message);
     }
 
     return res.data;

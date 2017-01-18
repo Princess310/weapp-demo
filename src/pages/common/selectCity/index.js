@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'labrador-redux';
 import city from '../../../utils/city';
 import { LOAD_LOCATION, SET_FILTER } from '../../../redux/match';
+import { LOAD_SYS_CITY } from '../../../redux/sysEmit';
 import * as redux from 'labrador-redux';
 import * as matchActions from '../../../redux/match';
 
@@ -19,10 +20,18 @@ class Index extends Component {
 		scrollTop:0,
 		city:"",
 		cityArr:[],
-		src:'../../../images/dw.png'
+		src:'../../../images/dw.png',
+		action: ''
 	}
 
-	onLoad() {
+	onLoad(options) {
+		const { action } = options;
+		if(options){
+			this.setState({
+				action: action
+			});
+		}
+
 		// get list first
 		const self = this;
 		wx.showToast({
@@ -158,30 +167,41 @@ class Index extends Component {
 	wxSortPickerViewItemTap(e){
 		let { id, text } = e.target.dataset;
 		let { filter } = this.props.match;
+		const { action } = this.state;
 
-		let props = {
-			...filter.current,
-			city_id: id
-		};
-		
 		const store = redux.getStore();
-		store.dispatch({
-			type: LOAD_LOCATION,
-			payload: {
-				data: {
-					id: id,
+
+		if(action === 'sysEmit'){
+			store.dispatch({
+				type: LOAD_SYS_CITY,
+				payload: {
 					name: text
 				}
-			}
-		});
+			});
+		}else {
+			let props = {
+				...filter.current,
+				city_id: id
+			};
+			
+			store.dispatch({
+				type: LOAD_LOCATION,
+				payload: {
+					data: {
+						id: id,
+						name: text
+					}
+				}
+			});
 
-		store.dispatch({
-			type: SET_FILTER,
-			data: props
-		});
+			store.dispatch({
+				type: SET_FILTER,
+				data: props
+			});
 
-		// refresh match list then
-		this.props.getMatchList(props);
+			// refresh match list then
+			this.props.getMatchList(props);
+		}
 		
 		wx.navigateBack({
 			delta: 1

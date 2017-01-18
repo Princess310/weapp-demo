@@ -37,7 +37,7 @@ export default function (rootReducer, rootSaga) {
   const store = createStore(rootReducer, compose(...enhancers));
 
   // persist
-  persistStore(store, reduxPersist, () => store.dispatch(StartupActions.startup()));
+  // persistStore(store, reduxPersist, () => store.dispatch(StartupActions.startup()));
 
   // kick off root saga
   sagaMiddleware.run(rootSaga);

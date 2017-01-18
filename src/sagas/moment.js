@@ -1,12 +1,14 @@
 import * as moment from '../redux/moment';
 import { takeLatest } from 'redux-saga';
 import { put } from 'redux-saga/effects';
+import { STARTUP } from '../redux/startup';
 import { LOAD_MOMENTS, FETCH_MOMENTS, REFRESH_MOMENTS, DELETE_MOMENT, ADD_MOMENT,
 		 FETCH_MOMENT_DETAIL, FETCH_INVITES, DO_LIKE_MOMENT, DO_LIKE_COMMENT,
 		 DO_JOIN_REWARD, FETCH_REWARD, LOAD_REWARD, SHIELD_MOMENT, DO_SEND_COMMENT } from '../redux/moment';
 import { FETCH_MATCH } from '../redux/match';
-import { request } from '../utils/request';
+import { request, setSession } from '../utils/request';
 import { load, loadDetail, loadReward, loadLikeMoment, loadLikeComment, loadJoinReward } from '../redux/moment';
+import * as userActions from '../redux/user';
 import * as redux from 'labrador-redux';
 import wx from 'labrador';
 
@@ -15,6 +17,22 @@ function* fetchMoments(action) {
 	const { page } = action.payload;
 
 	try {
+		const { id } = redux.getStore().getState().user;
+		
+		// do login first here for now
+		if(!id){
+			let res = yield wx.login();
+			let data = yield wx.getUserInfo();
+			let user = yield request(false).post('user/wx-small-login', {
+				code: res.code,
+				type: 'cbeb1b',
+				...data
+			});
+
+			setSession(user.access_token);
+			yield put(userActions.load(user.data));
+		}
+
 		let { list, page: resPage } = yield request(true).get("moments/moments", {
 			page: page
 		});

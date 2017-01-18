@@ -20,6 +20,9 @@ export const SET_FILTER = 'SET_FILTER';
 export const FETCH_LOCATION = 'FETCH_LOCATION';
 export const LOAD_LOCATION = 'LOAD_LOCATION';
 
+export const FETCH_INDUSTRY = 'FETCH_INDUSTRY';
+export const LOAD_INDUSTRY = 'LOAD_INDUSTRY';
+
 // 初始state
 export const INITIAL_STATE = immutable({
 	detail: {},
@@ -43,6 +46,7 @@ export const INITIAL_STATE = immutable({
 		hot_city: [],
 		normal_city: []
 	},
+	industry: []
 });
 
 export const list = createAction(FETCH_MATCH);
@@ -63,6 +67,9 @@ export const setFilter = createAction(SET_FILTER);
 
 export const fetchLoaction = createAction(FETCH_LOCATION);
 export const loadLoaction = createAction(LOAD_LOCATION);
+
+export const fetchIndustry = createAction(FETCH_INDUSTRY);
+export const loadIndustry = createAction(LOAD_INDUSTRY);
 
 export default handleActions({
 	[LOAD_MATCH]: (state, action) => {
@@ -154,6 +161,14 @@ export default handleActions({
 		return {
 			...state,
 			filter: filter
+		}
+	},
+	[LOAD_INDUSTRY]: (state, action) => {
+		console.log("industry", action);
+		const { list } = action.payload;
+		return {
+			...state,
+			industry: list
 		}
 	}
 }, INITIAL_STATE);

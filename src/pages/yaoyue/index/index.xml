@@ -66,7 +66,7 @@
 		<view class="weui-search-bar__cancel-btn" hidden="{{!state.inputShowed}}" bindtap="hideInput">取消</view>
 	</view>
 </view>
-<view wx:if="{{props.user.tag_identity_id > 0 }}" class="tip-bar">
+<!-- <view wx:if="{{props.user.tag_identity_id > 0 }}" class="tip-bar">
 	<view class="info">
 		<image src="../../../images/tip_icon.png"/>
 		<text>填写您的优势需求，让匹配的人更精准！</text>
@@ -74,7 +74,7 @@
 	<navigator url="../publish/index">
 		<text class="link">现在就去</text>
 	</navigator>
-</view>
+</view> -->
 <view>
 	<block wx:for="{{props.match.list}}"  wx:key="id">
 		<template is="feed-detail-invite" data="{{...item, index: index}}" />

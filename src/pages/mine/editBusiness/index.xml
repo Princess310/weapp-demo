@@ -1,0 +1,44 @@
+<view class="weui-panel weui-panel_access">
+	<view class="weui-panel__bd">
+		<view class="weui-media-box weui-media-box_text">
+			<view class="weui-media-box__title weui-media-box__title_in-text">业务介绍</view>
+			<view class="weui-media-box__desc">
+				<view class="weui-cells weui-cells_after-title publish-area">
+					<view class="weui-cell">
+						<view class="weui-cell__bd">
+							<textarea placeholder="请输入业务介绍，字数限制200字" maxlength="200" style="height: 210rpx" bindinput="handleContent" />
+						</view>
+					</view>
+				</view>
+			</view>
+		</view>
+	</view>
+</view>
+
+<view class="weui-cells">
+	<view class="weui-cell">
+		<view class="weui-cell__bd">
+			<view class="weui-uploader">
+				<view class="weui-uploader__hd">
+					<view class="weui-uploader__title">图片上传</view>
+					<view class="weui-uploader__info">{{state.fileCount}}/{{state.filesLimit}}</view>
+				</view>
+				<view class="weui-uploader__bd">
+					<view class="weui-uploader__files" id="uploaderFiles">
+						<block wx:for-items="{{state.files}}" wx:key="{{index}}">
+								<view class="weui-uploader__file">
+									<image class="weui-uploader__img" src="{{item}}" mode="aspectFill" />
+									<image class="weui-uploader__clear_file" src="../../images/clear-icon.png" mode="aspectFill" data-index="{{index}}" catchtap="clearFile" />
+								</view>
+						</block>
+						<view class="weui-uploader__input-box">
+							<view class="weui-uploader__input" bindtap="chooseImage"></view>
+						</view>
+					</view>
+				</view>
+			</view>
+		</view>
+	</view>
+</view>
+
+<button class="weui-btn publish-btn" type="primary" catchtap="handleSubmit">保存</button>

@@ -1,0 +1,115 @@
+<view>
+	<view class="weui-cells">
+		<view class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+			<view class="weui-cell__bd">
+				<text>头像</text>
+			</view>
+			<view class="weui-cell__ft">
+				<image class="avatar-img" src="{{state.avatar}}" mode="aspectFill" bindtap="chooseImage"/>
+			</view>
+		</view>
+	</view>
+
+	<view class="weui-cells">
+		<view class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+			<view class="weui-cell__bd">
+				<text>真实姓名</text>
+			</view>
+			<view class="weui-cell__ft">
+				<input placeholder="请输入您的姓名(必填)" value="{{state.nickname}}" bindinput="handleName"/>
+			</view>
+		</view>
+		<view class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+			<view class="weui-cell__bd">
+				<text>性别</text>
+			</view>
+			<view class="weui-cell__ft gender-wrapper">
+				<view class="gender-wrapper" data-value="1" catchtap="handleGender">
+					<icon wx:if="{{state.gender == 1}}" type="success" size="23"></icon>
+					<icon wx:if="{{state.gender == 2}}" type="circle" size="23"></icon>
+					<text>男</text>
+				</view>
+				<view class="gender-wrapper" data-value="2" catchtap="handleGender">
+					<icon wx:if="{{state.gender == 2}}" type="success" size="23"></icon>
+					<icon wx:if="{{state.gender == 1}}" type="circle" size="23"></icon>
+					<text>女</text>
+				</view>
+			</view>
+		</view>
+	</view>
+
+	<view class="weui-cells">
+		<navigator url="../../common/selectIdentity/index?id={{props.sysEmit.selectIndustry.id}}_{{props.sysEmit.selectIndustry.sid}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+			<view class="weui-cell__bd">
+				<text>行业方向</text>
+			</view>
+			<view class="weui-cell__ft weui-cell__ft_in-access">
+				<text wx:if="{{state.tag_identity_name == ''}}" class="no-value">请选择行业方向</text>
+				<text wx:else>{{props.sysEmit.selectIndustry.name}}</text>
+			</view>
+		</navigator>
+		<view class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+			<view class="weui-cell__bd">
+				<text>公司</text>
+			</view>
+			<view class="weui-cell__ft">
+				<input placeholder="请输入您的公司名称(必填)" value="{{state.company}}" bindinput="handleCompany"/>
+			</view>
+		</view>
+		<view class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+			<view class="weui-cell__bd">
+				<text>职位</text>
+			</view>
+			<view class="weui-cell__ft">
+				<input placeholder="请输入您的职位(必填)" value="{{state.position}}" bindinput="handlePosition"/>
+			</view>
+		</view>
+		<navigator url="../../common/selectCity/index?action=sysEmit" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+			<view class="weui-cell__bd">
+				<text>工作地区</text>
+			</view>
+			<view class="weui-cell__ft weui-cell__ft_in-access">
+				<text wx:if="{{props.sysEmit.selectCity.name == ''}}" class="no-value">请选择您的工作地区</text>
+				<text wx:else>{{props.sysEmit.selectCity.name}}</text>
+			</view>
+		</navigator>
+		<view class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+			<view class="weui-cell__bd">
+				<text>详细地址</text>
+			</view>
+			<view class="weui-cell__ft">
+				<input placeholder="请输入您的详细地址(必填)" value="{{state.address}}"/>
+			</view>
+		</view>
+	</view>
+
+	<view class="ali-title">
+		<text>联系方式</text>
+	</view>
+
+	<view class="weui-cells action-wrapper">
+		<view class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+			<view class="weui-cell__bd">
+				<text>邀约号</text>
+			</view>
+			<view class="weui-cell__ft">
+				<block wx:if="{{state.showEditUsername}}">
+					<input placeholder="输入您的邀约号" value="{{state.username}}" bindinput="handleUsername"/>
+					<button class="weui-btn" type="primary" plain="true" catchtap="handleSaveUsername">确认</button>
+				</block>
+				<text wx:else>{{state.username}}</text>
+			</view>
+		</view>
+		<view class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+			<view class="weui-cell__bd">
+				<text>手机号</text>
+			</view>
+			<view class="weui-cell__ft">
+				<text>{{state.mobile}}</text>
+				<button class="weui-btn" type="primary" plain="true">修改</button>
+			</view>
+		</view>
+	</view>
+
+	<button class="weui-btn publish-btn" type="primary" catchtap="handleSubmit">保存</button>
+</view>

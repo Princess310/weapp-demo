@@ -1,0 +1,59 @@
+@import '../../../styles/mixins.less';
+
+.type-wrapper{
+	margin-top: 12rpx;
+	padding: 32rpx 24rpx;
+	background-color: @white;
+	display: flex;
+	align-items: center;
+	justify-content:center;
+	font-size: 24rpx;
+	text-align: center;
+	.type-circle{
+		margin: 0 32rpx;
+		width: 100rpx;
+		height: 100rpx;
+		display: flex;
+		align-items: center;
+		justify-content:center;
+		color: #bcbcbc;
+		border: 1rpx #bcbcbc solid;
+		.border-radius(100%);
+		&.active{
+			color: @color-v2-base-blue;
+			border-color: @color-v2-base-blue;
+		}
+	}
+}
+
+.items-wrapper{
+	padding: 24rpx;
+	margin-top: 12rpx;
+	background-color: @white;
+	.item{
+		display: inline-block;
+		margin-top: 12rpx;
+		margin-left: 12rpx;
+		width: 155rpx;
+		height: 65rpx;
+		line-height: 65rpx;
+		text-align: center;
+		border: 1rpx @color-v2-base-blue solid;
+		color: @color-v2-base-blue;
+		.border-radius(10rpx);
+		&.active{
+			background-color: @color-v2-base-blue;
+			color: @white;
+		}
+	}
+}
+
+.comfirm-btn{
+	margin-top: 15rpx;
+	width: 420rpx;
+	color: @white;
+	background-color: @color-v2-base-blue;
+	&.button-hover{
+		opacity: .7;
+	}
+}
