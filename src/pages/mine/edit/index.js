@@ -109,6 +109,11 @@ class Index extends Component {
 		this.props.saveUsername({
 			username: username
 		});
+
+		// refresh state for username
+		this.setState({
+			username: username
+		});
 	}
 }
 
