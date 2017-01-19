@@ -21,6 +21,14 @@ class Index extends Component {
 		inputVal: ""
 	}
 
+	onShareAppMessage() {
+		return {
+			title: '邀请您加入小邀约',
+			desc: '做推广，找合作，就用商务邀约 ',
+			path: '/pages/business/index/index'
+		}
+	}
+
 	async onLoad() {
 		// get list first
 		const self = this;

@@ -31,6 +31,13 @@ function* fetchMoments(action) {
 
 			setSession(user.access_token);
 			yield put(userActions.load(user.data));
+
+			// if have not industry, should load the guide page
+			if(user.data.industry_son_id <= 0){
+				wx.navigateTo({
+					url: '../../../pages/common/guide/index'
+				});
+			}
 		}
 
 		let { list, page: resPage } = yield request(true).get("moments/moments", {

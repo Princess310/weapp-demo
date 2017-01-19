@@ -106,7 +106,9 @@
 			</view>
 			<view class="weui-cell__ft">
 				<text>{{state.mobile}}</text>
-				<button class="weui-btn" type="primary" plain="true">修改</button>
+				<navigator url="../editMobile/index">
+					<button class="weui-btn" type="primary" plain="true">修改</button>
+				</navigator>
 			</view>
 		</view>
 	</view>

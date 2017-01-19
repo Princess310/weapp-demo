@@ -57,6 +57,21 @@ class Index extends Component {
 		});
 	}
 
+	clearFile(e){
+		const { index } = e.currentTarget.dataset;
+		const { files } = this.state;
+
+		let newFiles = files.filter((f, i) => {
+			if(index !== i){
+				return f;
+			}
+		});
+
+		this.setState({
+			files: newFiles
+		});
+	}
+
 	async handleSubmit(){
 		const { content, files, tel, showTel } = this.state;
 
@@ -77,7 +92,7 @@ class Index extends Component {
 					}
 				});
 
-				return flase;
+				return false;
 			}
 
 			props.mobile = tel;
@@ -94,7 +109,7 @@ class Index extends Component {
 				}
 			});
 
-			return flase;
+			return false;
 		}
 
 

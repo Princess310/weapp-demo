@@ -1,9 +1,30 @@
 @import '../../../styles/mixins.less';
 
 .feed-detail-card {
+	position: relative;
 	margin-top:20rpx;
 
 	border-top:1rpx solid @color-v2-border;
+
+	.follow-wrapper{
+		position: absolute;
+		top: 24rpx;
+		right: 0;
+		.wrapper{
+			display: flex;
+			align-items: center;
+			flex-direction: column;
+			font-size: 24rpx;
+			image{
+				width: 40rpx;
+				height: 40rpx;
+			}
+			text{
+				margin-top: 4rpx;
+				color: @color-v2-base-blue;
+			}
+		}
+	}
 }
 
 .user-tags {

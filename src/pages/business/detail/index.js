@@ -16,6 +16,15 @@ class Index extends Component {
 		}
 	}
 
+	onShareAppMessage() {
+		const { id, nickname, content } = this.props.moment.detail;
+		return {
+			title: '分享' + nickname + '的邀约动态',
+			desc: '做推广，找合作，就用商务邀约  ' + content,
+			path: '/pages/business/detail/index?id=' + id
+		}
+	}
+
 	async onLoad(options) {
 		const { id } = options;
 

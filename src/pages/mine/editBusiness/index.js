@@ -56,14 +56,28 @@ class Index extends Component {
 
 	handleSubmit(){
 		const { content, files } = this.state;
-		console.log("files", files.join(","));
 		this.props.save({
 			business_intro: content,
-			pictures: files
+			pictures: JSON.stringify(files)
 		});
 
 		wx.navigateBack({
 			delta: 1
+		});
+	}
+
+	clearFile(e){
+		const { index } = e.currentTarget.dataset;
+		const { files } = this.state;
+
+		let newFiles = files.filter((f, i) => {
+			if(index !== i){
+				return f;
+			}
+		});
+
+		this.setState({
+			files: newFiles
 		});
 	}
 }

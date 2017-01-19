@@ -52,7 +52,7 @@
 						<block wx:for-items="{{state.files}}" wx:key="{{index}}">
 								<view class="weui-uploader__file">
 									<image class="weui-uploader__img" src="{{item}}" mode="aspectFill" />
-									<image class="weui-uploader__clear_file" src="../../images/clear-icon.png" mode="aspectFill" data-index="{{index}}" catchtap="clearFile" />
+									<image class="weui-uploader__clear_file" src="../../../images/clear-icon.png" mode="aspectFill" data-index="{{index}}" catchtap="clearFile" />
 								</view>
 						</block>
 						<view class="weui-uploader__input-box">

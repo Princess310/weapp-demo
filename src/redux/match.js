@@ -26,6 +26,16 @@ export const LOAD_INDUSTRY = 'LOAD_INDUSTRY';
 export const FETCH_BUSINESS_INFO = 'FETCH_BUSINESS_INFO';
 export const LOAD_BUSINESS_INFO = 'LOAD_BUSINESS_INFO';
 
+export const FETCH_TAG_LIST = 'FETCH_TAG_LIST';
+export const LOAD_TAG_LIST = 'LOAD_TAG_LIST';
+export const ADD_TAG = 'ADD_TAG';
+export const DELETE_TAG = 'DELETE_TAG';
+export const SELECT_TAG = 'SELECT_TAG';
+export const SAVE_TAGS = 'SAVE_TAGS';
+
+export const FOLLOW_USER = 'FOLLOW_USER';
+export const CANCEL_FOLLOW_USER = 'CANCEL_FOLLOW_USER';
+
 // 初始state
 export const INITIAL_STATE = immutable({
 	detail: {},
@@ -50,7 +60,8 @@ export const INITIAL_STATE = immutable({
 		normal_city: []
 	},
 	industry: [],
-	business: {}
+	business: {},
+	tags: {}
 });
 
 export const list = createAction(FETCH_MATCH);
@@ -77,6 +88,16 @@ export const loadIndustry = createAction(LOAD_INDUSTRY);
 
 export const fetchBusinessInfo = createAction(FETCH_BUSINESS_INFO);
 export const loadBusinessInfo = createAction(LOAD_BUSINESS_INFO);
+
+export const fetchTags = createAction(FETCH_TAG_LIST);
+export const loadTags = createAction(LOAD_TAG_LIST);
+export const addTag = createAction(ADD_TAG);
+export const deleteTag = createAction(DELETE_TAG);
+export const selectTag = createAction(SELECT_TAG);
+export const saveTags = createAction(SAVE_TAGS);
+
+export const followUser = createAction(FOLLOW_USER);
+export const cancelFollowUser = createAction(CANCEL_FOLLOW_USER);
 
 export default handleActions({
 	[LOAD_MATCH]: (state, action) => {
@@ -183,5 +204,48 @@ export default handleActions({
 			...state,
 			business: data
 		}
+	},
+	[LOAD_TAG_LIST]: (state, action) => {
+		let { data } = action.payload;
+
+		return {
+			...state,
+			tags: data
+		}
+	},
+	[SELECT_TAG]: (state, action) => {
+		let { id, type } = action.payload;
+		let { display_list } = state.tags;
+		let { advantage, needs } = display_list;
+
+		if(type == 'advantage'){
+			advantage = advantage.map((a) => {
+				if(a.id === id){
+					a.selected =  a.selected == 1 ? 0 : 1;
+				}
+
+				return a;
+			});
+		}else {
+			needs = needs.map((n) => {
+				if(n.id === id){
+					n.selected =  n.selected == 1 ? 0 : 1;
+				}
+
+				return n;
+			});
+		}
+
+		return{
+			...state,
+			tags: {
+				...state.tags,
+				display_list: {
+					advantage: advantage,
+					needs: needs
+				}
+			}
+		}
+
 	}
 }, INITIAL_STATE);

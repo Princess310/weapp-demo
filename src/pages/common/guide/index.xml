@@ -1,0 +1,44 @@
+<view class="container">
+	<view class="avatar-container">
+		<view class="avatar-wrapper" bindtap="chooseImage">
+			<image class="avatar" src="{{state.avatar}}" mode="aspectFill" />
+			<image class="img-icon" src="../../../images/icon_photo.png" mode="aspectFill" />
+		</view>
+		<text class="des">点击上传头像</text>
+	</view>
+
+	<view class="weui-cells weui-cells_after-title">
+		<view class="weui-cell">
+			<view class="weui-cell__bd">
+				<input maxlength="6" placeholder="真实姓名" value="{{state.nickname}}" bindinput="handleNickname"/>
+			</view>
+		</view>
+		<view class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+			<view class="weui-cell__bd">
+				<text>性别</text>
+			</view>
+			<view class="weui-cell__ft gender-wrapper">
+				<view class="gender-wrapper" data-value="1" catchtap="handleGender">
+					<icon wx:if="{{state.gender == 1}}" type="success" size="23"></icon>
+					<icon wx:if="{{state.gender == 2}}" type="circle" size="23"></icon>
+					<text>男</text>
+				</view>
+				<view class="gender-wrapper" data-value="2" catchtap="handleGender">
+					<icon wx:if="{{state.gender == 2}}" type="success" size="23"></icon>
+					<icon wx:if="{{state.gender == 1}}" type="circle" size="23"></icon>
+					<text>女</text>
+				</view>
+			</view>
+		</view>
+		<navigator url="../../common/selectIdentity/index?id={{props.sysEmit.selectIndustry.id}}_{{props.sysEmit.selectIndustry.sid}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+				<view class="weui-cell__bd">
+					<text>行业方向</text>
+				</view>
+				<view class="weui-cell__ft weui-cell__ft_in-access">
+					<text wx:if="{{state.tag_identity_name !== ''}}">{{props.sysEmit.selectIndustry.name}}</text>
+				</view>
+			</navigator>
+	</view>
+
+	<button class="publish-btn" catchtap="handleSave">确定</button>
+</view>

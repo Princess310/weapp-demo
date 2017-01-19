@@ -7,3 +7,61 @@
 .publish-btn{
 	width: 420rpx;
 }
+
+.weui-media-box__title{
+	display: flex;
+	justify-content: space-between;
+	.edit-tags{
+		color: @color-v2-base-blue;
+	}
+}
+
+.user-tags {
+	.user-box-wrapper {
+		display:flex;
+		.box-des {
+			font-size:28rpx;
+
+			display:flex;
+
+			min-width:120rpx;
+
+			color:@color-v2-txt-help;
+
+			justify-content:space-between;
+			align-items:center;
+		}
+		.box-container {
+			height:auto;
+			padding-bottom:15rpx;
+			.box-item {
+				font-size:26rpx;
+				line-height:.533333rem;
+				line-height:38rpx;
+
+				display:inline-block;
+
+				width:175rpx;
+				height:38rpx;
+				margin-top:15rpx;
+				margin-left:15rpx;
+
+				text-align:center;
+
+				.border-radius(4rpx);
+			}
+			&.advantage {
+				.box-item {
+					color:#4a90c7;
+					background-color:#e3eaf0;
+				}
+			}
+			&.require {
+				.box-item {
+					color:@white;
+					background-color:@color-v2-base-blue;
+				}
+			}
+		}
+	}
+}

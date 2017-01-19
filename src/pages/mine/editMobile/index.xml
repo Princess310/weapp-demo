@@ -1,0 +1,24 @@
+<view class="container">
+	<view class="weui-cells weui-cells_after-title">
+		<view class="weui-cell">
+			<view class="weui-cell__bd">
+				<input maxlength="11" type="number" value="{{state.mobile}}" placeholder="手机号码" bindinput="handleMoblie"/>
+			</view>
+		</view>
+		<view class="weui-cell">
+			<view class="weui-cell__bd">
+				<input maxlength="12" placeholder="验证码" value="{{state.code}}" bindinput="handleCode"/>
+			</view>
+			<view class="weui-cell__ft">
+				<text class="get-verify-code" catchtap="handleGetCode">获取验证码</text>
+			</view>
+		</view>
+		<view class="weui-cell">
+			<view class="weui-cell__bd">
+				<input maxlength="20" password="true" placeholder="密码6-20位字符" value="{{state.password}}" bindinput="handlePassword"/>
+			</view>
+		</view>
+	</view>
+
+	<button class="publish-btn" catchtap="handleSave">完成</button>
+</view>

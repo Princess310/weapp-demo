@@ -99,6 +99,21 @@ class Index extends Component {
 		});
 	}
 
+	clearFile(e){
+		const { index } = e.currentTarget.dataset;
+		const { files } = this.state;
+
+		let newFiles = files.filter((f, i) => {
+			if(index !== i){
+				return f;
+			}
+		});
+
+		this.setState({
+			files: newFiles
+		});
+	}
+
 	async handleSubmit(e){
 		const self = this;
 		const { type, reward_amount, content, files, showTel, tel, category } = this.state;
@@ -125,7 +140,7 @@ class Index extends Component {
 					}
 				});
 
-				return flase;
+				return false;
 			}
 
 			props.mobile = tel;
@@ -142,7 +157,7 @@ class Index extends Component {
 				}
 			});
 
-			return flase;
+			return false;
 		}
 		
 		await this.props.addReward(props);

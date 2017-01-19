@@ -1,0 +1,44 @@
+<view class="ali-title">
+	<text>您的优势 (最多显示3个)</text>
+</view>
+
+<view class="tags-wrapper advantage">
+	<block wx:for-items="{{props.match.tags.display_list.advantage}}" wx:key="{{index}}">
+		<view class="item {{item.selected === 1 ? 'active' : ''}}" data-select="{{item.selected}}" data-id="{{item.id}}" data-type="advantage" catchtap="handleItem">
+			<text>{{item.name}}</text>
+			<image wx:if="{{item.custom !== '0'}}" class="weui-uploader__clear_file" src="../../../images/clear-icon.png" mode="aspectFill" data-id="{{item.id}}" catchtap="clearTag" />
+		</view>
+	</block>
+</view>
+
+<view class="add-btn advantage" data-type="advantage" catchtap="showInput">
+	<image src="../../../images/icon_add_green.png" mode="aspectFill" data-index="{{index}}" catchtap="clearTag" />
+	<text>自己加标签</text>
+</view>
+
+<view class="ali-title">
+	<text>您的需求 (最多显示3个)</text>
+</view>
+
+<view class="tags-wrapper needs">
+	<block wx:for-items="{{props.match.tags.display_list.needs}}" wx:key="{{index}}">
+		<view class="item {{item.selected === 1 ? 'active' : ''}}" data-select="{{item.selected}}" data-id="{{item.id}}" data-type="needs" catchtap="handleItem">
+			<text>{{item.name}}</text>
+			<image wx:if="{{item.custom !== '0'}}" class="weui-uploader__clear_file" src="../../../images/clear-icon.png" mode="aspectFill" data-id="{{item.id}}" catchtap="clearTag" />
+		</view>
+	</block>
+</view>
+
+<view class="add-btn needs" data-type="needs" catchtap="showInput">
+	<image src="../../../images/icon_add_blue.png" mode="aspectFill" data-index="{{index}}" catchtap="clearTag" />
+	<text>自己加标签</text>
+</view>
+
+<view wx:if="{{state.showInput}}" class="edit-tool">
+	<view class="input-wrapper">
+		<input cursor-spacing="15" value="{{state.inputValue}}" placeholder="输入自定义标签，字数最多不超过8个" maxlength="8" bindinput="handleInputValue" bindblur="handleBlur" bindconfirm="handleAddTag" />
+	</view>
+	<button type="primary" catchtap="handleAddTag">添加</button>
+</view>
+
+<button class="weui-btn publish-btn" type="primary" catchtap="handleSave">保存</button>

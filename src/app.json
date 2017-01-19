@@ -11,10 +11,13 @@
     "pages/mine/index/index",
     "pages/mine/edit/index",
     "pages/mine/editBusiness/index",
+    "pages/mine/editTags/index",
+    "pages/mine/editMobile/index",
 
     "pages/common/selectPanel/index",
     "pages/common/selectCity/index",
-    "pages/common/selectIdentity/index"
+    "pages/common/selectIdentity/index",
+    "pages/common/guide/index"
   ],
   "window":{
     "backgroundTextStyle":"dark",

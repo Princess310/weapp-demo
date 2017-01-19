@@ -3,9 +3,14 @@ import { takeLatest } from 'redux-saga';
 import { put } from 'redux-saga/effects';
 import { FETCH_MATCH, FETCH_DETAIL, FETCH_MY_LIST, 
 		 FETCH_CITY, FETCH_FILTERS, FETCH_LOCATION,
-		 FETCH_INDUSTRY, FETCH_BUSINESS_INFO } from '../redux/match';
+		 FETCH_INDUSTRY, FETCH_BUSINESS_INFO, FETCH_TAG_LIST,
+		 ADD_TAG, DELETE_TAG, SAVE_TAGS,
+		 FOLLOW_USER, CANCEL_FOLLOW_USER } from '../redux/match';
+import { REFRESH } from '../redux/user';
 import { request } from '../utils/request';
-import { load, loadDetail, loadMyList, loadCity, loadFilters, loadLoaction, loadIndustry, loadBusinessInfo } from '../redux/match';
+import { load, loadDetail, loadMyList, loadCity, 
+		 loadFilters, loadLoaction, loadIndustry, 
+		 loadBusinessInfo, loadTags, saveTags } from '../redux/match';
 
 // --------- Invite Interface --------- //
 function* fetchIvites(action){
@@ -54,6 +59,30 @@ function* fetchFilters(){
 			items: items,
 			roles: roles
 		}));
+	} catch (error) {
+		console.log('login error', error);
+	}
+}
+
+function* followUser(action){
+	try {
+		yield request(true).post("follow/add-follow", action.payload);
+
+		yield put({type: FETCH_DETAIL, payload: {
+			id: action.payload.fid
+		}});
+	} catch (error) {
+		console.log('login error', error);
+	}
+}
+
+function* cancelFollowUser(action){
+	try {
+		yield request(true).put("follow/cancel-follow", action.payload);
+
+		yield put({type: FETCH_DETAIL, payload: {
+			id: action.payload.fid
+		}});
 	} catch (error) {
 		console.log('login error', error);
 	}
@@ -115,6 +144,50 @@ function* fetchBusinessInfo(action){
 		console.log('login error', error);
 	}
 }
+
+function* fetchTags(action){
+	try {
+		let { data } = yield request(true).get("tag/business-tag-list");
+
+		yield put(loadTags({
+			data: data
+		}));
+	} catch (error) {
+		console.log('login error', error);
+	}
+}
+
+function* addTag(action){
+	try {
+		yield request(true).post("tag/add-tag", action.payload);
+
+		yield put({type: FETCH_TAG_LIST, payload: {}});
+	} catch (error) {
+		console.log('login error', error);
+	}
+}
+
+function* delTag(action){
+	try {
+		yield request(true).delete("tag/delete-tags", action.payload);
+
+		yield put({type: FETCH_TAG_LIST, payload: {}});
+	} catch (error) {
+		console.log('login error', error);
+	}
+}
+
+function* saveTagInfo(action){
+	try {
+		yield request(true).put("tag/business-edit-tags", action.payload);
+
+		yield put({type: FETCH_TAG_LIST, payload: {}});
+		yield put({type: FETCH_BUSINESS_INFO, payload: {}});
+		yield put({type: REFRESH, payload: {}});
+	} catch (error) {
+		console.log('login error', error);
+	}
+}
 // --------- /Business Interface --------- //
 
 function* matchSaga() {
@@ -126,7 +199,13 @@ function* matchSaga() {
 		takeLatest(FETCH_LOCATION, fetchLocation),
 		takeLatest(FETCH_FILTERS, fetchFilters),
 		takeLatest(FETCH_INDUSTRY, fetchIndustry),
-		takeLatest(FETCH_BUSINESS_INFO, fetchBusinessInfo)
+		takeLatest(FETCH_BUSINESS_INFO, fetchBusinessInfo),
+		takeLatest(FETCH_TAG_LIST, fetchTags),
+		takeLatest(ADD_TAG, addTag),
+		takeLatest(DELETE_TAG, delTag),
+		takeLatest(SAVE_TAGS, saveTagInfo),
+		takeLatest(FOLLOW_USER, followUser),
+		takeLatest(CANCEL_FOLLOW_USER, cancelFollowUser)
 	];
 }
 

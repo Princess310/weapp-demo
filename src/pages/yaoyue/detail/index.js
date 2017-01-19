@@ -16,6 +16,15 @@ class Index extends Component {
 		}
 	}
 
+	onShareAppMessage() {
+		const { id, nickname, company, position, advantage, needs } = this.props.match.detail;
+		return {
+			title: '分享' + nickname + '的名片',
+			desc: '公司：' + company + '，职位：' + position + '，优势：' + advantage.join(' | ') + '，需求：' + needs.join(' | '),
+			path: '/pages/yaoyue/detail/index?id=' + id
+		}
+	}
+
 	async onLoad(options) {
 		const { id } = options;
 
@@ -77,12 +86,28 @@ class Index extends Component {
 			urls: this.props.match.detail.pictures
 		});
 	}
+
+	handleFollow(e){
+		const { action } = e.currentTarget.dataset;
+
+		if(action === 'follow'){
+			this.props.followUser({
+				fid: this.props.match.detail.id
+			});
+		}else {
+			this.props.cancelFollowUser({
+				fid: this.props.match.detail.id
+			});
+		}
+	}
 }
 
 export default connect(
-	({ match }) => ({ match }),
+	({ user, match }) => ({ user, match }),
 	(dispatch) => bindActionCreators({
 		getInfo: matchActions.fetchDetail,
-		getMomentsList: matchActions.fetchMyList
+		getMomentsList: matchActions.fetchMyList,
+		followUser: matchActions.followUser,
+		cancelFollowUser: matchActions.cancelFollowUser
 	}, dispatch)
 )(Index);

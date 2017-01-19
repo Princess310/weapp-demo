@@ -1,0 +1,87 @@
+@import '../../../styles/mixins.less';
+
+.ali-title{
+	color: @black-normal;
+}
+
+.tags-wrapper{
+	padding: 32rpx 24rpx;
+	background-color: @white;
+	.item{
+		margin-right: 8rpx;
+		display: inline-block;
+		padding: 2rpx 10rpx;
+		position: relative;
+		border: 1rpx @black-30 solid;
+		color: @black-30;
+		font-size: 24rpx;
+		.border-radius(8rpx);
+	}
+	&.advantage{
+		.item.active{
+			border-color: @color-v2-base-green;
+			color: @color-v2-base-green;
+		}
+	}
+	&.needs{
+		.item.active{
+			border-color: @color-v2-base-blue;
+			color: @color-v2-base-blue;
+		}
+	}
+}
+
+.add-btn{
+	padding: 24rpx 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 26rpx;
+	background-color: @white;
+	border-top: 1rpx @color-v2-border solid;
+	image{
+		margin-right: 16rpx;
+		width: 36rpx;
+		height: 36rpx;
+	}
+	&.advantage{
+		color: @color-v2-base-green;
+	}
+	&.needs{
+		color: @color-v2-base-blue;
+	}
+}
+
+.edit-tool{
+	position: fixed;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	height: 90rpx;
+	display: flex;
+	background-color: @white;
+	.input-wrapper{
+		height: 100%;
+		width: 80%;
+		display: flex;
+		align-items: center;
+		input{
+			width: 90%;
+			padding-left: 12rpx;
+		}
+	}
+	button{
+		height: 100%;
+		width: 20%;
+		background-color: @color-v2-base-blue;
+		color: @white;
+		.border-radius(0);
+		&.button-hover{
+			opacity: .7;
+		}
+	}
+}
+
+.publish-btn{
+	width: 420rpx;
+}

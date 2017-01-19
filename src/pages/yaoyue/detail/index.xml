@@ -30,6 +30,20 @@
 					</text>
 				</view>
 			</view>
+			<view wx:if="{{props.user.id != props.match.detail.id}}" class="follow-wrapper">
+				<block wx:if="{{props.match.detail.is_my_friend > 0}}">
+					<view class="wrapper" data-action="cancel" catchtap="handleFollow">
+						<image src="../../../images/icon_cancel_follow.png" mode="aspectFit"/>
+						<text>取消关注</text>
+					</view>
+				</block>
+				<block wx:else>
+					<view class="wrapper" data-action="follow" catchtap="handleFollow">
+						<image src="../../../images/icon_follow.png" mode="aspectFit"/>
+						<text>加关注</text>
+					</view>
+				</block>
+			</view>
 		</view>
 		<view class="contact-info">
 			<view class="item tel">

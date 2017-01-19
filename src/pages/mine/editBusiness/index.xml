@@ -1,13 +1,46 @@
+<view class="weui-panel weui-panel_access" style="margin-top: 0">
+	<view class="weui-panel__bd user-tags">
+		<view class="weui-media-box weui-media-box_text">
+			<view class="weui-media-box__title weui-media-box__title_in-text">
+				<text>优势需求</text>
+				<navigator url="../editTags/index" class="edit-tags">编辑</navigator>
+			</view>
+			<view class="weui-media-box__desc" wx:if="{{props.match.business.advantage.length > 0 || props.match.business.needs.length > 0}}">
+				<view class="user-box-wrapper">
+					<view class="box-des">
+						<text>提</text>
+						<text>供</text>
+					</view>
+					<view class="box-container advantage">
+						<block wx:for="{{props.match.business.advantage}}"  wx:key="index">
+							<view class="box-item">{{item}}</view>
+						</block>
+					</view>
+				</view>
+				<view class="user-box-wrapper">
+					<view class="box-des">
+						<text>需</text>
+						<text>求</text>
+					</view>
+					<view class="box-container require">
+						<block wx:for="{{props.match.business.needs}}"  wx:key="index">
+							<view class="box-item">{{item}}</view>
+						</block>
+					</view>
+				</view>
+			</view>
+		</view>
+	</view>
+</view>
+
 <view class="weui-panel weui-panel_access">
 	<view class="weui-panel__bd">
 		<view class="weui-media-box weui-media-box_text">
 			<view class="weui-media-box__title weui-media-box__title_in-text">业务介绍</view>
 			<view class="weui-media-box__desc">
-				<view class="weui-cells weui-cells_after-title publish-area">
-					<view class="weui-cell">
-						<view class="weui-cell__bd">
-							<textarea placeholder="请输入业务介绍，字数限制200字" maxlength="200" value="{{state.content}}" style="height: 210rpx" bindinput="handleContent" />
-						</view>
+				<view class="weui-cells_after-title publish-area">
+					<view class="weui-cell__bd">
+						<textarea placeholder="请输入业务介绍，字数限制200字" maxlength="200" value="{{state.content}}" style="height: 210rpx" bindinput="handleContent" />
 					</view>
 				</view>
 			</view>
@@ -28,7 +61,7 @@
 						<block wx:for-items="{{state.files}}" wx:key="{{index}}">
 								<view class="weui-uploader__file">
 									<image class="weui-uploader__img" src="{{item}}" mode="aspectFill" />
-									<image class="weui-uploader__clear_file" src="../../images/clear-icon.png" mode="aspectFill" data-index="{{index}}" catchtap="clearFile" />
+									<image class="weui-uploader__clear_file" src="../../../images/clear-icon.png" mode="aspectFill" data-index="{{index}}" catchtap="clearFile" />
 								</view>
 						</block>
 						<view class="weui-uploader__input-box">
