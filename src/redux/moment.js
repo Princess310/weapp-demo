@@ -1,5 +1,6 @@
 import { createAction, handleActions } from 'redux-actions';
 import immutable from 'seamless-immutable';
+import date from '../utils/date';
 
 export const REFRESH_MOMENTS = 'REFRESH_MOMENTS';
 export const LOAD_MOMENTS = 'LOAD_MOMENTS';
@@ -69,6 +70,11 @@ export default handleActions({
 		let list = [];
 		let hasNext = page && page.current_page < page.page_count;
 
+		// tansform date here
+		action.payload.list.map((m) => {
+			m.created_at = date.parseDate(m.created_at);
+		});
+
 		if(page && page.current_page === 1){
 			list = action.payload.list;
 		}else {
@@ -84,6 +90,9 @@ export default handleActions({
 	},
 	[LOAD_MOMENT_DETAIL]: (state, action) => {
 		const { data } = action.payload;
+
+		// date format
+		data.created_at = date.parseDate(data.created_at);
 
 		return {
 			...state,

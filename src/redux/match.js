@@ -1,5 +1,7 @@
 import { createAction, handleActions } from 'redux-actions';
 import immutable from 'seamless-immutable';
+import date from '../utils/date';
+import city from '../utils/city';
 
 export const FETCH_MATCH = 'FETCH_MATCH';
 export const LOAD_MATCH = 'LOAD_MATCH';
@@ -105,6 +107,12 @@ export default handleActions({
 		let list = [];
 		// page start as 2
 		let hasNext = page && page.current_page < (page.page_count + 1);
+
+		// tansform date and city here
+		action.payload.list.map((m) => {
+			m.event_at = date.parseDate(m.event_at);
+			m.distance = city.parseDistance(m.distance, m.city_name);
+		});
 
 		if(page && page.current_page === 1){
 			list = action.payload.list;
