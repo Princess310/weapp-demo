@@ -61,7 +61,7 @@
 		<view class="weui-panel__bd user-tags">
 			<view class="weui-media-box weui-media-box_text">
 				<view class="weui-media-box__title weui-media-box__title_in-text">优势需求</view>
-				<view class="weui-media-box__desc">
+				<view>
 					<view class="user-box-wrapper">
 						<view class="box-des">
 							<text>提</text>

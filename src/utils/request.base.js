@@ -112,6 +112,13 @@ export function create(options) {
         title: res.data.message,
         icon: 'loading'
       });
+
+      if(res.data.code === 603){
+        wx.navigateTo({
+          url: '../../../pages/mine/login/index'
+        });
+      }
+
       throw new Error(res.data.message);
     }
 

@@ -5,7 +5,7 @@
 				<text>优势需求</text>
 				<navigator url="../editTags/index" class="edit-tags">编辑</navigator>
 			</view>
-			<view class="weui-media-box__desc" wx:if="{{props.match.business.advantage.length > 0 || props.match.business.needs.length > 0}}">
+			<view wx:if="{{props.match.business.advantage.length > 0 || props.match.business.needs.length > 0}}">
 				<view class="user-box-wrapper">
 					<view class="box-des">
 						<text>提</text>

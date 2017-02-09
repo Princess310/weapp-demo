@@ -70,17 +70,6 @@ class Index extends Component {
 		})
 	}
 
-	clearFile(e){
-		const { index } = e.currentTarget.dataset;
-		const self = this;
-		self.setState({
-			files: self.state.files.filter((f, i) => {
-				return (i != index)
-			}),
-			fileCount: (self.state.fileCount - 1)
-		});
-	}
-
 	handleAmount(e){
 		this.setState({
 			reward_amount: e.detail.value
@@ -110,7 +99,8 @@ class Index extends Component {
 		});
 
 		this.setState({
-			files: newFiles
+			files: newFiles,
+			fileCount: (this.state.fileCount - 1)
 		});
 	}
 

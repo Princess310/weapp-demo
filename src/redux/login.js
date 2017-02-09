@@ -2,12 +2,18 @@ import { createAction, handleActions } from 'redux-actions';
 import immutable from 'seamless-immutable';
 
 export const LOGIN = 'LOGIN';
+export const REFRESH_LOGIN = 'REFRESH_LOGIN';
+export const ACCOUNT_LOGIN = 'ACCOUNT_LOGIN';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 export const LOGOUT = 'LOGOUT';
 
 // 请求登录action
 export const login = createAction(LOGIN);
+
+export const wxLogin = createAction(REFRESH_LOGIN);
+
+export const accountLogin = createAction(ACCOUNT_LOGIN);
 
 // 注销action
 export const logout = createAction(LOGOUT);

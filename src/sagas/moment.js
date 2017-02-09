@@ -23,19 +23,26 @@ function* fetchMoments(action) {
 		if(!id){
 			let res = yield wx.login();
 			let data = yield wx.getUserInfo();
-			let user = yield request(false).post('user/wx-small-login', {
-				code: res.code,
-				type: 'cbeb1b',
-				...data
-			});
 
-			setSession(user.access_token);
-			yield put(userActions.load(user.data));
+			if(res.code){
+				let user = yield request(false).post('user/wx-small-login', {
+					code: res.code,
+					type: 'cbeb1b',
+					...data
+				});
 
-			// if have not industry, should load the guide page
-			if(user.data.industry_son_id <= 0){
+				setSession(user.access_token);
+				yield put(userActions.load(user.data));
+
+				// if have not industry, should load the guide page
+				if(user.data.industry_son_id <= 0){
+					wx.navigateTo({
+						url: '../../../pages/common/guide/index'
+					});
+				}
+			}else {
 				wx.navigateTo({
-					url: '../../../pages/common/guide/index'
+					url: '../../../pages/mine/login/index'
 				});
 			}
 		}

@@ -68,6 +68,7 @@ class Index extends Component {
 		});
 
 		this.setState({
+			fileCount: this.state.fileCount - 1,
 			files: newFiles
 		});
 	}
