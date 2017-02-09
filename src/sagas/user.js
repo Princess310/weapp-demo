@@ -7,9 +7,16 @@ import { FETCH_BUSINESS_INFO} from '../redux/match';
 import { FETCH_MATCH } from '../redux/user';
 import { request } from '../utils/request';
 import { load } from '../redux/user';
+import { uploadFile } from '../utils/utils';
 
 function* save(action) {
 	try {
+		let { avatar } = action.payload;
+		avatar = (avatar instanceof Array) ? avatar.join(',') : avatar;
+
+		let { url } = yield uploadFile(avatar);
+		action.payload.avatar = url;
+
 		yield request(true).put("user/edit", action.payload);
 
 		// refresh user info
@@ -43,6 +50,19 @@ function* saveUsername(action){
 
 function* saveBusiness(action){
 	try {
+		let { pictures } = action.payload;
+		let urls = [];
+		
+		// upload files to server
+		if(pictures.length > 0){
+			for(let i = 0; i < pictures.length; i++){
+				let { url } = yield uploadFile(pictures[i]);
+				urls.push(url);
+			}
+		}
+
+		action.payload.pictures = JSON.stringify(urls);
+
 		yield request(true).put("user/business", action.payload);
 
 		// refresh user and business info

@@ -1,6 +1,7 @@
 import { createAction, handleActions } from 'redux-actions';
 import immutable from 'seamless-immutable';
 import date from '../utils/date';
+import { getImgSuitablePath } from '../utils/utils';
 
 export const REFRESH_MOMENTS = 'REFRESH_MOMENTS';
 export const LOAD_MOMENTS = 'LOAD_MOMENTS';
@@ -73,6 +74,12 @@ export default handleActions({
 		// tansform date here
 		action.payload.list.map((m) => {
 			m.created_at = date.parseDate(m.created_at);
+
+			if(m.pictures.length > 0){
+				m.pictures = m.pictures.map((p) => {
+					return getImgSuitablePath(p);
+				});
+			}
 		});
 
 		if(page && page.current_page === 1){
@@ -93,6 +100,12 @@ export default handleActions({
 
 		// date format
 		data.created_at = date.parseDate(data.created_at);
+
+		if(data.pictures.length > 0){
+			data.pictures = data.pictures.map((p) => {
+				return getImgSuitablePath(p);
+			});
+		}
 
 		return {
 			...state,

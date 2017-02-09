@@ -11,6 +11,7 @@ import { load, loadDetail, loadReward, loadLikeMoment, loadLikeComment, loadJoin
 import * as userActions from '../redux/user';
 import * as redux from 'labrador-redux';
 import wx from 'labrador';
+import { uploadFile } from '../utils/utils';
 
 // --------- Moment Interface --------- //
 function* fetchMoments(action) {
@@ -63,13 +64,36 @@ function* fetchMoments(action) {
 function* addMoment(action){
 	try {
 		const { city, filter } = redux.getStore().getState().match;
-		yield request(true).post("moments/release", action.payload);
+		let { pictures } = action.payload;
+		pictures = pictures.split(",");
+
+		let { url: firstPic } = yield uploadFile(pictures[0]);
+
+		const { moments_id } = yield request(true).post("moments/release", {
+			...action.payload,
+			pictures: firstPic
+		});
 
 		// after add moment, should refresh list for invites and moments
 		yield put({type: FETCH_MOMENTS, payload: {
 			page: 1
 		}});
 		yield put({type: FETCH_MATCH, payload: filter.current});
+
+		// upload files to server
+		if(pictures.length > 1){
+			let urls = [];
+
+			for(let i = 1; i < pictures.length; i++){
+				let { url } = yield uploadFile(pictures[i]);
+				urls.push(url);
+			}
+
+			yield request(true).post('moments/pictures', {
+				moments_id: moments_id,
+				pictures: urls.join(',')
+			})
+		}
 	} catch (error) {
 		console.log('login error', error);
 	}

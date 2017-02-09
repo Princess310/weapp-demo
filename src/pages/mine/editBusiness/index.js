@@ -58,7 +58,7 @@ class Index extends Component {
 		const { content, files } = this.state;
 		this.props.save({
 			business_intro: content,
-			pictures: JSON.stringify(files)
+			pictures: files
 		});
 
 		wx.navigateBack({

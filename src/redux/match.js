@@ -114,7 +114,7 @@ export default handleActions({
 			m.distance = city.parseDistance(m.distance, m.city_name);
 		});
 
-		if(page && page.current_page === 1){
+		if(page && (page.current_page === 1 || page.current_page === 2)){
 			list = action.payload.list;
 		}else {
 			list = state.list.concat(action.payload.list);
