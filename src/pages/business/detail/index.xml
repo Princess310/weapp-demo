@@ -129,7 +129,7 @@
 				<block wx:for="{{props.moment.detail.likes}}"  wx:key="id">
 					<view class="feed-comment-panel comment-title">
 						<view class="feed-comment-left">
-							<navigator url="../../yaoyue/detail/index?id={{item.uid}}" class="user-icon-wrapper">
+							<navigator url="../../yaoyue/detail/index?id={{item.created_by}}" class="user-icon-wrapper">
 								<image mode="aspectFill" class="user-icon" src="{{item.avatar}}"/>
 								<view wx:if="{{item.verify_status == 2}}" class="vip">V</view>
 							</navigator>
@@ -153,10 +153,10 @@
 				<block wx:for="{{props.moment.detail.participate}}"  wx:key="id">
 					<view class="feed-comment-panel comment-title">
 						<view class="feed-comment-left">
-							<navigator url="../../yaoyue/detail/index?id={{item.id}}" class="user-icon-wrapper">
+							<view class="user-icon-wrapper">
 								<image mode="aspectFill" class="user-icon" src="{{item.avatar}}"/>
 								<view wx:if="{{item.verify_status == 2}}" class="vip">V</view>
-							</navigator>
+							</view>
 						</view> 
 						<view class="feed-comment-right">
 							<view class="header">
