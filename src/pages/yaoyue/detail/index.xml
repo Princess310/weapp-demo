@@ -92,11 +92,11 @@
 		<view class="weui-panel__bd">
 			<view wx:if="{{props.match.detail.intro !== ''}}" class="weui-media-box weui-media-box_text">
 				<view class="weui-media-box__title weui-media-box__title_in-text">个人简介</view>
-				<view class="weui-media-box__desc">{{props.match.detail.intro}}</view>
+				<view class="ali-des">{{props.match.detail.intro}}</view>
 			</view>
 			<view wx:if="{{props.match.detail.business_intro !== ''}}" class="weui-media-box weui-media-box_text">
 				<view class="weui-media-box__title weui-media-box__title_in-text">业务介绍</view>
-				<view class="weui-media-box__desc">{{props.match.detail.business_intro}}</view>
+				<view class="ali-des">{{props.match.detail.business_intro}}</view>
 			</view>
 		</view>
 	</view>
@@ -122,7 +122,7 @@
 		<view class="weui-panel__bd user-tags">
 			<view class="weui-media-box weui-media-box_text">
 				<view class="weui-media-box__title weui-media-box__title_in-text">TA的动态</view>
-				<view class="weui-media-box__desc">
+				<view class="ali-des">
 					<block wx:for="{{props.match.myList}}" wx:key="index">
 						<navigator url="../../business/detail/index?id={{item.id}}" class="moment-wrapper">
 							<view class="content">
