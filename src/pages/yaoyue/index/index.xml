@@ -53,7 +53,7 @@
 		<view class="weui-search-bar__form">
 			<view class="weui-search-bar__box">
 				<icon class="weui-icon-search_in-box" type="search" size="14"></icon>
-				<input type="text" class="weui-search-bar__input" placeholder="搜索人脉资源" value="{{state.inputVal}}" focus="{{state.inputShowed}}" bindinput="inputTyping" bindblur="hideInput" bindconfirm="handleSearch" />
+				<input type="text" class="weui-search-bar__input" placeholder="搜索人脉资源" value="{{state.inputVal}}" focus="{{state.inputShowed}}" bindinput="inputTyping" bindconfirm="handleSearch" />
 				<view class="weui-icon-clear" wx:if="{{state.inputVal.length > 0}}" bindtap="clearInput">
 					<icon type="clear" size="14"></icon>
 				</view>
@@ -76,6 +76,12 @@
 	</navigator>
 </view>
 <view>
+	<block wx:if="{{props.match.list.length > 0}}"></block>
+	<block wx:else>
+		<view class="no-data">
+			<text>没有相关匹配？试试改变搜索条件或者到 [我->业务介绍] 里面修改自己的优势需求</text>
+		</view>
+	</block>
 	<block wx:for="{{props.match.list}}"  wx:key="id">
 		<template is="feed-detail-invite" data="{{...item, index: index}}" />
 	</block>

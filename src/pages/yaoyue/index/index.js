@@ -227,7 +227,7 @@ class Index extends Component {
 
 	handleSearch(e){
 		this.props.getList({
-			page: this.state.page,
+			page: this.state.pageStart,
 			tag_identity_id: this.state.tag_identity_id,
 			reward_as: this.state.reward_as,
 			reward_item: this.state.reward_item,
@@ -236,8 +236,7 @@ class Index extends Component {
 		});
 
 		this.setState({
-			inputVal: "",
-			inputShowed: false
+			page: this.state.pageStart
 		});
 	}
 }

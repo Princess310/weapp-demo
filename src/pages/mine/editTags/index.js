@@ -27,7 +27,6 @@ class Index extends Component {
 
 	handleBlur(){
 		this.setState({
-			inputValue: '',
 			showInput: false
 		});
 	}

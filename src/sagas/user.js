@@ -14,8 +14,10 @@ function* save(action) {
 		let { avatar } = action.payload;
 		avatar = (avatar instanceof Array) ? avatar.join(',') : avatar;
 
-		let { url } = yield uploadFile(avatar);
-		action.payload.avatar = url;
+		if(avatar !== '' && (avatar.indexOf('wxfile://') >= 0)){
+			let { url } = yield uploadFile(avatar);
+			action.payload.avatar = url;
+		}
 
 		yield request(true).put("user/edit", action.payload);
 

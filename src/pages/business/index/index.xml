@@ -65,8 +65,15 @@
 </template>
 
 <view class="dashboard">
-	<block wx:for="{{props.moment.list}}"  wx:key="id">
-		<template is="feed-detail-moment" data="{{...item, index: index}}" />
+	<block wx:if="{{props.moment.list.length > 0}}">
+		<block wx:for="{{props.moment.list}}"  wx:key="id">
+			<template is="feed-detail-moment" data="{{...item, index: index}}" />
+		</block>
+	</block>
+	<block wx:else>
+		<view class="no-data">
+			<text>没有动态？点击发布按钮或者去邀约列表添加好友查看好友动态吧</text>
+		</view>
 	</block>
 </view>
 <navigator class="publish-wrapper" url="../publish/index">

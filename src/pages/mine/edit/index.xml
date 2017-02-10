@@ -53,7 +53,7 @@
 				<text>公司</text>
 			</view>
 			<view class="weui-cell__ft">
-				<input placeholder="请输入您的公司名称(必填)" value="{{state.company}}" bindinput="handleCompany"/>
+				<input placeholder="您的公司名称" maxlength="6" value="{{state.company}}" bindinput="handleCompany"/>
 			</view>
 		</view>
 		<view class="weui-cell weui-cell_access" hover-class="weui-cell_active">
@@ -61,7 +61,7 @@
 				<text>职位</text>
 			</view>
 			<view class="weui-cell__ft">
-				<input placeholder="请输入您的职位(必填)" value="{{state.position}}" bindinput="handlePosition"/>
+				<input placeholder="您的职位" value="{{state.position}}" bindinput="handlePosition"/>
 			</view>
 		</view>
 		<navigator url="../../common/selectCity/index?action=sysEmit" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
@@ -78,7 +78,15 @@
 				<text>详细地址</text>
 			</view>
 			<view class="weui-cell__ft">
-				<input placeholder="请输入您的详细地址(必填)" value="{{state.address}}" bindinput="handleAddress"/>
+				<input placeholder="您的详细地址" value="{{state.address}}" bindinput="handleAddress"/>
+			</view>
+		</view>
+		<view class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+			<view class="weui-cell__bd">
+				<text>个人简介</text>
+			</view>
+			<view class="weui-cell__ft">
+				<input placeholder="个人简介" value="{{state.intro}}" bindinput="handleIntro"/>
 			</view>
 		</view>
 	</view>

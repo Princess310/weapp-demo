@@ -65,9 +65,13 @@ function* addMoment(action){
 	try {
 		const { city, filter } = redux.getStore().getState().match;
 		let { pictures } = action.payload;
+		let firstPic = '';
 		pictures = pictures.split(",");
 
-		let { url: firstPic } = yield uploadFile(pictures[0]);
+		if(pictures.length > 0 && pictures[0] !== ''){
+			let { url } = yield uploadFile(pictures[0]);
+			firstPic = url;
+		}
 
 		const { moments_id } = yield request(true).post("moments/release", {
 			...action.payload,
@@ -101,6 +105,7 @@ function* addMoment(action){
 
 function* delMoment(action){
 	try {
+		const { city, filter } = redux.getStore().getState().match;
 		let { data } = yield request(true).delete("moments/delete", {
 			moments_id: action.payload.id
 		});
@@ -109,6 +114,7 @@ function* delMoment(action){
 		yield put({type: FETCH_MOMENTS, payload: {
 			page: 1
 		}});
+		yield put({type: FETCH_MATCH, payload: filter.current});
 	} catch (error) {
 		console.log('login error', error);
 	}

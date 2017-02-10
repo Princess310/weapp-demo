@@ -63,6 +63,12 @@ class Index extends Component {
 		});
 	}
 
+	handleIntro(e) {
+		this.setState({
+			intro: e.detail.value
+		});
+	}
+
 	chooseImage(e) {
 		let self = this;
 

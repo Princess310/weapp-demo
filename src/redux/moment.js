@@ -82,7 +82,7 @@ export default handleActions({
 			}
 		});
 
-		if(page && page.current_page === 1){
+		if((page && page.current_page === 1) || !page){
 			list = action.payload.list;
 		}else {
 			list = state.list.concat(action.payload.list);
