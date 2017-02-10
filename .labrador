@@ -24,7 +24,7 @@
     "development": {},
     "production": {
       "define": {
-        "API_ROOT": "https://api-test.alijian.net/index.php?r="
+        "API_ROOT": "https://api.alijian.net/index.php?r="
       }
     }
   }
