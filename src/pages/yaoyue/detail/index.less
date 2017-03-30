@@ -89,8 +89,16 @@
 	border-bottom: 1rpx @color-v2-border solid;
 	.content{
 		margin-bottom: 8rpx;
-		font-size: 28rpx;
 		color: #1a2126;
+		max-height: 64rpx;
+		font-size: 28rpx;
+		line-height:32rpx;
+		 overflow: hidden;
+		text-overflow: -o-ellipsis-lastline;
+		text-overflow: ellipsis;
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
 		.sort{
 			margin-right: 15rpx;
 			color: @color-v2-base-red-2;
@@ -102,5 +110,6 @@
 	}
 	.sub-info{
 		margin-top: 8rpx;
+		color: @color-v2-txt-help;
 	}
 }

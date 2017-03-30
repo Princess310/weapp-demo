@@ -54,3 +54,27 @@ export function getImgSuitablePath(path) {
 
 	return path;
 }
+
+export function matchPhone(content) {
+  const reg = /<a href\="tel:\d*"\>\d*\<\/a\>/i;
+  const regPhone = /\d{11}/i;
+  let hasPhone = false;
+  let phone = '';
+
+  const matchUrlArr = content.match(reg);
+  if(matchUrlArr !== null && matchUrlArr.length > 0){
+    const macthPhoneArr = matchUrlArr[0].match(regPhone);
+
+    if(macthPhoneArr !== null && macthPhoneArr.length > 0){
+      hasPhone = true;
+      phone = macthPhoneArr[0];
+      content = content.replace(matchUrlArr[0], macthPhoneArr[0]);
+    }
+  }
+
+  return {
+    hasPhone: hasPhone,
+    content: content,
+    phone: phone,
+  }
+}

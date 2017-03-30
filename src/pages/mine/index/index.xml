@@ -37,57 +37,22 @@
 			<navigator url="../editBusiness/index" class="action-item private-eidt">业务介绍</navigator>
 		</view>
 	</view>
-	<!-- <view class="weui-cells weui-cells_after-title action-wrapper">
-		<navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-			<view class="weui-cell__bd">
-				<image class="btn-right share-btn" src="../../../images/menu_circle_active.png"></image>
-				<text>我的详情</text>
-			</view>
-			<view class="weui-cell__ft weui-cell__ft_in-access"></view>
-		</navigator>
-		<navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-			<view class="weui-cell__bd">
-				<image class="btn-right share-btn" src="../../../images/icon_grou_user_active.png"></image>
-				<text>访客</text>
-			</view>
-			<view class="weui-cell__ft weui-cell__ft_in-access"></view>
-		</navigator>
-		<navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+	<view class="weui-cells weui-cells_after-title action-wrapper">
+		<navigator url="../myMoments/index" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
 			<view class="weui-cell__bd">
 				<image class="btn-right share-btn" src="../../../images/menu_circle_active.png"></image>
 				<text>我的商务圈</text>
 			</view>
 			<view class="weui-cell__ft weui-cell__ft_in-access"></view>
 		</navigator>
-		<navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+		<navigator url="../myMatch/index" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
 			<view class="weui-cell__bd">
-				<image class="btn-right share-btn" src="../../../images/icon_star_active.png"></image>
-				<text>我的收藏</text>
+				<image class="btn-right share-btn" src="../../../images/icon_require.png"></image>
+				<text>我的需求</text>
 			</view>
 			<view class="weui-cell__ft weui-cell__ft_in-access"></view>
 		</navigator>
-		<navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-			<view class="weui-cell__bd">
-				<image class="btn-right share-btn" src="../../../images/icon_money_active.png"></image>
-				<text>我的钱包</text>
-			</view>
-			<view class="weui-cell__ft weui-cell__ft_in-access"></view>
-		</navigator>
-		<navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-			<view class="weui-cell__bd">
-				<image class="btn-right share-btn" src="../../../images/icon_tip_active.png"></image>
-				<text>成为认证用户</text>
-			</view>
-			<view class="weui-cell__ft weui-cell__ft_in-access"></view>
-		</navigator>
-		<navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-			<view class="weui-cell__bd">
-				<image class="btn-right share-btn" src="../../../images/menu_xiaoxi_active.png"></image>
-				<text>意见反馈</text>
-			</view>
-			<view class="weui-cell__ft weui-cell__ft_in-access"></view>
-		</navigator>
-	</view> -->
+	</view>
 	<view class="contact-wrapper">
 		<view class="des">
 			<text>遇到问题，请点击按钮联系客服</text>

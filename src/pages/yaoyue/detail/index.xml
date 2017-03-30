@@ -52,43 +52,14 @@
 			<view class="item area">
 				<text class="des">地  区: </text>
 				<text class="content">{{props.match.detail.address}}</text>
-				<image class="pin" src="../../../images/pin_icon.png" mode="aspectFit"/>
-				<text>{{props.match.detail.city_name}}</text>
+				<block wx:if="{{props.match.detail.city_name}}">
+					<image class="pin" src="../../../images/pin_icon.png" mode="aspectFit"/>
+					<text>{{props.match.detail.city_name}}</text>
+				</block>
 			</view>
 		</view>
 	</view>
-	<view wx:if="{{props.match.detail.advantage.length > 0 || props.match.detail.needs.length > 0}}" class="weui-panel weui-panel_access" style="margin-top: 0">
-		<view class="weui-panel__bd user-tags">
-			<view class="weui-media-box weui-media-box_text">
-				<view class="weui-media-box__title weui-media-box__title_in-text">优势需求</view>
-				<view>
-					<view class="user-box-wrapper">
-						<view class="box-des">
-							<text>提</text>
-							<text>供</text>
-						</view>
-						<view class="box-container advantage">
-							<block wx:for="{{props.match.detail.advantage}}"  wx:key="index">
-								<view class="box-item">{{item}}</view>
-							</block>
-						</view>
-					</view>
-					<view class="user-box-wrapper">
-						<view class="box-des">
-							<text>需</text>
-							<text>求</text>
-						</view>
-						<view class="box-container require">
-							<block wx:for="{{props.match.detail.needs}}"  wx:key="index">
-								<view class="box-item">{{item}}</view>
-							</block>
-						</view>
-					</view>
-				</view>
-			</view>
-		</view>
-	</view>
-	<view wx:if="{{props.match.detail.intro !== '' && props.match.detail.business_intro !== ''}}" class="weui-panel weui-panel_access">
+	<view wx:if="{{props.match.detail.intro !== '' || props.match.detail.business_intro !== ''}}" class="weui-panel weui-panel_access">
 		<view class="weui-panel__bd">
 			<view wx:if="{{props.match.detail.intro !== ''}}" class="weui-media-box weui-media-box_text">
 				<view class="weui-media-box__title weui-media-box__title_in-text">个人简介</view>
@@ -118,7 +89,7 @@
 		</view>
 	</view>
 
-	<view wx:if="{{props.match.detail.pictures.length > 0}}" class="weui-panel weui-panel_access">
+	<view wx:if="{{props.match.myList.length > 0}}" class="weui-panel weui-panel_access">
 		<view class="weui-panel__bd user-tags">
 			<view class="weui-media-box weui-media-box_text">
 				<view class="weui-media-box__title weui-media-box__title_in-text">TA的动态</view>

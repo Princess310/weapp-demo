@@ -744,6 +744,7 @@
 
 /*-------- fedd-detail-item --------*/
 .fedd-detail-item{
+	position: relative;
 	padding: 20rpx 32rpx 20rpx 32rpx;
 	display: flex;
 	background-color: @white;
@@ -947,6 +948,14 @@
 	}
 }
 
+.call-phone{
+	position: absolute;
+	top: 64rpx;
+	right: 32rpx;
+	width: 48rpx;
+	height: 48rpx;
+}
+
 .feed-comment-panel{
 	padding: 20rpx 32rpx 20rpx 32rpx;
 	display: flex;
@@ -1049,6 +1058,116 @@
 }
 /*-------- /fedd-detail-item --------*/
 
+/*-------- feed-match-card --------*/
+.feed-match-card{
+	position: relative;
+	padding: 20rpx 32rpx 20rpx 32rpx;
+	margin-bottom: 16rpx;
+	display: flex;
+	background-color: @white;
+	.feed-detail-left{
+		.user-icon-wrapper{
+			position: relative;
+			height: 102rpx;
+			width: 102rpx;
+			.user-icon{
+				width: 100%;
+				height: 100%;
+				.border-radius(8rpx);
+			}
+			.vip{
+				position: absolute;
+				right: -2rpx;
+				bottom: -2rpx;
+				width: 30rpx;
+				height: 30rpx;
+				.border-radius(100%);
+				text-align: center;
+				line-height: 30rpx;
+				color: @white;
+				font-size: 24rpx;
+				background-color: @color-v2-base-yellow;
+				border: 2rpx @white solid;
+			}
+		}
+		.city-info{
+			margin-top: 8rpx;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			.pin{
+				width: 24rpx;
+				height: 24rpx;
+			}
+			.distance{
+				margin-left: 4rpx;
+				font-size: 24rpx;
+				color: @color-v2-txt-help;
+			}
+		}
+	}
+	.feed-detail-right{
+		margin-left: 15rpx;
+		width: 100%;
+		.header{
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			font-size: 24rpx;
+			.wrapper{
+				display: flex;
+				align-items: center;
+				image{
+					margin: 0 12rpx;
+					width: 30rpx;
+					height: 30rpx;
+					&.todo-btn{
+						margin: 0;
+						width: 40rpx;
+						height: 40rpx;
+					}
+				}
+			}
+			.user-name{
+				font-size: 33rpx;
+			}
+			.user-company{
+				margin-left: 8rpx;
+				color: @color-v2-txt-help;
+			}
+			.user-position{
+				margin-left: 8rpx;
+				color: @color-v2-txt-help;
+			}
+		}
+		.sub-info{
+			display: flex;
+			align-items: center;
+			font-size: 25rpx;
+			color: @color-v2-txt-help;
+			text{
+				margin-right: 12rpx;
+			}
+		}
+		.time{
+			font-size: 24rpx;
+			color: @color-v2-txt-help;
+			text-align: right;
+		}
+	}
+	.reward-item{
+		position: absolute;
+		top: 20rpx;
+		right: 32rpx;
+		padding: 2rpx 8rpx;
+		font-size: 24rpx;
+		background-color: @color-v2-base-yellow;
+		color: @white;
+		border-radius: 4rpx;
+	}
+}
+/*-------- /feed-match-card --------*/
+
 /*-------- chat-tool--------*/
 .chat-tool{
 	position: fixed;
@@ -1076,7 +1195,7 @@
 	}
 	button{
 		margin: 0;
-		height: 50rpx;	
+		height: 50rpx;
 		line-height: 50rpx;
 		background-color: @color-v2-base-blue;
 		color: @white;

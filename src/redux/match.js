@@ -2,6 +2,7 @@ import { createAction, handleActions } from 'redux-actions';
 import immutable from 'seamless-immutable';
 import date from '../utils/date';
 import city from '../utils/city';
+import { matchPhone } from '../utils/utils';
 
 export const FETCH_MATCH = 'FETCH_MATCH';
 export const LOAD_MATCH = 'LOAD_MATCH';
@@ -38,12 +39,16 @@ export const SAVE_TAGS = 'SAVE_TAGS';
 export const FOLLOW_USER = 'FOLLOW_USER';
 export const CANCEL_FOLLOW_USER = 'CANCEL_FOLLOW_USER';
 
+export const FETCH_MY_MATCH = 'FETCH_MY_MATCH';
+export const LOAD_MY_MATCH = 'LOAD_MY_MATCH';
+
 // 初始state
 export const INITIAL_STATE = immutable({
 	detail: {},
 	page: {},
 	list: [],
 	myList: [],
+	myMatchList: [],
 	filter: {
 		items: [],
 		roles: [],
@@ -101,12 +106,15 @@ export const saveTags = createAction(SAVE_TAGS);
 export const followUser = createAction(FOLLOW_USER);
 export const cancelFollowUser = createAction(CANCEL_FOLLOW_USER);
 
+export const fetchMyMatch = createAction(FETCH_MY_MATCH);
+export const loadMyMatch = createAction(LOAD_MY_MATCH);
+
 export default handleActions({
 	[LOAD_MATCH]: (state, action) => {
 		const page = action.payload.page;
 		let list = [];
 		// page start as 2
-		let hasNext = page && page.current_page < (page.page_count + 1);
+		let hasNext = page && page.current_page <= page.page_count;
 
 		// tansform date and city here
 		action.payload.list.map((m) => {
@@ -123,7 +131,6 @@ export default handleActions({
 		return {
 			...state,
 			hasNext: hasNext,
-			page: state.list.concat(action.payload.page),
 			list: list
 		};
 	},
@@ -174,13 +181,23 @@ export default handleActions({
 	[LOAD_MY_LIST]: (state, action) => {
 		const page = action.payload.page;
 		let list = [];
-		let hasNext = page && page.current_page < page.page_count;
+		let hasNext = page && page.current_page <= page.page_count;
 
 		if(page && page.current_page === 1){
 			list = action.payload.list;
 		}else {
 			list = state.myList.concat(action.payload.list);
 		}
+
+		list = list.map((l) => {
+			const matchResult = matchPhone(l.content);
+			if(matchResult.hasPhone){
+				l.content = matchResult.content;
+				l.phone = matchResult.phone;
+			}
+
+			return l;
+		});
 
 		return {
 			...state,
@@ -254,6 +271,29 @@ export default handleActions({
 				}
 			}
 		}
+	},
+	[LOAD_MY_MATCH]: (state, action) => {
+		const page = action.payload.page;
+		let list = [];
+		// page start as 1
+		let hasNext = page && page.current_page <= page.page_count;
 
-	}
+		// tansform date and city here
+		action.payload.list.map((m) => {
+			m.event_at = date.parseDate(m.event_at);
+			m.distance = city.parseDistance(m.distance, m.city_name);
+		});
+
+		if(page && (page.current_page === 1 || page.current_page === 2)){
+			list = action.payload.list;
+		}else {
+			list = state.list.concat(action.payload.list);
+		}
+
+		return {
+			...state,
+			hasMyMatchNext: hasNext,
+			myMatchList: list,
+		};
+	},
 }, INITIAL_STATE);

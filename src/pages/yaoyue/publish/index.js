@@ -13,16 +13,11 @@ class Index extends Component {
 		fileCount: 0,
 		files: [],
 		filesLimit: 9,
-		showTel: true,
 		category: 3,
 		tel: ''
 	}
 
 	async onLoad() {
-		this.props.setSelectInfo({
-			id: 1,
-			name: "模式"
-		});
 	}
 
 	selectCategory(e) {
@@ -35,12 +30,6 @@ class Index extends Component {
 		const type = e.currentTarget.dataset.type;
 		this.setState({
 			type: type
-		});
-	}
-
-	switchTel(e){
-		this.setState({
-			showTel: !this.state.showTel
 		});
 	}
 
@@ -106,7 +95,7 @@ class Index extends Component {
 
 	async handleSubmit(e){
 		const self = this;
-		const { type, reward_amount, content, files, showTel, tel, category } = this.state;
+		const { type, reward_amount, content, files, tel, category } = this.state;
 		const { selectMsg } = this.props.sysEmit;
 
 		const props = {
@@ -117,24 +106,6 @@ class Index extends Component {
 			category: category,
 			reward_amount: reward_amount
 		};
-
-		if(showTel){
-			if(tel === "" || (tel.length !== 7 && tel.length !== 11)){
-				wx.showModal({
-					content: '请输入正确电话号码和格式',
-					showCancel: false,
-					success: function (res) {
-						if (res.confirm) {
-							console.log('用户点击确定')
-						}
-					}
-				});
-
-				return false;
-			}
-
-			props.mobile = tel;
-		}
 
 		if(content === '' && files.length === 0){
 			wx.showModal({
@@ -149,9 +120,9 @@ class Index extends Component {
 
 			return false;
 		}
-		
+
 		await this.props.addReward(props);
-		
+
 		wx.navigateBack({
 			delta: 1
 		});

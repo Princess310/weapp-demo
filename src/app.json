@@ -14,6 +14,8 @@
     "pages/mine/editTags/index",
     "pages/mine/editMobile/index",
     "pages/mine/login/index",
+    "pages/mine/myMatch/index",
+    "pages/mine/myMoments/index",
 
     "pages/common/selectPanel/index",
     "pages/common/selectCity/index",
@@ -34,13 +36,13 @@
     "list": [
       {
         "pagePath": "pages/business/index/index",
-        "text": "商务圈",
+        "text": "动态",
         "iconPath":"images/menu_circle.png",
         "selectedIconPath":"images/menu_circle_active.png"
       },
       {
         "pagePath": "pages/yaoyue/index/index",
-        "text": "邀约",
+        "text": "人脉",
         "iconPath":"images/menu_yaoyue.png",
         "selectedIconPath":"images/menu_yaoyue_active.png"
       },

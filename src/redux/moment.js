@@ -1,11 +1,15 @@
 import { createAction, handleActions } from 'redux-actions';
 import immutable from 'seamless-immutable';
 import date from '../utils/date';
-import { getImgSuitablePath } from '../utils/utils';
+import { getImgSuitablePath, matchPhone } from '../utils/utils';
 
 export const REFRESH_MOMENTS = 'REFRESH_MOMENTS';
 export const LOAD_MOMENTS = 'LOAD_MOMENTS';
 export const FETCH_MOMENTS = 'FETCH_MOMENTS';
+
+export const FETCH_MOMENTS_ROLES = 'FETCH_MOMENTS_ROLES';
+export const LOAD_MOMENTS_ROLES = 'LOAD_MOMENTS_ROLES';
+export const LOAD_CURRENT_ROLE = 'LOAD_CURRENT_ROLE';
 
 export const DELETE_MOMENT = 'DELETE_MOMENT';
 export const ADD_MOMENT = 'ADD_MOMENT';
@@ -29,12 +33,18 @@ export const LOAD_JOIN_REWARD= 'LOAD_JOIN_REWARD';
 export const FETCH_REWARD = 'FETCH_REWARD';
 export const LOAD_REWARD = 'LOAD_REWARD';
 
+export const FETCH_MY_MOMENTS = 'FETCH_MY_MOMENTS';
+export const LOAD_MY_MOMENTS = 'LOAD_MY_MOMENTS';
+
 // 初始state
 export const INITIAL_STATE = immutable({
 	detail: {},
 	page: {},
 	list: [],
-	rewardList: []
+	rewardList: [],
+	roles: [],
+	currentRole: 0,
+	myList: [],
 });
 
 export const refresh = createAction(REFRESH_MOMENTS);
@@ -42,6 +52,10 @@ export const list = createAction(FETCH_MOMENTS);
 export const load = createAction(LOAD_MOMENTS, (list) => (list));
 export const del = createAction(DELETE_MOMENT);
 export const add = createAction(ADD_MOMENT, (moment) => (moment));
+
+export const fetchRoles = createAction(FETCH_MOMENTS_ROLES);
+export const loadRoles=  createAction(LOAD_MOMENTS_ROLES, (list) => (list));
+export const loadCurrentRole=  createAction(LOAD_CURRENT_ROLE, (role) => (role));
 
 export const shieldMoment = createAction(SHIELD_MOMENT);
 
@@ -62,14 +76,33 @@ export const loadJoinReward = createAction(LOAD_JOIN_REWARD, (data) => (data));
 export const fetchReward = createAction(FETCH_REWARD);
 export const loadReward = createAction(LOAD_REWARD, (list) => (list));
 
+export const fetchMyMoments = createAction(FETCH_MY_MOMENTS);
+export const loadMyMoments = createAction(LOAD_MY_MOMENTS, (list) => (list));
+
 export default handleActions({
 	[FETCH_MOMENTS]: (state, action) => {
 		return state;
 	},
+	[LOAD_MOMENTS_ROLES]: (state, action) => {
+		const { list } = action.payload;
+
+		return {
+			...state,
+			roles: list,
+		}
+	},
+	[LOAD_CURRENT_ROLE]: (state, action) => {
+		const { role } = action.payload;
+
+		return {
+			...state,
+			currentRole: role,
+		}
+	},
 	[LOAD_MOMENTS]: (state, action) => {
 		const page = action.payload.page;
 		let list = [];
-		let hasNext = page && page.current_page < page.page_count;
+		let hasNext = page && page.current_page <= page.page_count;
 
 		// tansform date here
 		action.payload.list.map((m) => {
@@ -79,6 +112,12 @@ export default handleActions({
 				m.pictures = m.pictures.map((p) => {
 					return getImgSuitablePath(p);
 				});
+			}
+
+			const matchResult = matchPhone(m.content);
+			if(matchResult.hasPhone){
+				m.content = matchResult.content;
+				m.phone = matchResult.phone;
 			}
 		});
 
@@ -91,7 +130,6 @@ export default handleActions({
 		return {
 			...state,
 			hasNext: hasNext,
-			page: state.list.concat(action.payload.page),
 			list: list
 		};
 	},
@@ -107,6 +145,12 @@ export default handleActions({
 			});
 		}
 
+		const matchResult = matchPhone(data.content);
+		if(matchResult.hasPhone){
+			data.content = matchResult.content;
+			data.phone = matchResult.phone;
+		}
+
 		return {
 			...state,
 			detail: data
@@ -117,5 +161,39 @@ export default handleActions({
 			...state,
 			rewardList: action.payload.list
 		};
-	}
+	},
+	[LOAD_MY_MOMENTS]: (state, action) => {
+		const page = action.payload.page;
+		let list = [];
+		let hasNext = page && page.current_page <= page.page_count;
+
+		// tansform date here
+		action.payload.list.map((m) => {
+			m.created_at = date.parseDate(m.created_at);
+
+			if(m.pictures.length > 0){
+				m.pictures = m.pictures.map((p) => {
+					return getImgSuitablePath(p);
+				});
+			}
+
+			const matchResult = matchPhone(m.content);
+			if(matchResult.hasPhone){
+				m.content = matchResult.content;
+				m.phone = matchResult.phone;
+			}
+		});
+
+		if((page && page.current_page === 1) || !page){
+			list = action.payload.list;
+		}else {
+			list = state.list.concat(action.payload.list);
+		}
+
+		return {
+			...state,
+			hasMyNext: hasNext,
+			myList: list
+		};
+	},
 }, INITIAL_STATE);

@@ -5,7 +5,7 @@
 				<image mode="aspectFill" class="user-icon" src="{{props.moment.detail.avatar}}"/>
 				<view wx:if="{{props.moment.detail.verify_status == 2}}" class="vip">V</view>
 			</view>
-		</view> 
+		</view>
 		<view class="feed-detail-right">
 			<view class="header">
 				<view class="wrapper">
@@ -40,6 +40,7 @@
 				</view>
 			</view>
 		</view>
+		<image wx:if="{{props.moment.detail.phone && props.moment.detail.phone !== ''}}" src="../../../images/dianhua_icon.png" class="call-phone" mode="aspectFit" data-tel="{{props.moment.detail.phone}}" catchtap="handleCall"/>
 	</view>
 	<view class="feed-status-info">
 		<view class="user-status-operaters">
@@ -90,7 +91,7 @@
 								<image mode="aspectFill" class="user-icon" src="{{item.avatar}}"/>
 								<view wx:if="{{item.verify_status == 2}}" class="vip">V</view>
 							</navigator>
-						</view> 
+						</view>
 						<view class="feed-comment-right">
 							<view class="header">
 								<view class="wrapper">
@@ -133,7 +134,7 @@
 								<image mode="aspectFill" class="user-icon" src="{{item.avatar}}"/>
 								<view wx:if="{{item.verify_status == 2}}" class="vip">V</view>
 							</navigator>
-						</view> 
+						</view>
 						<view class="feed-comment-right">
 							<view class="header">
 								<view class="wrapper">
@@ -157,7 +158,7 @@
 								<image mode="aspectFill" class="user-icon" src="{{item.avatar}}"/>
 								<view wx:if="{{item.verify_status == 2}}" class="vip">V</view>
 							</view>
-						</view> 
+						</view>
 						<view class="feed-comment-right">
 							<view class="header">
 								<view class="wrapper">

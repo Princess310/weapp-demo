@@ -32,18 +32,4 @@
 	</view>
 </view>
 
-<view class="weui-cells weui-cells_after-title">
-	<view class="weui-cell weui-cell_switch">
-		<view class="weui-cell__bd">添加电话号码</view>
-		<view class="weui-cell__ft">
-			<switch checked="checked" bindchange="switchTel"></switch>
-		</view>
-	</view>
-	<view wx:if="{{state.showTel}}" class="weui-cell weui-cell_input">
-		<view class="weui-cell__bd">
-			<input class="weui-input" type="number" maxlength="11" placeholder="请输入你的电话号码" bindinput="handleTel"/>
-		</view>
-	</view>
-</view>
-
 <button class="weui-btn publish-btn" type="primary" catchtap="handleSubmit">发布</button>

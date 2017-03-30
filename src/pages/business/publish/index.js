@@ -9,7 +9,6 @@ class Index extends Component {
 		fileCount: 0,
 		files: [],
 		filesLimit: 9,
-		showTel: true,
 		tel: ''
 	}
 
@@ -45,18 +44,6 @@ class Index extends Component {
 		})
 	}
 
-	switchTel(e){
-		this.setState({
-			showTel: !this.state.showTel
-		});
-	}
-
-	handleTel(e){
-		this.setState({
-			tel: e.detail.value
-		});
-	}
-
 	clearFile(e){
 		const { index } = e.currentTarget.dataset;
 		const { files } = this.state;
@@ -74,30 +61,12 @@ class Index extends Component {
 	}
 
 	async handleSubmit(){
-		const { content, files, tel, showTel } = this.state;
+		const { content, files, tel } = this.state;
 
 		const props = {
 			content: content,
 			pictures: files.join(',')
 		};
-
-		if(showTel){
-			if(tel === "" || (tel.length !== 7 && tel.length !== 11)){
-				wx.showModal({
-					content: '请输入正确电话号码和格式',
-					showCancel: false,
-					success: function (res) {
-						if (res.confirm) {
-							console.log('用户点击确定')
-						}
-					}
-				});
-
-				return false;
-			}
-
-			props.mobile = tel;
-		}
 
 		if(content === '' && files.length === 0){
 			wx.showModal({

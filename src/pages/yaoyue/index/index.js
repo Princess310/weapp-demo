@@ -7,8 +7,8 @@ import * as matchActions from '../../../redux/match';
 
 class Index extends Component {
 	state = {
-		pageStart: 2,
-		page: 2,
+		pageStart: 1,
+		page: 1,
 		refreshing: false,
 		pageCount: -1,
 		tag_identity_id: 0,
@@ -125,14 +125,6 @@ class Index extends Component {
 		wx.hideToast();
 	}
 
-	handleCall(e) {
-		const { tel } = e.currentTarget.dataset;
-
-		wx.makePhoneCall({
-			phoneNumber: tel
-		});
-	}
-
 	showFilter(e) {
 		this.setState({
 			showFilter: true
@@ -187,7 +179,7 @@ class Index extends Component {
 				reward_item: reward_item,
 				city_id: self.props.match.city.current.id
 			}
-			
+
 			// store filter
 			redux.getStore().dispatch({
 				type: SET_FILTER,

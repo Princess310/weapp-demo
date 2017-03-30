@@ -1,0 +1,44 @@
+<template name="feed-detail-invite">
+	<navigator url="../detail/index?id={{id}}" class="feed-match-card">
+		<view class="feed-detail-left">
+			<view class="user-icon-wrapper">
+				<image mode="aspectFill" class="user-icon" src="{{avatar}}"/>
+				<view wx:if="{{verify_status == 2}}" class="vip">V</view>
+			</view>
+			<view wx:if="{{city_name !== ''}}" class="city-info">
+				<image class="pin" src="../../../images/pin_icon.png" mode="aspectFit"/>
+				<text class="distance">{{city_name}}</text>
+			</view>
+		</view>
+		<view class="feed-detail-right">
+			<view class="header">
+				<view class="wrapper">
+					<text class="user-name">{{nickname}}</text>
+					<text class="user-company">{{company}}</text>
+					<text class="user-position">{{position}}</text>
+				</view>
+			</view>
+			<view class="feed-content">
+				<text>{{event_summary}}</text>
+			</view>
+			<view class="time">
+				<text>{{event_at}}</text>
+			</view>
+		</view>
+		<view wx:if="{{tag_identity_name !== ''}}" class="reward-item">
+				<text>{{tag_identity_name}}</text>
+		</view>
+	</navigator>
+</template>
+
+<view>
+	<block wx:if="{{props.match.myMatchList.length > 0}}"></block>
+	<block wx:else>
+		<view class="no-data">
+			<text>没有相关需求</text>
+		</view>
+	</block>
+	<block wx:for="{{props.match.myMatchList}}"  wx:key="id">
+		<template is="feed-detail-invite" data="{{...item, index: index}}" />
+	</block>
+</view>

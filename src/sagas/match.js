@@ -1,16 +1,17 @@
 import * as moment from '../redux/moment';
 import { takeLatest } from 'redux-saga';
 import { put } from 'redux-saga/effects';
-import { FETCH_MATCH, FETCH_DETAIL, FETCH_MY_LIST, 
+import { FETCH_MATCH, FETCH_DETAIL, FETCH_MY_LIST,
 		 FETCH_CITY, FETCH_FILTERS, FETCH_LOCATION,
 		 FETCH_INDUSTRY, FETCH_BUSINESS_INFO, FETCH_TAG_LIST,
 		 ADD_TAG, DELETE_TAG, SAVE_TAGS,
-		 FOLLOW_USER, CANCEL_FOLLOW_USER } from '../redux/match';
+		 FOLLOW_USER, CANCEL_FOLLOW_USER, FETCH_MY_MATCH } from '../redux/match';
 import { REFRESH } from '../redux/user';
 import { request } from '../utils/request';
-import { load, loadDetail, loadMyList, loadCity, 
-		 loadFilters, loadLoaction, loadIndustry, 
-		 loadBusinessInfo, loadTags, saveTags } from '../redux/match';
+import { load, loadDetail, loadMyList, loadCity,
+		 loadFilters, loadLoaction, loadIndustry,
+		 loadBusinessInfo, loadTags, saveTags,
+	   loadMyMatch } from '../redux/match';
 
 // --------- Invite Interface --------- //
 function* fetchIvites(action){
@@ -83,6 +84,19 @@ function* cancelFollowUser(action){
 		yield put({type: FETCH_DETAIL, payload: {
 			id: action.payload.fid
 		}});
+	} catch (error) {
+		console.log('login error', error);
+	}
+}
+
+function* fetchMyMatch(action){
+	try {
+		let { list, page: resPage } = yield request(true).get("moments/my-reward", action.payload);
+
+		yield put(loadMyMatch({
+			page: resPage,
+			list: list
+		}));
 	} catch (error) {
 		console.log('login error', error);
 	}
@@ -205,7 +219,8 @@ function* matchSaga() {
 		takeLatest(DELETE_TAG, delTag),
 		takeLatest(SAVE_TAGS, saveTagInfo),
 		takeLatest(FOLLOW_USER, followUser),
-		takeLatest(CANCEL_FOLLOW_USER, cancelFollowUser)
+		takeLatest(CANCEL_FOLLOW_USER, cancelFollowUser),
+		takeLatest(FETCH_MY_MATCH, fetchMyMatch)
 	];
 }
 

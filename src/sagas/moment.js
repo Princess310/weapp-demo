@@ -4,10 +4,11 @@ import { put } from 'redux-saga/effects';
 import { STARTUP } from '../redux/startup';
 import { LOAD_MOMENTS, FETCH_MOMENTS, REFRESH_MOMENTS, DELETE_MOMENT, ADD_MOMENT,
 		 FETCH_MOMENT_DETAIL, FETCH_INVITES, DO_LIKE_MOMENT, DO_LIKE_COMMENT,
-		 DO_JOIN_REWARD, FETCH_REWARD, LOAD_REWARD, SHIELD_MOMENT, DO_SEND_COMMENT } from '../redux/moment';
+		 DO_JOIN_REWARD, FETCH_REWARD, LOAD_REWARD, SHIELD_MOMENT, DO_SEND_COMMENT,
+	   FETCH_MOMENTS_ROLES, LOAD_CURRENT_ROLE, FETCH_MY_MOMENTS	} from '../redux/moment';
 import { FETCH_MATCH } from '../redux/match';
 import { request, setSession } from '../utils/request';
-import { load, loadDetail, loadReward, loadLikeMoment, loadLikeComment, loadJoinReward } from '../redux/moment';
+import { load, loadDetail, loadRoles, loadCurrentRole, loadReward, loadLikeMoment, loadLikeComment, loadJoinReward, loadMyMoments } from '../redux/moment';
 import * as userActions from '../redux/user';
 import * as redux from 'labrador-redux';
 import wx from 'labrador';
@@ -15,11 +16,31 @@ import { uploadFile } from '../utils/utils';
 
 // --------- Moment Interface --------- //
 function* fetchMoments(action) {
-	const { page } = action.payload;
+	const { page, role } = action.payload;
 
 	try {
+		let { list, page: resPage } = yield request(true).get("moments/exhibition-moments", {
+			page: page,
+			role: role
+		});
+
+		yield put(load({
+			page: resPage,
+			list: list
+		}));
+
+		yield put(loadCurrentRole({
+			role: role
+		}))
+	} catch (error) {
+		console.log('login error', error);
+	}
+}
+
+function* fetchMomentRoles() {
+	try {
 		const { id } = redux.getStore().getState().user;
-		
+
 		// do login first here for now
 		if(!id){
 			let res = yield wx.login();
@@ -28,7 +49,7 @@ function* fetchMoments(action) {
 			if(res.code){
 				let user = yield request(false).post('user/wx-small-login', {
 					code: res.code,
-					type: 'cbeb1b',
+					type: '534add',
 					...data
 				});
 
@@ -48,14 +69,17 @@ function* fetchMoments(action) {
 			}
 		}
 
-		let { list, page: resPage } = yield request(true).get("moments/moments", {
-			page: page
-		});
+		const roles = yield request(true).get('moments/role');
 
-		yield put(load({
-			page: resPage,
-			list: list
+		yield put(loadRoles({
+			page: 1,
+			list: roles.list
 		}));
+
+		yield put({type: FETCH_MOMENTS, payload: {
+			page: 1,
+			role: roles.list[0].id
+		}});
 	} catch (error) {
 		console.log('login error', error);
 	}
@@ -192,7 +216,7 @@ function* joinReward(action){
 		yield request(true).post("moments/participate", {
 			moments_id: id
 		});
-		
+
 		// then refresh detail
 		yield put({type: FETCH_MOMENT_DETAIL, payload: {
 			id: id
@@ -219,6 +243,23 @@ function* sendComment(action){
 		console.log('login error', error);
 	}
 }
+
+function* fetchMyMoments(action) {
+	const { page } = action.payload;
+
+	try {
+		let { list, page: resPage } = yield request(true).get("moments/my-moments", {
+			page: page
+		});
+
+		yield put(loadMyMoments({
+			page: resPage,
+			list: list
+		}));
+	} catch (error) {
+		console.log('login error', error);
+	}
+}
 // --------- /Moment Interface --------- //
 
 // --------- Reward Interface --------- //
@@ -237,6 +278,7 @@ function* fetchReword(){
 function* momentSaga() {
 	yield [
 		takeLatest(REFRESH_MOMENTS, fetchMoments),
+		takeLatest(FETCH_MOMENTS_ROLES, fetchMomentRoles),
 		takeLatest(FETCH_MOMENTS, fetchMoments),
 		takeLatest(FETCH_MOMENT_DETAIL, fetchDetail),
 		takeLatest(FETCH_REWARD, fetchReword),
@@ -246,7 +288,8 @@ function* momentSaga() {
 		takeLatest(DO_SEND_COMMENT, sendComment),
 		takeLatest(DO_LIKE_MOMENT, likeMoment),
 		takeLatest(DO_LIKE_COMMENT, likeComment),
-		takeLatest(DO_JOIN_REWARD, joinReward)
+		takeLatest(DO_JOIN_REWARD, joinReward),
+		takeLatest(FETCH_MY_MOMENTS, fetchMyMoments),
 	];
 }
 

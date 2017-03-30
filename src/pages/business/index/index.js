@@ -6,8 +6,11 @@ import * as momentActions from '../../../redux/moment';
 class Index extends Component {
 	state = {
 		page: 1,
+		role: 0,
 		refreshing: false,
-		pageCount: -1
+		pageCount: -1,
+		sliderLeft: 26,
+		sliderOffset: 0,
 	}
 
 	onShareAppMessage() {
@@ -26,9 +29,35 @@ class Index extends Component {
 			icon: 'loading'
 		})
 
-		const { page } = this.state;
+		this.props.getRoles();
+
+		wx.hideToast();
+	}
+
+	tabClick(e) {
+		const id = e.currentTarget.id;
+		this.setState({
+			sliderOffset: e.currentTarget.offsetLeft,
+			activeIndex: id
+		});
+
+		this.props.loadCurrentRole({
+			role: id
+		});
+
+		wx.showToast({
+			title: '加载中',
+			icon: 'loading'
+		})
+
 		this.props.getList({
-			page: page
+			page: 1,
+			role: id,
+		});
+
+		this.setState({
+			page: 1,
+			role: id,
 		});
 
 		wx.hideToast();
@@ -36,12 +65,15 @@ class Index extends Component {
 
 	async onPullDownRefresh() {
 		if(this.state.refreshing) return false;
+		const { currentRole } = this.props.moment;
+
 		this.setState({
 			refreshing: true
 		});
 
 		this.props.doRefresh({
-			page: 1
+			page: 1,
+			role: currentRole,
 		});
 
 		this.setState({
@@ -64,11 +96,13 @@ class Index extends Component {
 		})
 
 		let { page } = this.state;
+		const { currentRole } = this.props.moment;
 
 		page = page + 1;
 
 		this.props.getList({
-			page: page
+			page: page,
+			role: currentRole,
 		});
 
 		this.setState({
@@ -150,6 +184,8 @@ export default connect(
 	({ moment, user }) => ({ moment, user }),
 	(dispatch) => bindActionCreators({
 		doRefresh: momentActions.refresh,
+		getRoles: momentActions.fetchRoles,
+		loadCurrentRole: momentActions.loadCurrentRole,
 		getList: momentActions.list,
 		deleteMoment: momentActions.del,
 		shieldMoment: momentActions.shieldMoment,

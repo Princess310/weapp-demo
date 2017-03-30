@@ -1,6 +1,6 @@
 {
   "define": {
-    "API_ROOT": "https://api-test.alijian.net/index.php?r="
+    "API_ROOT": "https://jkhz.alijian.net/index.php?r="
   },
   "npmMap": {
     "lodash.isplainobject": "lodash/isPlainObject",
@@ -24,7 +24,7 @@
     "development": {},
     "production": {
       "define": {
-        "API_ROOT": "https://api.alijian.net/index.php?r="
+        "API_ROOT": "https://jkhz.alijian.net/index.php?r="
       }
     }
   }

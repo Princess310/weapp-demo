@@ -12,7 +12,7 @@ function* login() {
 	let data = yield wx.getUserInfo();
 	let user = yield request(false).post('user/wx-small-login', {
 		code: res.code,
-		type: 'cbeb1b',
+		type: '534add',
 		...data
 	});
 
