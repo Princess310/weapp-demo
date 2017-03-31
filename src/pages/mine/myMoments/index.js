@@ -76,7 +76,7 @@ class Index extends Component {
 		let src = data.src;
 		let pid = data.pid;
 		let urls = [];
-		const list = this.props.moment.list || [];
+		const list = this.props.moment.myList || [];
 
 		list.map((item, i) => {
 			if(pid === item.id){

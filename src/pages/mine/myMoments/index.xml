@@ -1,5 +1,5 @@
 <template name="feed-detail-moment">
-	<navigator url="../detail/index?id={{id}}">
+	<navigator url="../../moment/detail/index?id={{id}}">
 		<view class="fedd-detail-item">
 			<view class="feed-detail-left">
 				<navigator url="../../yaoyue/detail/index?id={{uid}}" class="user-icon-wrapper">

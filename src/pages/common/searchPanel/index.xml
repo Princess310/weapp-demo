@@ -1,0 +1,85 @@
+<template name="feed-detail-moment">
+	<navigator url="../../business/detail/index?id={{id}}">
+		<view class="fedd-detail-item">
+			<view class="feed-detail-left">
+				<navigator url="../../yaoyue/detail/index?id={{uid}}" class="user-icon-wrapper">
+					<image mode="aspectFill" class="user-icon" src="{{avatar}}"/>
+					<view wx:if="{{verify_status == 2}}" class="vip">V</view>
+				</navigator>
+			</view>
+			<view class="feed-detail-right">
+				<view class="header">
+					<view class="wrapper">
+						<text class="user-name">{{nickname}}</text>
+					</view>
+				</view>
+				<view class="sub-info">
+					<text>{{company}}</text>
+					<text>{{tag_identity_name}}</text>
+				</view>
+				<view class="time">
+					<text>{{created_at}}</text>
+				</view>
+				<view class="user-status-wrapper">
+					<view class="user-status-content">
+						<view class="words">{{content}}</view>
+						<view class="pictures {{(pictures.length === 2) ? 'normal' : (pictures.length === 1 ? 'big' : '')}}">
+							<block wx:for="{{pictures}}" wx:key="unique">
+								<image mode="aspectFill" class="pic" src="{{item}}" data-src="{{item}}" data-pid="{{id}}" catchtap="handleViewImage"></image>
+							</block>
+						</view>
+					</view>
+				</view>
+			</view>
+		</view>
+	</navigator>
+</template>
+
+<view class="ali-search-container">
+	<view class="weui-search-bar">
+		<view class="weui-search-bar__form">
+			<view class="weui-search-bar__box">
+				<icon class="weui-icon-search_in-box" type="search" size="14"></icon>
+				<input type="text" class="weui-search-bar__input" focus="{{true}}" placeholder="{{state.placeholder}}" value="{{state.inputVal}}" bindinput="inputTyping" bindconfirm="handleSearch" />
+				<view class="weui-icon-clear" wx:if="{{state.inputVal.length > 0}}" bindtap="clearInput">
+					<icon type="clear" size="14"></icon>
+				</view>
+			</view>
+		</view>
+		<view class="weui-search-bar__cancel-btn" bindtap="handleBack">取消</view>
+	</view>
+</view>
+
+<block wx:if="{{state.action === 'moment'}}">
+  <block wx:if="{{props.moment.searchList.length > 0}}">
+    <block wx:for="{{props.moment.searchList}}"  wx:key="id">
+      <template is="feed-detail-moment" data="{{...item, index: index}}" />
+    </block>
+  </block>
+</block>
+<block wx:else>
+	<block wx:if="{{props.match.searchList.length > 0}}">
+		<block wx:for="{{props.match.searchList}}"  wx:key="id">
+			<navigator url="../../yaoyue/detail/index?id={{item.id}}" class="feed-comment-panel comment-title">
+				<view class="feed-comment-left">
+					<view class="user-icon-wrapper">
+						<image mode="aspectFill" class="user-icon" src="{{item.avatar}}"/>
+						<view wx:if="{{item.verify_status == 2}}" class="vip">V</view>
+					</view>
+				</view>
+				<view class="feed-comment-right">
+					<view class="header">
+						<view class="wrapper">
+							<text class="user-name">{{item.nickname}}</text>
+							<text class="company">{{item.company}}</text>
+							<text class="role">{{item.position}}</text>
+						</view>
+					</view>
+					<view class="sub-info">
+						<text>{{item.tag_identity_name}}</text>
+					</view>
+				</view>
+			</navigator>
+		</block>
+	</block>
+</block>

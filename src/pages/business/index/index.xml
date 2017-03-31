@@ -1,3 +1,5 @@
+<import src="../../../templates/contentParse.wxml"/>
+
 <template name="feed-detail-moment">
 	<navigator url="../detail/index?id={{id}}">
 		<view class="fedd-detail-item">
@@ -29,7 +31,11 @@
 				</view>
 				<view class="user-status-wrapper">
 					<view class="user-status-content">
-						<view class="words">{{content}}</view>
+						<view class="words">
+							<block wx:for-items="{{nodes}}" wx:key="{{index}}">
+								<template is="content-parse-tmpl" data="{{...item, index: index}}" />
+							</block>
+						</view>
 						<view class="pictures {{(pictures.length === 2) ? 'normal' : (pictures.length === 1 ? 'big' : '')}}">
 							<block wx:for="{{pictures}}" wx:key="unique">
 								<image mode="aspectFill" class="pic" src="{{item}}" data-src="{{item}}" data-pid="{{id}}" catchtap="handleViewImage"></image>
@@ -41,7 +47,6 @@
 					</view>
 				</view>
 			</view>
-			<image wx:if="{{phone && phone !== ''}}" src="../../../images/dianhua_icon.png" class="call-phone" mode="aspectFit" data-tel="{{phone}}" catchtap="handleCall"/>
 		</view>
 		<view class="feed-status-info">
 			<view class="user-status-operaters">
@@ -59,8 +64,6 @@
 					<text class="count">{{like_count}}</text>
 				</view>
 			</view>
-			<view wx:if="{{reward_as == 1}}" class="reward-tag supply">他提供货源</view>
-			<view wx:if="{{reward_as == 2}}" class="reward-tag">他在找货源</view>
 		</view>
 	</navigator>
 </template>
@@ -84,6 +87,19 @@
 </view>
 
 <view class="dashboard">
+	<navigator class="ali-search-container" url="../../common/searchPanel/index?action=moment">
+		<view class="weui-search-bar">
+			<view class="weui-search-bar__form">
+				<view class="weui-search-bar__box">
+					<input type="text" class="weui-search-bar__input" placeholder="搜索动态" />
+				</view>
+				<label class="weui-search-bar__label">
+					<icon class="weui-icon-search" type="search" size="14"></icon>
+					<view class="weui-search-bar__text">搜索动态</view>
+				</label>
+			</view>
+		</view>
+	</navigator>
 	<block wx:if="{{props.moment.list.length > 0}}">
 		<block wx:for="{{props.moment.list}}"  wx:key="id">
 			<template is="feed-detail-moment" data="{{...item, index: index}}" />

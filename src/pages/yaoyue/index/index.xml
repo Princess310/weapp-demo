@@ -44,24 +44,19 @@
 		<text class="name">发需求</text>
 	</navigator>
 </view>
-<view class="ali-search-container">
+<navigator class="ali-search-container" url="../../common/searchPanel/index?action=match">
 	<view class="weui-search-bar">
 		<view class="weui-search-bar__form">
 			<view class="weui-search-bar__box">
-				<icon class="weui-icon-search_in-box" type="search" size="14"></icon>
-				<input type="text" class="weui-search-bar__input" placeholder="搜索人脉资源" value="{{state.inputVal}}" focus="{{state.inputShowed}}" bindinput="inputTyping" bindconfirm="handleSearch" />
-				<view class="weui-icon-clear" wx:if="{{state.inputVal.length > 0}}" bindtap="clearInput">
-					<icon type="clear" size="14"></icon>
-				</view>
+				<input type="text" class="weui-search-bar__input" placeholder="搜索人脉资源" />
 			</view>
-			<label class="weui-search-bar__label" hidden="{{state.inputShowed}}" bindtap="showInput">
+			<label class="weui-search-bar__label">
 				<icon class="weui-icon-search" type="search" size="14"></icon>
 				<view class="weui-search-bar__text">搜索人脉资源</view>
 			</label>
 		</view>
-		<view class="weui-search-bar__cancel-btn" hidden="{{!state.inputShowed}}" bindtap="hideInput">取消</view>
 	</view>
-</view>
+</navigator>
 
 <view>
 	<block wx:if="{{props.match.list.length > 0}}"></block>

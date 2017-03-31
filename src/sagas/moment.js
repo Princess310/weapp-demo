@@ -5,10 +5,10 @@ import { STARTUP } from '../redux/startup';
 import { LOAD_MOMENTS, FETCH_MOMENTS, REFRESH_MOMENTS, DELETE_MOMENT, ADD_MOMENT,
 		 FETCH_MOMENT_DETAIL, FETCH_INVITES, DO_LIKE_MOMENT, DO_LIKE_COMMENT,
 		 DO_JOIN_REWARD, FETCH_REWARD, LOAD_REWARD, SHIELD_MOMENT, DO_SEND_COMMENT,
-	   FETCH_MOMENTS_ROLES, LOAD_CURRENT_ROLE, FETCH_MY_MOMENTS	} from '../redux/moment';
+	   FETCH_MOMENTS_ROLES, LOAD_CURRENT_ROLE, FETCH_MY_MOMENTS, FETCH_SEARCH_MOMENTS	} from '../redux/moment';
 import { FETCH_MATCH } from '../redux/match';
 import { request, setSession } from '../utils/request';
-import { load, loadDetail, loadRoles, loadCurrentRole, loadReward, loadLikeMoment, loadLikeComment, loadJoinReward, loadMyMoments } from '../redux/moment';
+import { load, loadDetail, loadRoles, loadCurrentRole, loadReward, loadLikeMoment, loadLikeComment, loadJoinReward, loadMyMoments, loadSearchMoments } from '../redux/moment';
 import * as userActions from '../redux/user';
 import * as redux from 'labrador-redux';
 import wx from 'labrador';
@@ -16,7 +16,12 @@ import { uploadFile } from '../utils/utils';
 
 // --------- Moment Interface --------- //
 function* fetchMoments(action) {
-	const { page, role } = action.payload;
+	let { page, role } = action.payload;
+
+	if(!role){
+		const { currentRole } = redux.getStore().getState().moment;
+		role = currentRole;
+	}
 
 	try {
 		let { list, page: resPage } = yield request(true).get("moments/exhibition-moments", {
@@ -260,6 +265,24 @@ function* fetchMyMoments(action) {
 		console.log('login error', error);
 	}
 }
+
+function* fetchSearchMoments(action) {
+	const { page, keyword } = action.payload;
+
+	try {
+		let { list, page: resPage } = yield request(true).get("moments/search", {
+			page: page,
+			keyword: keyword
+		});
+
+		yield put(loadSearchMoments({
+			page: resPage,
+			list: list
+		}));
+	} catch (error) {
+		console.log('login error', error);
+	}
+}
 // --------- /Moment Interface --------- //
 
 // --------- Reward Interface --------- //
@@ -290,6 +313,7 @@ function* momentSaga() {
 		takeLatest(DO_LIKE_COMMENT, likeComment),
 		takeLatest(DO_JOIN_REWARD, joinReward),
 		takeLatest(FETCH_MY_MOMENTS, fetchMyMoments),
+		takeLatest(FETCH_SEARCH_MOMENTS, fetchSearchMoments),
 	];
 }
 

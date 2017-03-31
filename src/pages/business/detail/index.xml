@@ -1,3 +1,5 @@
+<import src="../../../templates/contentParse.wxml"/>
+
 <scroll-view>
 	<view class="fedd-detail-item">
 		<view class="feed-detail-left">
@@ -10,13 +12,11 @@
 			<view class="header">
 				<view class="wrapper">
 					<text class="user-name">{{props.moment.detail.nickname}}</text>
-					<image wx:if="{{props.moment.detail.mobile && props.moment.detail.mobile !== ''}}" src="../../../images/dianhua_icon.png" mode="aspectFit" data-tel="{{props.moment.detail.mobile}}" catchtap="handleCall"/>
 				</view>
 				<view class="wrapper">
 					<text wx:if="{{props.moment.detail.reward_as == 1}}" class="label supply">供</text>
 					<text wx:if="{{props.moment.detail.reward_as == 2}}" class="label">求</text>
 					<text wx:if="{{props.moment.detail.reward_amount > 0}}" class="money">{{props.moment.detail.reward_amount}}元</text>
-					<image class="todo-btn" mode="aspectFill" src="../../../images/icon_menu.png" data-id="{{props.moment.detail.id}}" data-uid="{{props.moment.detail.uid}}" catchtap="handleTodo"></image>
 				</view>
 			</view>
 			<view class="sub-info">
@@ -28,7 +28,11 @@
 			</view>
 			<view class="user-status-wrapper">
 				<view class="user-status-content">
-					<view class="words">{{props.moment.detail.content}}</view>
+					<view class="words">
+						<block wx:for-items="{{props.moment.detail.nodes}}" wx:key="{{index}}">
+							<template is="content-parse-tmpl" data="{{...item, index: index}}" />
+						</block>
+					</view>
 					<view class="pictures {{(props.moment.detail.pictures.length === 2) ? 'normal' : (props.moment.detail.pictures.length === 1 ? 'big' : '')}}">
 						<block wx:for="{{props.moment.detail.pictures}}" wx:key="unique">
 							<image mode="aspectFill" class="pic" src="{{item}}" data-src="{{item}}" data-pid="{{id}}" catchtap="handleViewImage"></image>
@@ -40,7 +44,6 @@
 				</view>
 			</view>
 		</view>
-		<image wx:if="{{props.moment.detail.phone && props.moment.detail.phone !== ''}}" src="../../../images/dianhua_icon.png" class="call-phone" mode="aspectFit" data-tel="{{props.moment.detail.phone}}" catchtap="handleCall"/>
 	</view>
 	<view class="feed-status-info">
 		<view class="user-status-operaters">

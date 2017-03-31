@@ -36,6 +36,10 @@ export const LOAD_REWARD = 'LOAD_REWARD';
 export const FETCH_MY_MOMENTS = 'FETCH_MY_MOMENTS';
 export const LOAD_MY_MOMENTS = 'LOAD_MY_MOMENTS';
 
+export const FETCH_SEARCH_MOMENTS = 'FETCH_SEARCH_MOMENTS';
+export const LOAD_SEARCH_MOMENTS = 'LOAD_SEARCH_MOMENTS';
+export const CLEAR_SEARCH_MOMENTS = 'CLEAR_SEARCH_MOMENTS';
+
 // 初始state
 export const INITIAL_STATE = immutable({
 	detail: {},
@@ -45,6 +49,7 @@ export const INITIAL_STATE = immutable({
 	roles: [],
 	currentRole: 0,
 	myList: [],
+	searchList: [],
 });
 
 export const refresh = createAction(REFRESH_MOMENTS);
@@ -79,6 +84,10 @@ export const loadReward = createAction(LOAD_REWARD, (list) => (list));
 export const fetchMyMoments = createAction(FETCH_MY_MOMENTS);
 export const loadMyMoments = createAction(LOAD_MY_MOMENTS, (list) => (list));
 
+export const fetchSearchMoments = createAction(FETCH_SEARCH_MOMENTS);
+export const loadSearchMoments = createAction(LOAD_SEARCH_MOMENTS, (list) => (list));
+export const clearSearchMoments = createAction(CLEAR_SEARCH_MOMENTS);
+
 export default handleActions({
 	[FETCH_MOMENTS]: (state, action) => {
 		return state;
@@ -102,7 +111,7 @@ export default handleActions({
 	[LOAD_MOMENTS]: (state, action) => {
 		const page = action.payload.page;
 		let list = [];
-		let hasNext = page && page.current_page <= page.page_count;
+		let hasNext = page && page.current_page < page.page_count;
 
 		// tansform date here
 		action.payload.list.map((m) => {
@@ -118,6 +127,7 @@ export default handleActions({
 			if(matchResult.hasPhone){
 				m.content = matchResult.content;
 				m.phone = matchResult.phone;
+				m.nodes = matchResult.nodes;
 			}
 		});
 
@@ -149,6 +159,7 @@ export default handleActions({
 		if(matchResult.hasPhone){
 			data.content = matchResult.content;
 			data.phone = matchResult.phone;
+			data.nodes = matchResult.nodes;
 		}
 
 		return {
@@ -165,7 +176,7 @@ export default handleActions({
 	[LOAD_MY_MOMENTS]: (state, action) => {
 		const page = action.payload.page;
 		let list = [];
-		let hasNext = page && page.current_page <= page.page_count;
+		let hasNext = page && page.current_page < page.page_count;
 
 		// tansform date here
 		action.payload.list.map((m) => {
@@ -181,13 +192,14 @@ export default handleActions({
 			if(matchResult.hasPhone){
 				m.content = matchResult.content;
 				m.phone = matchResult.phone;
+				m.nodes = matchResult.nodes;
 			}
 		});
 
 		if((page && page.current_page === 1) || !page){
 			list = action.payload.list;
 		}else {
-			list = state.list.concat(action.payload.list);
+			list = state.myList.concat(action.payload.list);
 		}
 
 		return {
@@ -196,4 +208,46 @@ export default handleActions({
 			myList: list
 		};
 	},
+	[LOAD_SEARCH_MOMENTS]: (state, action) => {
+		const page = action.payload.page;
+		let list = [];
+		let hasNext = page && page.current_page < page.page_count;
+
+		// tansform date here
+		action.payload.list.map((m) => {
+			m.created_at = date.parseDate(m.created_at);
+
+			if(m.pictures.length > 0){
+				m.pictures = m.pictures.map((p) => {
+					return getImgSuitablePath(p);
+				});
+			}
+
+			const matchResult = matchPhone(m.content);
+			if(matchResult.hasPhone){
+				m.content = matchResult.content;
+				m.phone = matchResult.phone;
+				m.nodes = matchResult.nodes;
+			}
+		});
+
+		if((page && page.current_page === 1) || !page){
+			list = action.payload.list;
+		}else {
+			list = state.searchList.concat(action.payload.list);
+		}
+
+		return {
+			...state,
+			hasSearchNext: hasNext,
+			searchList: list
+		};
+	},
+	[CLEAR_SEARCH_MOMENTS]: (state, action) => {
+		return {
+			...state,
+			hasSearchNext: false,
+			searchList: []
+		};
+	}
 }, INITIAL_STATE);

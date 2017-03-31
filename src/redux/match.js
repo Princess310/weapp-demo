@@ -42,6 +42,10 @@ export const CANCEL_FOLLOW_USER = 'CANCEL_FOLLOW_USER';
 export const FETCH_MY_MATCH = 'FETCH_MY_MATCH';
 export const LOAD_MY_MATCH = 'LOAD_MY_MATCH';
 
+export const FETCH_SEARCH_MATCH = 'FETCH_SEARCH_MATCH';
+export const LOAD_SEARCH_MATCH = 'LOAD_SEARCH_MATCH';
+export const CLEAR_SEARCH_MATCH = 'CLEAR_SEARCH_MATCH';
+
 // 初始state
 export const INITIAL_STATE = immutable({
 	detail: {},
@@ -49,6 +53,7 @@ export const INITIAL_STATE = immutable({
 	list: [],
 	myList: [],
 	myMatchList: [],
+	searchList: [],
 	filter: {
 		items: [],
 		roles: [],
@@ -109,12 +114,16 @@ export const cancelFollowUser = createAction(CANCEL_FOLLOW_USER);
 export const fetchMyMatch = createAction(FETCH_MY_MATCH);
 export const loadMyMatch = createAction(LOAD_MY_MATCH);
 
+export const fetchSearchMatch = createAction(FETCH_SEARCH_MATCH);
+export const loadSearchMatch = createAction(LOAD_SEARCH_MATCH);
+export const clearSearchMatch = createAction(CLEAR_SEARCH_MATCH);
+
 export default handleActions({
 	[LOAD_MATCH]: (state, action) => {
 		const page = action.payload.page;
 		let list = [];
 		// page start as 2
-		let hasNext = page && page.current_page <= page.page_count;
+		let hasNext = page && page.current_page < page.page_count;
 
 		// tansform date and city here
 		action.payload.list.map((m) => {
@@ -122,7 +131,7 @@ export default handleActions({
 			m.distance = city.parseDistance(m.distance, m.city_name);
 		});
 
-		if(page && (page.current_page === 1 || page.current_page === 2)){
+		if(page && page.current_page === 1){
 			list = action.payload.list;
 		}else {
 			list = state.list.concat(action.payload.list);
@@ -181,12 +190,14 @@ export default handleActions({
 	[LOAD_MY_LIST]: (state, action) => {
 		const page = action.payload.page;
 		let list = [];
-		let hasNext = page && page.current_page <= page.page_count;
+		let hasNext = page && page.current_page < page.page_count;
 
-		if(page && page.current_page === 1){
-			list = action.payload.list;
-		}else {
-			list = state.myList.concat(action.payload.list);
+		if(action.payload.list.length > 0){
+			if(page && page.current_page === 1){
+				list = action.payload.list;
+			}else {
+				list = state.myList.concat(action.payload.list);
+			}
 		}
 
 		list = list.map((l) => {
@@ -276,18 +287,17 @@ export default handleActions({
 		const page = action.payload.page;
 		let list = [];
 		// page start as 1
-		let hasNext = page && page.current_page <= page.page_count;
+		let hasNext = page && page.current_page < page.page_count;
 
 		// tansform date and city here
 		action.payload.list.map((m) => {
-			m.event_at = date.parseDate(m.event_at);
-			m.distance = city.parseDistance(m.distance, m.city_name);
+			m.created_at = date.parseDate(m.created_at);
 		});
 
-		if(page && (page.current_page === 1 || page.current_page === 2)){
+		if(page && page.current_page === 1){
 			list = action.payload.list;
 		}else {
-			list = state.list.concat(action.payload.list);
+			list = state.myMatchList.concat(action.payload.list);
 		}
 
 		return {
@@ -296,4 +306,34 @@ export default handleActions({
 			myMatchList: list,
 		};
 	},
+	[LOAD_SEARCH_MATCH]: (state, action) => {
+		const page = action.payload.page;
+		let list = [];
+		// page start as 1
+		let hasNext = page && page.current_page < page.page_count;
+
+		// tansform date and city here
+		action.payload.list.map((m) => {
+			m.created_at = date.parseDate(m.created_at);
+		});
+
+		if(page && page.current_page === 1){
+			list = action.payload.list;
+		}else {
+			list = state.searchList.concat(action.payload.list);
+		}
+
+		return {
+			...state,
+			hasSearchNext: hasNext,
+			searchList: list,
+		};
+	},
+	[CLEAR_SEARCH_MATCH]: (state, action) => {
+		return {
+			...state,
+			hasSearchNext: false,
+			searchList: [],
+		};
+	}
 }, INITIAL_STATE);

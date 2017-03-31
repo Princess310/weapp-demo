@@ -25,6 +25,10 @@ class Index extends Component {
 		}
 	}
 
+	onUnload() {
+		console.log('onUnload detail');
+	}
+
 	async onLoad(options) {
 		const { id } = options;
 

@@ -1,0 +1,12 @@
+<template name="content-parse-tmpl">
+  <block wx:if="{{node === 'text'}}">
+    <text>{{text}}</text>
+  </block>
+  <block wx:else>
+    <block wx:for-items="{{nodes}}" wx:key="{{index}}" wx:for-item="n">
+      <block wx:if="{{n.node === 'text'}}">
+        <text class="call-phone"  data-tel="{{n.text}}" catchtap="handleCall">{{n.text}}</text>
+      </block>
+    </block>
+  </block>
+</template>

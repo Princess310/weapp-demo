@@ -101,7 +101,7 @@ class Index extends Component {
 		const props = {
 			content: content,
 			pictures: files.join(','),
-			reward_item: selectMsg.id,
+			reward_item: selectMsg.id ? selectMsg.id : '',
 			reward_as: type,
 			category: category,
 			reward_amount: reward_amount

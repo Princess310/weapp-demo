@@ -20,7 +20,8 @@
     "pages/common/selectPanel/index",
     "pages/common/selectCity/index",
     "pages/common/selectIdentity/index",
-    "pages/common/guide/index"
+    "pages/common/guide/index",
+    "pages/common/searchPanel/index"
   ],
   "window":{
     "backgroundTextStyle":"dark",

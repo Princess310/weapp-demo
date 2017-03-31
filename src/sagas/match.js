@@ -5,13 +5,14 @@ import { FETCH_MATCH, FETCH_DETAIL, FETCH_MY_LIST,
 		 FETCH_CITY, FETCH_FILTERS, FETCH_LOCATION,
 		 FETCH_INDUSTRY, FETCH_BUSINESS_INFO, FETCH_TAG_LIST,
 		 ADD_TAG, DELETE_TAG, SAVE_TAGS,
-		 FOLLOW_USER, CANCEL_FOLLOW_USER, FETCH_MY_MATCH } from '../redux/match';
+		 FOLLOW_USER, CANCEL_FOLLOW_USER, FETCH_MY_MATCH,
+	   FETCH_SEARCH_MATCH } from '../redux/match';
 import { REFRESH } from '../redux/user';
 import { request } from '../utils/request';
 import { load, loadDetail, loadMyList, loadCity,
 		 loadFilters, loadLoaction, loadIndustry,
 		 loadBusinessInfo, loadTags, saveTags,
-	   loadMyMatch } from '../redux/match';
+	   loadMyMatch, loadSearchMatch } from '../redux/match';
 
 // --------- Invite Interface --------- //
 function* fetchIvites(action){
@@ -94,6 +95,22 @@ function* fetchMyMatch(action){
 		let { list, page: resPage } = yield request(true).get("moments/my-reward", action.payload);
 
 		yield put(loadMyMatch({
+			page: resPage,
+			list: list
+		}));
+	} catch (error) {
+		console.log('login error', error);
+	}
+}
+
+function* fetchSearchMatch(action) {
+	try {
+		let { list, page: resPage } = yield request(true).get("follow/search-friend", {
+			...action.payload,
+			type: 0,
+		});
+
+		yield put(loadSearchMatch({
 			page: resPage,
 			list: list
 		}));
@@ -220,7 +237,8 @@ function* matchSaga() {
 		takeLatest(SAVE_TAGS, saveTagInfo),
 		takeLatest(FOLLOW_USER, followUser),
 		takeLatest(CANCEL_FOLLOW_USER, cancelFollowUser),
-		takeLatest(FETCH_MY_MATCH, fetchMyMatch)
+		takeLatest(FETCH_MY_MATCH, fetchMyMatch),
+		takeLatest(FETCH_SEARCH_MATCH, fetchSearchMatch)
 	];
 }
 
