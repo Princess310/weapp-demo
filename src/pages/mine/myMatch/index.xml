@@ -1,5 +1,5 @@
 <template name="feed-detail-invite">
-	<navigator url="../../yaoyue/detail/index?id={{id}}" class="feed-match-card">
+	<navigator url="../../yaoyue/detail/index?id={{uid}}" class="feed-match-card">
 		<view class="feed-detail-left">
 			<view class="user-icon-wrapper">
 				<image mode="aspectFill" class="user-icon" src="{{avatar}}"/>

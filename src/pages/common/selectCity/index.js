@@ -34,15 +34,9 @@ class Index extends Component {
 
 		// get list first
 		const self = this;
-		wx.showToast({
-			title: '加载中',
-			icon: 'loading'
-		})
 
 		const { page } = this.state;
 		this.props.getList();
-
-		wx.hideToast();
 		// 生命周期函数--监听页面加载
 		let searchLetter = city.searchLetter;
 

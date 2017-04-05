@@ -1,10 +1,10 @@
 <template name="feed-detail-invite">
-	<navigator url="../detail/index?id={{id}}" class="feed-match-card">
+	<view class="feed-match-card" data-type="{{event_type}}" data-id="{{id}}" data-mid="{{event_id}}" catchtap="handleNav">
 		<view class="feed-detail-left">
-			<view class="user-icon-wrapper">
+			<navigator class="user-icon-wrapper" url="../detail/index?id={{id}}">
 				<image mode="aspectFill" class="user-icon" src="{{avatar}}"/>
 				<view wx:if="{{verify_status == 2}}" class="vip">V</view>
-			</view>
+			</navigator>
 			<view wx:if="{{city_name !== ''}}" class="city-info">
 				<image class="pin" src="../../../images/pin_icon.png" mode="aspectFit"/>
 				<text class="distance">{{city_name}}</text>
@@ -25,10 +25,10 @@
 				<text>{{event_at}}</text>
 			</view>
 		</view>
-		<view wx:if="{{tag_identity_name !== ''}}" class="reward-item">
-				<text>{{tag_identity_name}}</text>
+		<view wx:if="{{reward_item_name !== ''}}" class="reward-item">
+				<text>{{reward_item_name}}</text>
 		</view>
-	</navigator>
+	</view>
 </template>
 
 <view class="ali-header">
@@ -58,7 +58,7 @@
 	</view>
 </navigator>
 
-<view>
+<view class="match-list">
 	<block wx:if="{{props.match.list.length > 0}}"></block>
 	<block wx:else>
 		<view class="no-data">

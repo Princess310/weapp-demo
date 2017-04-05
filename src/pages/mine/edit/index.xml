@@ -98,11 +98,11 @@
 	<view class="weui-cells action-wrapper">
 		<view class="weui-cell weui-cell_access" hover-class="weui-cell_active">
 			<view class="weui-cell__bd">
-				<text>邀约号</text>
+				<text>健康汇销号</text>
 			</view>
 			<view class="weui-cell__ft">
 				<block wx:if="{{state.showEditUsername}}">
-					<input placeholder="输入您的邀约号" value="{{state.username}}" bindinput="handleUsername"/>
+					<input placeholder="输入您的健康汇销号" value="{{state.username}}" bindinput="handleUsername"/>
 					<button class="weui-btn" type="primary" plain="true" catchtap="handleSaveUsername">确认</button>
 				</block>
 				<text wx:else>{{state.username}}</text>

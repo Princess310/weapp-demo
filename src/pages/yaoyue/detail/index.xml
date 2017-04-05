@@ -1,17 +1,19 @@
+<import src="../../../templates/contentParse.wxml"/>
+
 <view class="user-info">
 	<view class="feed-detail-card user-info" data-id="{{props.match.detail.id}}">
 		<view class="feed-detail-header">
 			<view class="user-icon-wrapper">
-				<image mode="aspectFill" class="user-icon" src="{{props.match.detail.avatar}}"/>
+				<image mode="aspectFill" class="user-icon" catchtap="handlViewAvatar" src="{{props.match.detail.avatar}}" data-src="{{props.match.detail.avatar}}">
 				<view wx:if="{{props.match.detail.verify_status == 2}}" class="vip">V</view>
 			</view>
 			<view class="user-info">
 				<view class="user-name">
 					{{props.match.detail.nickname}}
 				</view>
-				<view wx:if="{{props.match.detail.company !== '' && props.match.detail.position !== ''}}" class="user-role">
-					<text class="user-role-item">{{props.match.detail.company}}</text>
-					<text class="user-role-item">{{props.match.detail.position}}</text>
+				<view class="user-role">
+					<text class="user-role-item" wx:if="{{props.match.detail.company !== ''}}">{{props.match.detail.company}}</text>
+					<text class="user-role-item" wx:if="{{props.match.detail.position !== ''}}">{{props.match.detail.position}}</text>
 				</view>
 				<view class="user-identity">
 					<text>{{props.match.detail.tag_identity_name}}</text>
@@ -98,7 +100,9 @@
 						<navigator url="../../business/detail/index?id={{item.id}}" class="moment-wrapper">
 							<view class="content">
 								<text wx:if="{{item.sort > 0}}" class="sort">置顶</text>
-								<text>{{item.content}}</text>
+								<block wx:for-items="{{item.nodes}}" wx:key="{{index}}">
+									<template is="content-parse-tmpl" data="{{...item, index: index}}" />
+								</block>
 							</view>
 							<block wx:if="{{item.pictures.length > 0}}">
 								<image src="{{item.pictures[0]}}" class="moment-image" mode="aspectFit"/>

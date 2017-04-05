@@ -50,10 +50,11 @@
 		</view>
 		<view class="feed-status-info">
 			<view class="user-status-operaters">
-				<!-- <view class="operater-item share-btn">
-					<image mode="aspectFill" src="../../../images/icon_share_grey.png"></image>
+				<view class="operater-item share-btn">
+					<image  wx:if="{{is_share === 0}}" mode="aspectFill" src="../../../images/icon_share.png"></image>
+					<image wx:if="{{is_share > 0}}" mode="aspectFill" src="../../../images/icon_share_active.png"></image>
 					<text class="count">{{share_count}}</text>
-				</view> -->
+				</view>
 				<view class="operater-item comment-btn">
 					<image mode="aspectFill" src="../../../images/comment_icon.png"></image>
 					<text class="count">{{comment_count}}</text>
@@ -86,20 +87,21 @@
     </view>
 </view>
 
-<view class="dashboard">
-	<navigator class="ali-search-container" url="../../common/searchPanel/index?action=moment">
-		<view class="weui-search-bar">
-			<view class="weui-search-bar__form">
-				<view class="weui-search-bar__box">
-					<input type="text" class="weui-search-bar__input" placeholder="搜索动态" />
-				</view>
-				<label class="weui-search-bar__label">
-					<icon class="weui-icon-search" type="search" size="14"></icon>
-					<view class="weui-search-bar__text">搜索动态</view>
-				</label>
+<navigator class="ali-search-container" url="../../common/searchPanel/index?action=moment">
+	<view class="weui-search-bar">
+		<view class="weui-search-bar__form">
+			<view class="weui-search-bar__box">
+				<input type="text" class="weui-search-bar__input" placeholder="搜索动态" />
 			</view>
+			<label class="weui-search-bar__label">
+				<icon class="weui-icon-search" type="search" size="14"></icon>
+				<view class="weui-search-bar__text">搜索动态</view>
+			</label>
 		</view>
-	</navigator>
+	</view>
+</navigator>
+
+<view class="dashboard">
 	<block wx:if="{{props.moment.list.length > 0}}">
 		<block wx:for="{{props.moment.list}}"  wx:key="id">
 			<template is="feed-detail-moment" data="{{...item, index: index}}" />
@@ -107,7 +109,7 @@
 	</block>
 	<block wx:else>
 		<view class="no-data">
-			<text>没有动态？点击发布按钮或者去邀约列表添加好友查看好友动态吧</text>
+			<text>没有动态？点击发布按钮发布动态吧</text>
 		</view>
 	</block>
 </view>

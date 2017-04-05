@@ -10,11 +10,27 @@ class Index extends Component {
 
 	onShareAppMessage() {
 		const { id, nickname, company, position, intro } = this.props.user;
+
+		let shareTitle = nickname + '的健康汇销名片';
+		let shareContent = '点击查看详情：' +
+							(company !== '' ? company + '.' : '') +
+							(position !== '' ? position + '.' : '') +
+							nickname + '邀请您加入80万行业资源平台，找讲师，找厂家，找经销商就上健康汇销！';
+
 		return {
-			title: '分享' + nickname + '的名片',
-			desc: '公司：' + company + '，职位：' + position + '，个人简介：' + intro,
+			title: shareTitle,
+			desc: shareContent,
 			path: '/pages/yaoyue/detail/index?id=' + id
 		}
+	}
+
+	handlViewAvatar(e) {
+		const { src } = e.currentTarget.dataset;
+
+		wx.previewImage({
+			current: src,
+			urls: [src]
+		});
 	}
 }
 

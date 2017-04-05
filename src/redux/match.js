@@ -205,6 +205,7 @@ export default handleActions({
 			if(matchResult.hasPhone){
 				l.content = matchResult.content;
 				l.phone = matchResult.phone;
+				l.nodes = matchResult.nodes;
 			}
 
 			return l;

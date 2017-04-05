@@ -70,11 +70,6 @@ class Index extends Component {
     if(action === 'match' && !this.props.match.hasSearchNext){
 			return false;
 		}
-
-		wx.showToast({
-			title: '加载中',
-			icon: 'loading'
-		})
 		const { currentRole } = this.props.moment;
 
 		page = page + 1;
@@ -94,8 +89,6 @@ class Index extends Component {
 		this.setState({
 			page: page
 		});
-
-		wx.hideToast();
 	}
 
   inputTyping(e) {

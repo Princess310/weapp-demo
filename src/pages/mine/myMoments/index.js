@@ -14,16 +14,10 @@ class Index extends Component {
 	async onLoad() {
 		// get list first
 		const self = this;
-		wx.showToast({
-			title: '加载中',
-			icon: 'loading'
-		})
 
 		this.props.getList({
 			page: 1
 		});
-
-		wx.hideToast();
 	}
 
 	async onPullDownRefresh() {
@@ -51,11 +45,6 @@ class Index extends Component {
 			return false;
 		}
 
-		wx.showToast({
-			title: '加载中',
-			icon: 'loading'
-		})
-
 		let { page } = this.state;
 
 		page = page + 1;
@@ -67,8 +56,6 @@ class Index extends Component {
 		this.setState({
 			page: page
 		});
-
-		wx.hideToast();
 	}
 
 	handleViewImage(e) {

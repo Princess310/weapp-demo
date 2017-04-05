@@ -5,7 +5,8 @@ import { STARTUP } from '../redux/startup';
 import { LOAD_MOMENTS, FETCH_MOMENTS, REFRESH_MOMENTS, DELETE_MOMENT, ADD_MOMENT,
 		 FETCH_MOMENT_DETAIL, FETCH_INVITES, DO_LIKE_MOMENT, DO_LIKE_COMMENT,
 		 DO_JOIN_REWARD, FETCH_REWARD, LOAD_REWARD, SHIELD_MOMENT, DO_SEND_COMMENT,
-	   FETCH_MOMENTS_ROLES, LOAD_CURRENT_ROLE, FETCH_MY_MOMENTS, FETCH_SEARCH_MOMENTS	} from '../redux/moment';
+	     FETCH_MOMENTS_ROLES, LOAD_CURRENT_ROLE, FETCH_MY_MOMENTS, FETCH_SEARCH_MOMENTS,
+		 DO_SHARE_MOMENT } from '../redux/moment';
 import { FETCH_MATCH } from '../redux/match';
 import { request, setSession } from '../utils/request';
 import { load, loadDetail, loadRoles, loadCurrentRole, loadReward, loadLikeMoment, loadLikeComment, loadJoinReward, loadMyMoments, loadSearchMoments } from '../redux/moment';
@@ -141,6 +142,9 @@ function* delMoment(action){
 
 		// then refresh list
 		yield put({type: FETCH_MOMENTS, payload: {
+			page: 1
+		}});
+		yield put({type: FETCH_MY_MOMENTS, payload: {
 			page: 1
 		}});
 		yield put({type: FETCH_MATCH, payload: filter.current});
@@ -283,6 +287,30 @@ function* fetchSearchMoments(action) {
 		console.log('login error', error);
 	}
 }
+
+function* shareMoment(action) {
+	const { id } = action.payload;
+
+	try {
+		yield request(true).post("user/share", {
+			pk: id,
+			module: 1,
+			platform: '2'
+		})
+
+		// then refresh detail and list
+		yield put({type: FETCH_MOMENT_DETAIL, payload: {
+			id: id
+		}});
+
+		// then refresh list
+		yield put({type: FETCH_MOMENTS, payload: {
+			page: 1
+		}});
+	} catch (error) {
+		console.log('login error', error);
+	}
+}
 // --------- /Moment Interface --------- //
 
 // --------- Reward Interface --------- //
@@ -314,6 +342,7 @@ function* momentSaga() {
 		takeLatest(DO_JOIN_REWARD, joinReward),
 		takeLatest(FETCH_MY_MOMENTS, fetchMyMoments),
 		takeLatest(FETCH_SEARCH_MOMENTS, fetchSearchMoments),
+		takeLatest(DO_SHARE_MOMENT, shareMoment),
 	];
 }
 

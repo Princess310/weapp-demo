@@ -2,6 +2,8 @@ import wx, { Component, PropTypes } from 'labrador-immutable';
 import { bindActionCreators } from 'redux';
 import { connect } from 'labrador-redux';
 import * as momentActions from '../../../redux/moment';
+import * as matchActions from '../../../redux/match';
+import { matchPhone } from '../../../utils/utils';
 
 class Index extends Component {
 	state = {
@@ -13,15 +15,38 @@ class Index extends Component {
 		comment: {
 			cid: '',
 			content: ''
-		}
+		},
+		showShareGuide: false,
 	}
 
 	onShareAppMessage() {
 		const { id, nickname, content } = this.props.moment.detail;
+		const { company, position, nickname: uNickname } = this.props.user;
+		const self = this;
+		const matchResult = matchPhone(content);
+
+		let shareTitle = '分享' + nickname + '的健康汇销动态';
+		let shareCntent = '会销行业自己的APP：' + 
+							(company !== '' ? company + '.' : '') +
+							(position !== '' ? position + '.' : '') +
+							uNickname + '在分享动态，邀请您也来分享！';
+
+
+		console.log(matchResult);
+		if(content !== '') {
+			shareTitle = matchResult.replaceContent.substring(0, 60);
+		}
+
 		return {
-			title: '分享' + nickname + '的邀约动态',
-			desc: '做推广，找合作，就用商务邀约  ' + content,
-			path: '/pages/business/detail/index?id=' + id
+			title: shareTitle,
+			desc: shareCntent,
+			path: '/pages/business/detail/index?id=' + id,
+			success: function() {
+				self.props.shareMoment({ id: id });
+				self.setState({
+					showShareGuide: false
+				});
+			}
 		}
 	}
 
@@ -32,17 +57,9 @@ class Index extends Component {
 			id: id
 		});
 
-		// get reward list
-		wx.showToast({
-			title: '加载中',
-			icon: 'loading'
-		});
-
 		this.props.getInfo({
 			id: id
 		});
-
-		wx.hideToast();
 	}
 
 	handleViewImage(e) {
@@ -209,6 +226,37 @@ class Index extends Component {
 			}
 		});
 	}
+
+	handleFollow(e){
+		const { action, id } = e.currentTarget.dataset;
+		const { id: mid } = this.props.moment.detail;
+
+		if(action === 'follow'){
+			this.props.followUser({
+				fid: id,
+				type: 'moment',
+				mid: mid,
+			});
+		}else {
+			this.props.cancelFollowUser({
+				fid: id,
+				type: 'moment',
+				mid: mid,
+			});
+		}
+	}
+
+	handleShare(e) {
+		this.setState({
+			showShareGuide: true
+		});
+	}
+
+	handleHideShare(e) {
+		this.setState({
+			showShareGuide: false
+		});
+	}
 }
 
 export default connect(
@@ -220,6 +268,9 @@ export default connect(
 		deleteMoment: momentActions.del,
 		shieldMoment: momentActions.shieldMoment,
 		doJoinReward: momentActions.doJoinReward,
-		sendComment: momentActions.sendComment
+		sendComment: momentActions.sendComment,
+		shareMoment: momentActions.shareMoment,
+		followUser: matchActions.followUser,
+		cancelFollowUser: matchActions.cancelFollowUser,
 	}, dispatch)
 )(Index);

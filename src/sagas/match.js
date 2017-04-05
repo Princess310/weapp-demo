@@ -7,6 +7,7 @@ import { FETCH_MATCH, FETCH_DETAIL, FETCH_MY_LIST,
 		 ADD_TAG, DELETE_TAG, SAVE_TAGS,
 		 FOLLOW_USER, CANCEL_FOLLOW_USER, FETCH_MY_MATCH,
 	   FETCH_SEARCH_MATCH } from '../redux/match';
+import { FETCH_MOMENT_DETAIL } from '../redux/moment';
 import { REFRESH } from '../redux/user';
 import { request } from '../utils/request';
 import { load, loadDetail, loadMyList, loadCity,
@@ -67,24 +68,43 @@ function* fetchFilters(){
 }
 
 function* followUser(action){
+	const { fid, type, mid } = action.payload;
 	try {
-		yield request(true).post("follow/add-follow", action.payload);
-
-		yield put({type: FETCH_DETAIL, payload: {
-			id: action.payload.fid
-		}});
+		yield request(true).post("follow/add-follow", {
+			fid: fid
+		});
+		
+		if(type && type === 'moment') {
+			yield put({type: FETCH_MOMENT_DETAIL, payload: {
+				id: mid
+			}});
+		}else {
+			yield put({type: FETCH_DETAIL, payload: {
+				id: fid
+			}});
+		}
 	} catch (error) {
 		console.log('login error', error);
 	}
 }
 
 function* cancelFollowUser(action){
-	try {
-		yield request(true).put("follow/cancel-follow", action.payload);
+	const { fid, type, mid } = action.payload;
 
-		yield put({type: FETCH_DETAIL, payload: {
-			id: action.payload.fid
-		}});
+	try {
+		yield request(true).put("follow/cancel-follow", {
+			fid: fid
+		});
+
+		if(type && type === 'moment') {
+			yield put({type: FETCH_MOMENT_DETAIL, payload: {
+				id: mid
+			}});
+		}else {
+			yield put({type: FETCH_DETAIL, payload: {
+				id: fid
+			}});
+		}
 	} catch (error) {
 		console.log('login error', error);
 	}

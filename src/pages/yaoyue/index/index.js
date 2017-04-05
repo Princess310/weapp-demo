@@ -22,9 +22,12 @@ class Index extends Component {
 	}
 
 	onShareAppMessage() {
+		let shareTitle = nickname + '邀请您加入健康汇销APP';
+		let shareContent = '80万行业资源平台，找讲师，找厂家，找经销商就上健康汇销！';
+
 		return {
-			title: '邀请您加入小邀约',
-			desc: '做推广，找合作，就用商务邀约 ',
+			title: shareTitle,
+			desc: shareContent,
 			path: '/pages/business/index/index'
 		}
 	}
@@ -32,10 +35,6 @@ class Index extends Component {
 	async onLoad() {
 		// get list first
 		const self = this;
-		wx.showToast({
-			title: '加载中',
-			icon: 'loading'
-		})
 
 		const { page } = this.state;
 
@@ -68,8 +67,6 @@ class Index extends Component {
 
 		// reward filter
 		this.props.getFilters();
-
-		wx.hideToast();
 	}
 
 	async onPullDownRefresh() {
@@ -100,11 +97,6 @@ class Index extends Component {
 			return false;
 		}
 
-		wx.showToast({
-			title: '加载中',
-			icon: 'loading'
-		})
-
 		let { id, page } = this.state;
 
 		page = page + 1;
@@ -121,8 +113,20 @@ class Index extends Component {
 		this.setState({
 			page: page
 		});
+	}
 
-		wx.hideToast();
+	handleNav(e) {
+		const { id, mid, type } = e.currentTarget.dataset;
+
+		if(type === 0) {
+			wx.navigateTo({
+				url: '../detail/index?id=' + id
+			})
+		}else {
+			wx.navigateTo({
+				url: '../../business/detail/index?id=' + mid
+			})
+		}
 	}
 
 	showFilter(e) {
@@ -167,11 +171,6 @@ class Index extends Component {
 				showFilter: false
 			});
 
-			wx.showToast({
-				title: '加载中',
-				icon: 'loading'
-			})
-
 			const props = {
 				page: this.state.pageStart,
 				tag_identity_id: tag_identity_id,
@@ -187,8 +186,6 @@ class Index extends Component {
 			});
 			// refresh list
 			this.props.getList(props);
-
-			wx.hideToast();
 		}
 	}
 

@@ -106,6 +106,7 @@ export function matchPhone(content) {
     hasPhone: hasPhone,
     content: content,
     phone: phone,
+    replaceContent: content.replace(reg, phone),
     ...htmlParesResult
   }
 }

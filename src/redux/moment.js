@@ -22,6 +22,8 @@ export const LOAD_MOMENT_DETAIL = 'LOAD_MOMENT_DETAIL';
 export const DO_LIKE_MOMENT = 'DO_LIKE_MOMENT';
 export const LOAD_LIKE_MOMENT = 'LOAD_LIKE_MOMENT';
 
+export const DO_SHARE_MOMENT = 'DO_SHARE_MOMENT';
+
 export const DO_LIKE_COMMENT = 'DO_LIKE_COMMENT';
 export const LOAD_LIKE_COMMENT= 'LOAD_LIKE_COMMENT';
 
@@ -63,6 +65,7 @@ export const loadRoles=  createAction(LOAD_MOMENTS_ROLES, (list) => (list));
 export const loadCurrentRole=  createAction(LOAD_CURRENT_ROLE, (role) => (role));
 
 export const shieldMoment = createAction(SHIELD_MOMENT);
+export const shareMoment = createAction(DO_SHARE_MOMENT);
 
 export const sendComment = createAction(DO_SEND_COMMENT);
 
@@ -160,6 +163,14 @@ export default handleActions({
 			data.content = matchResult.content;
 			data.phone = matchResult.phone;
 			data.nodes = matchResult.nodes;
+		}
+
+		if(data.comments.length > 0) {
+			data.comments = data.comments.map((c) => {
+				const mc = matchPhone(c.content);
+				c.nodes = mc.nodes;
+				return c;
+			});
 		}
 
 		return {

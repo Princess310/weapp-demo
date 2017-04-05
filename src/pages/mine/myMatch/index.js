@@ -16,10 +16,6 @@ class Index extends Component {
 	async onLoad() {
 		// get list first
 		const self = this;
-		wx.showToast({
-			title: '加载中',
-			icon: 'loading'
-		})
 
 		const { page } = this.state;
 
@@ -29,8 +25,6 @@ class Index extends Component {
 
 		// reward filter
 		this.props.getFilters();
-
-		wx.hideToast();
 	}
 
 	async onPullDownRefresh() {
@@ -57,11 +51,6 @@ class Index extends Component {
 			return false;
 		}
 
-		wx.showToast({
-			title: '加载中',
-			icon: 'loading'
-		})
-
 		let { page } = this.state;
 
 		page = page + 1;
@@ -73,8 +62,6 @@ class Index extends Component {
 		this.setState({
 			page: page
 		});
-
-		wx.hideToast();
 	}
 }
 

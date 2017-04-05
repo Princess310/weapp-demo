@@ -14,24 +14,21 @@ class Index extends Component {
 	}
 
 	onShareAppMessage() {
+		const { nickname } = this.props.user;
+
+		let shareTitle = nickname + '邀请您加入健康汇销APP';
+		let shareContent = '80万行业资源平台，找讲师，找厂家，找经销商就上健康汇销！';
+
 		return {
-			title: '邀请您加入小邀约',
-			desc: '做推广，找合作，就用商务邀约 ',
+			title: shareTitle,
+			desc: shareContent,
 			path: '/pages/business/index/index'
 		}
 	}
 
 	async onLoad() {
-		// get list first
-		const self = this;
-		wx.showToast({
-			title: '加载中',
-			icon: 'loading'
-		})
-
+		// get roles first
 		this.props.getRoles();
-
-		wx.hideToast();
 	}
 
 	tabClick(e) {
@@ -45,11 +42,6 @@ class Index extends Component {
 			role: id
 		});
 
-		wx.showToast({
-			title: '加载中',
-			icon: 'loading'
-		})
-
 		this.props.getList({
 			page: 1,
 			role: id,
@@ -59,8 +51,6 @@ class Index extends Component {
 			page: 1,
 			role: id,
 		});
-
-		wx.hideToast();
 	}
 
 	async onPullDownRefresh() {
@@ -90,11 +80,6 @@ class Index extends Component {
 			return false;
 		}
 
-		wx.showToast({
-			title: '加载中',
-			icon: 'loading'
-		})
-
 		let { page } = this.state;
 		const { currentRole } = this.props.moment;
 
@@ -108,8 +93,6 @@ class Index extends Component {
 		this.setState({
 			page: page
 		});
-
-		wx.hideToast();
 	}
 
 	handleViewImage(e) {

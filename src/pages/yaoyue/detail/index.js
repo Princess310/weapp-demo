@@ -17,10 +17,18 @@ class Index extends Component {
 	}
 
 	onShareAppMessage() {
-		const { id, nickname, company, position, advantage, needs } = this.props.match.detail;
+		const { id, nickname } = this.props.match.detail;
+		const { company, position, nickname: uNickname } = this.props.user;
+
+		let shareTitle = nickname + '的健康汇销名片';
+		let shareContent = '点击查看详情' + 
+							(company !== '' ? company + '.' : '') +
+							(position !== '' ? position + '.' : '') +
+							uNickname + '邀请您加入80万行业资源平台，找讲师，找厂家，找经销商就上健康汇销！';
+
 		return {
-			title: '分享' + nickname + '的名片',
-			desc: '公司：' + company + '，职位：' + position + '，优势：' + advantage.join(' | ') + '，需求：' + needs.join(' | '),
+			title: shareTitle,
+			desc: shareContent,
 			path: '/pages/yaoyue/detail/index?id=' + id
 		}
 	}
@@ -36,12 +44,6 @@ class Index extends Component {
 			id: id
 		});
 
-		// get reward list
-		wx.showToast({
-			title: '加载中',
-			icon: 'loading'
-		});
-
 		await this.props.getInfo({
 			id: id
 		});
@@ -50,8 +52,6 @@ class Index extends Component {
 			uid: id,
 			page: this.state.page
 		});
-
-		wx.hideToast();
 	}
 
 	async onReachBottom() {
@@ -59,11 +59,6 @@ class Index extends Component {
 		if(!this.props.match.hasMyNext){
 			return false;
 		}
-
-		wx.showToast({
-			title: '加载中',
-			icon: 'loading'
-		})
 
 		let { id, page } = this.state;
 
@@ -78,8 +73,6 @@ class Index extends Component {
 		this.setState({
 			page: page
 		});
-
-		wx.hideToast();
 	}
 
 	handleViewImage(e) {
@@ -88,6 +81,15 @@ class Index extends Component {
 		wx.previewImage({
 			current: src,
 			urls: this.props.match.detail.pictures
+		});
+	}
+
+	handlViewAvatar(e) {
+		const { src } = e.currentTarget.dataset;
+
+		wx.previewImage({
+			current: src,
+			urls: [src]
 		});
 	}
 
@@ -103,6 +105,14 @@ class Index extends Component {
 				fid: this.props.match.detail.id
 			});
 		}
+	}
+
+	handleCall(e) {
+		const { tel } = e.currentTarget.dataset;
+
+		wx.makePhoneCall({
+			phoneNumber: tel
+		});
 	}
 }
 

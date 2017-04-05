@@ -1,5 +1,5 @@
 <template name="feed-detail-moment">
-	<navigator url="../../moment/detail/index?id={{id}}">
+	<navigator url="../../business/detail/index?id={{id}}">
 		<view class="fedd-detail-item">
 			<view class="feed-detail-left">
 				<navigator url="../../yaoyue/detail/index?id={{uid}}" class="user-icon-wrapper">
@@ -44,6 +44,11 @@
 		</view>
 		<view class="feed-status-info">
 			<view class="user-status-operaters">
+				<view class="operater-item share-btn">
+					<image  wx:if="{{is_share === 0}}" mode="aspectFill" src="../../../images/icon_share.png"></image>
+					<image wx:if="{{is_share > 0}}" mode="aspectFill" src="../../../images/icon_share_active.png"></image>
+					<text class="count">{{share_count}}</text>
+				</view>
 				<view class="operater-item comment-btn">
 					<image mode="aspectFill" src="../../../images/comment_icon.png"></image>
 					<text class="count">{{comment_count}}</text>

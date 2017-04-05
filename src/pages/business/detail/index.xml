@@ -1,12 +1,36 @@
 <import src="../../../templates/contentParse.wxml"/>
 
+<template name="user-comment-item">
+	<view class="feed-comment-panel comment-title">
+		<view class="feed-comment-left">
+			<navigator url="../../yaoyue/detail/index?id={{created_by}}" class="user-icon-wrapper">
+				<image mode="aspectFill" class="user-icon" src="{{avatar}}"/>
+				<view wx:if="{{verify_status == 2}}" class="vip">V</view>
+			</navigator>
+		</view>
+		<view class="feed-comment-right">
+			<view class="header">
+				<view class="wrapper">
+					<text class="user-name">{{nickname}}</text>
+					<text class="company">{{company}}</text>
+					<text class="role">{{position}}</text>
+				</view>
+			</view>
+			<view class="sub-info">
+				<text>{{tag_identity_name}}</text>
+			</view>
+		</view>
+	</view>
+</template>
+
+
 <scroll-view>
 	<view class="fedd-detail-item">
 		<view class="feed-detail-left">
-			<view class="user-icon-wrapper">
+			<navigator class="user-icon-wrapper" url="../../yaoyue/detail/index?id={{props.moment.detail.uid}}">
 				<image mode="aspectFill" class="user-icon" src="{{props.moment.detail.avatar}}"/>
 				<view wx:if="{{props.moment.detail.verify_status == 2}}" class="vip">V</view>
-			</view>
+			</navigator>
 		</view>
 		<view class="feed-detail-right">
 			<view class="header">
@@ -47,10 +71,11 @@
 	</view>
 	<view class="feed-status-info">
 		<view class="user-status-operaters">
-			<!-- <view class="operater-item share-btn">
-				<image mode="aspectFill" src="../../../images/icon_share_grey.png"></image>
-				<text class="count">{{share_count}}</text>
-			</view> -->
+			<view catchtap="handleShare" class="operater-item share-btn">
+				<image  wx:if="{{props.moment.detail.is_share === 0}}" mode="aspectFill" src="../../../images/icon_share.png"></image>
+				<image wx:if="{{props.moment.detail.is_share > 0}}" mode="aspectFill" src="../../../images/icon_share_active.png"></image>
+				<text class="count">{{props.moment.detail.share_count}}</text>
+			</view>
 			<view catchtap="handleShowChat" class="operater-item comment-btn">
 				<image mode="aspectFill" src="../../../images/comment_icon.png"></image>
 				<text class="count">{{props.moment.detail.comment_count}}</text>
@@ -79,9 +104,13 @@
 				<text>赞</text>
 				<text>{{props.moment.detail.like_count}}</text>
 			</view>
-			<view id="{{2}}" wx:if="{{props.moment.detail.participate_count >= 0}}" class="item {{state.activeIndex == 2 ? 'on' : ''}}" bindtap="tabClick">
-				<text>参与人</text>
-				<text>{{props.moment.detail.participate_count}}</text>
+			<view id="{{2}}" class="item {{state.activeIndex == 2 ? 'on' : ''}}" bindtap="tabClick">
+				<text>分享</text>
+				<text>{{props.moment.detail.share_count}}</text>
+			</view>
+			<view id="{{3}}" class="item {{state.activeIndex == 3 ? 'on' : ''}}" bindtap="tabClick">
+				<text>访客</text>
+				<text>{{props.moment.detail.hits}}</text>
 			</view>
 			<view class="weui-navbar__slider" style="left: {{state.sliderLeft}}rpx; transform: translateX({{state.sliderOffset}}px); -webkit-transform: translateX({{state.sliderOffset}}px);"></view>
 		</view>
@@ -114,7 +143,11 @@
 											<text class="to-name">{{item.to_name}}</text>
 											<text>：</text>
 										</block>
-										<text>{{item.content}}</text>
+										<text>
+											<block wx:for-items="{{item.nodes}}" wx:key="{{index}}">
+												<template is="content-parse-tmpl" data="{{...item, index: index}}" />
+											</block>
+										</text>
 									</view>
 								</view>
 							</view>
@@ -131,6 +164,30 @@
 			</view>
 			<view class="content" hidden="{{state.activeIndex != 1}}">
 				<block wx:for="{{props.moment.detail.likes}}"  wx:key="id">
+					<template is="user-comment-item" data="{{...item, index: index}}" />
+				</block>
+			</view>
+			<view class="content" hidden="{{state.activeIndex != 2}}">
+				<block wx:for="{{props.moment.detail.shares}}"  wx:key="id">
+					<template is="user-comment-item" data="{{...item, index: index}}" />
+				</block>
+			</view>
+			<view class="content has-padding" hidden="{{state.activeIndex != 3}}">
+				<View wx:if="{{props.moment.detail.wechat != '0' || props.moment.detail.wechat != '0' || props.moment.detail.wechat != '0'}}" class="hits-wrapper">
+					<view wx:if="{{props.moment.detail.wechat != '0'}}" class="hits-item">
+						<text>微信访客: {{props.moment.detail.wechat}}</text>
+					</view>
+					<view wx:if="{{props.moment.detail.qq != '0'}}" class="hits-item">
+						<text>QQ访客: {{props.moment.detail.qq}}</text>
+					</view>
+					<view wx:if="{{props.moment.detail.weibo != '0'}}" class="hits-item">
+						<text>微博访客: {{props.moment.detail.weibo}}</text>
+					</view>
+				</View>
+				<view class="ali-title">
+					<text>健康汇销用户: {{props.moment.detail.app}}</text>
+				</view>
+				<block wx:for="{{props.moment.detail.app_users}}"  wx:key="id">
 					<view class="feed-comment-panel comment-title">
 						<view class="feed-comment-left">
 							<navigator url="../../yaoyue/detail/index?id={{item.created_by}}" class="user-icon-wrapper">
@@ -149,36 +206,29 @@
 							<view class="sub-info">
 								<text>{{item.tag_identity_name}}</text>
 							</view>
-						</view>
-					</view>
-				</block>
-			</view>
-			<view class="content" hidden="{{state.activeIndex != 2}}">
-				<block wx:for="{{props.moment.detail.participate}}"  wx:key="id">
-					<view class="feed-comment-panel comment-title">
-						<view class="feed-comment-left">
-							<view class="user-icon-wrapper">
-								<image mode="aspectFill" class="user-icon" src="{{item.avatar}}"/>
-								<view wx:if="{{item.verify_status == 2}}" class="vip">V</view>
+							<view wx:if="{{item.is_my_friend || item.is_my_friend === 0}}" class="follow-wrapper">
+								<block wx:if="{{item.is_my_friend > 0}}">
+									<view class="wrapper" data-id="{{item.created_by}}" data-action="cancel">
+										<image src="../../../images/icon_follow_status.png" mode="aspectFit"/>
+										<text class="has-follow">已关注</text>
+									</view>
+								</block>
+								<block wx:else>
+									<view class="wrapper" data-id="{{item.created_by}}" data-action="follow" catchtap="handleFollow">
+										<image src="../../../images/icon_follow.png" mode="aspectFit"/>
+										<text>加关注</text>
+									</view>
+								</block>
 							</view>
-						</view>
-						<view class="feed-comment-right">
-							<view class="header">
-								<view class="wrapper">
-									<text class="user-name">{{item.nickname}}</text>
-									<text class="company">{{item.company}}</text>
-									<text class="role">{{item.position}}</text>
-								</view>
-							</view>
-							<view class="sub-info">
-								<text>{{item.tag_identity_name}}</text>
-							</view>
-							<image wx:if="{{item.won == '1'}}" mode="aspectFill" class="won-icon" src="../../../images/icon_zhongbiao.png"/>
 						</view>
 					</view>
 				</block>
 			</view>
 		</view>
+	</view>
+
+	<view wx:if="{{state.showShareGuide}}" catchtap="handleHideShare">
+		<image mode="aspectFill" class="share-guide" src="../../../images/share_guide.png"/>
 	</view>
 </scroll-view>
 

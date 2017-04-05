@@ -44,17 +44,9 @@ class Index extends Component {
 			type: "reward"
 		});
 
-		// get reward list
-		wx.showToast({
-			title: '加载中',
-			icon: 'loading'
-		})
-
 		if(type === "reward"){
 			this.props.getRewardList();
 		}
-
-		wx.hideToast();
 	}
 }
 

@@ -27,7 +27,7 @@
 }
 
 .comment-operaters{
-	margin: 0 24rpx;
+	padding: 0 24rpx;
 	padding-bottom: 20rpx;
 	border-bottom: 1rpx @color-v2-border solid;
 }
@@ -62,4 +62,62 @@
 	right: 30rpx;
 	width: 65rpx;
 	height: 65rpx;
+}
+
+.content-panel{
+	background-color: @color-v2-bg-light;
+	.has-padding{
+		padding-top: 7rpx;
+	}
+}
+
+.hits-wrapper{
+	display: flex;
+	align-items: center;
+	padding: 7px 15px;
+	font-size: 20rpx;
+	color: @black-normal;
+	background-color: @white;
+	.hits-item{
+		margin-right: 64rpx;
+	}
+}
+
+.ali-title{
+	font-size: 20rpx;
+}
+
+.follow-wrapper{
+	position: absolute;
+	top: 24rpx;
+	right: 24rpx;
+	width: 100rpx;
+	.wrapper{
+		display: flex;
+		align-items: center;
+		flex-direction: column;
+		font-size: 24rpx;
+		image{
+			width: 40rpx;
+			height: 40rpx;
+		}
+		text{
+			margin-top: 4rpx;
+			color: @color-v2-base-blue;
+		}
+		.has-follow{
+			color: @color-v2-txt-help;
+		}
+	}
+}
+
+.share-guide{
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 99;
 }
